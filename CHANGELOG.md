@@ -1,5 +1,33 @@
 # Changelog
 
+## [0.2.0] - 2025-09-08
+
+### Added
+- **Export Module**: Export generated data to multiple formats
+  - CSV export with customizable headers and delimiters
+  - JSON export with pretty printing option
+  - SQL INSERT statement generation
+  - TSV (Tab-Separated Values) export
+  - Markdown table format
+  - XML export with configurable elements
+  - YAML export with proper formatting
+  - Stream support for large datasets (memory efficient)
+  
+- **Taiwan Module**: Comprehensive Taiwan-specific data generation
+  - Taiwan ID number (身分證字號) with valid checksum
+  - Company tax ID (統一編號) with proper validation
+  - Landline phone numbers with area codes
+  - Postal codes (3 and 5 digit formats)
+  - Vehicle license plates (car, motorcycle, electric)
+  - Bank account numbers with real bank codes
+  - Health insurance card numbers
+  - Enhanced phone number prefixes for Taiwan carriers
+
+### Enhanced
+- Improved zh_TW locale with more realistic data
+- Better Taiwan phone number generation with actual carrier prefixes
+- More comprehensive Taiwan location data
+
 ## [0.1.3] - 2025-09-08
 
 ### Fixed

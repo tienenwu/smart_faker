@@ -19,6 +19,8 @@ import 'food_generator_screen.dart';
 import 'music_generator_screen.dart';
 import 'schema_demo_screen.dart';
 import 'smart_relationships_screen.dart';
+import 'export_demo_screen.dart';
+import 'taiwan_demo_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -247,6 +249,26 @@ class HomeScreen extends StatelessWidget {
                 ),
                 enabled: true,
               ),
+              FeatureTile(
+                title: 'Export Module',
+                subtitle: 'Export data to CSV, JSON, SQL, XML, YAML',
+                icon: Icons.download,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const ExportDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'Taiwan Module',
+                subtitle: 'Taiwan-specific data generation',
+                icon: Icons.flag,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const TaiwanDemoScreen(),
+                ),
+                enabled: true,
+              ),
             ],
           ),
         ],
@@ -280,7 +302,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Version: 0.1.1',
+              'Version: 0.2.0',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -322,7 +344,7 @@ class HomeScreen extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: 'SmartFaker Demo',
-      applicationVersion: '0.1.1',
+      applicationVersion: '0.2.0',
       applicationLegalese: '© 2024 SmartFaker',
       children: const [
         SizedBox(height: 16),

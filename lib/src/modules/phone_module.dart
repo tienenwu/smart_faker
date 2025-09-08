@@ -23,7 +23,36 @@ class PhoneModule {
     switch (currentLocale) {
       case 'zh_TW':
         // Taiwan mobile format: 09XX-XXX-XXX
-        return '09${random.integer(min: 10, max: 99)}-'
+        final prefix = random.element([
+          '0912',
+          '0918',
+          '0920',
+          '0921',
+          '0922',
+          '0932',
+          '0933',
+          '0935',
+          '0936',
+          '0937',
+          '0952',
+          '0953',
+          '0955',
+          '0958',
+          '0960',
+          '0963',
+          '0968',
+          '0970',
+          '0972',
+          '0975',
+          '0978',
+          '0980',
+          '0985',
+          '0986',
+          '0987',
+          '0988',
+          '0989'
+        ]);
+        return '$prefix-'
             '${random.integer(min: 100, max: 999)}-'
             '${random.integer(min: 100, max: 999)}';
       case 'ja_JP':

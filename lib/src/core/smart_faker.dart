@@ -20,6 +20,8 @@ import '../modules/color_module.dart';
 import '../modules/crypto_module.dart';
 import '../modules/food_module.dart';
 import '../modules/music_module.dart';
+import '../modules/export_module.dart';
+import '../modules/taiwan_module.dart';
 
 /// The main SmartFaker class that provides access to all data generation modules.
 ///
@@ -161,4 +163,16 @@ class SmartFaker {
 
   /// Gets the music module for generating music-related data.
   MusicModule get music => _moduleRegistry.music;
+
+  /// Gets the export module for exporting data to various formats.
+  ExportModule get export => const ExportModule();
+
+  /// Gets the Taiwan module for generating Taiwan-specific data.
+  /// Only available when locale is set to 'zh_TW'.
+  TaiwanModule get taiwan {
+    if (locale != 'zh_TW') {
+      throw StateError('Taiwan module is only available for zh_TW locale');
+    }
+    return TaiwanModule(_randomGenerator);
+  }
 }

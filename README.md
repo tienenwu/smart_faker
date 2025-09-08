@@ -5,7 +5,7 @@
 
 A powerful and intelligent fake data generator for Flutter and Dart applications. SmartFaker provides comprehensive test data generation with smart relationships, internationalization support, and schema-based generation.
 
-**Version:** 0.1.1  
+**Version:** 0.2.0  
 **Last Updated:** 2025-09-08
 
 ## 📦 Resources
@@ -24,6 +24,8 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
 - 🏗️ **Factory Patterns**: Multiple ways to integrate with your data classes
 - ⚡ **High Performance**: Optimized for generating large datasets
 - 🎨 **Rich Data Types**: 15+ modules covering person, internet, location, commerce, finance, and more
+- 📤 **Data Export**: Export to CSV, JSON, SQL, XML, YAML, Markdown formats (New in v0.2.0!)
+- 🇹🇼 **Taiwan Module**: Comprehensive Taiwan-specific data generation including ID numbers, tax IDs, and more (New in v0.2.0!)
 
 ## Installation
 
@@ -31,7 +33,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.1.1
+  smart_faker: ^0.2.0
 ```
 
 Then run:
@@ -356,6 +358,48 @@ faker.phone.countryCode()      // "+1"
 faker.phone.areaCode()         // "555"
 faker.phone.exchangeCode()     // "123"
 faker.phone.subscriberNumber() // "4567"
+```
+
+### Export Module (New in v0.2.0!)
+```dart
+// Generate data
+final users = List.generate(10, (_) => {
+  'id': faker.random.uuid(),
+  'name': faker.person.fullName(),
+  'email': faker.internet.email(),
+});
+
+// Export to various formats
+faker.export.toCSV(users)       // CSV format
+faker.export.toJSON(users, pretty: true)  // Pretty JSON
+faker.export.toSQL(users, table: 'users') // SQL inserts
+faker.export.toMarkdown(users)  // Markdown table
+faker.export.toXML(users)       // XML format
+faker.export.toYAML(users)      // YAML format
+
+// Stream large datasets (memory efficient)
+final stream = Stream.fromIterable(largeDataList);
+await for (final chunk in faker.export.streamCSV(stream)) {
+  // Process chunks
+}
+```
+
+### Taiwan Module (New in v0.2.0!)
+```dart
+// Set locale to zh_TW to access Taiwan module
+final faker = SmartFaker(locale: 'zh_TW');
+
+// Taiwan-specific generators
+faker.taiwan.idNumber()         // "A123456789" (身分證字號)
+faker.taiwan.companyTaxId()     // "12345678" (統一編號)
+faker.taiwan.landlineNumber()   // "(02) 1234-5678"
+faker.taiwan.postalCode()       // "100" or "10058" (5-digit)
+faker.taiwan.licensePlate()     // "ABC-1234"
+faker.taiwan.bankAccount()      // "004-1234-12345678901234"
+faker.taiwan.healthInsuranceNumber() // "AB12345678"
+
+// Enhanced Taiwan phone numbers
+faker.phone.number()            // "0912-345-678" (with real carrier prefixes)
 ```
 
 ### Additional Modules
