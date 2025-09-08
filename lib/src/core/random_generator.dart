@@ -34,8 +34,36 @@ class RandomGenerator {
   }
 
   /// Generates a random integer between [min] and [max] (inclusive).
+  ///
+  /// For values exceeding 32-bit integer range, uses segmented generation
+  /// to avoid overflow errors.
   int integer({int min = 0, required int max}) {
-    return min + _random.nextInt(max - min + 1);
+    // Check if range exceeds Random.nextInt limit (2^32 - 1)
+    final range = max - min + 1;
+
+    if (range <= 0) {
+      throw ArgumentError('max must be greater than or equal to min');
+    }
+
+    // If range fits within 32 bits, use standard method
+    if (range <= 0xFFFFFFFF) {
+      return min + _random.nextInt(range);
+    }
+
+    // For large ranges, use segmented generation
+    // Split range into high and low segments
+    final high = range ~/ 0xFFFFFFFF;
+    final low = range % 0xFFFFFFFF;
+
+    // Randomly select between high or low segment
+    if (_random.nextDouble() < high / (high + 1)) {
+      // Select random value from high segments
+      final segment = _random.nextInt(high);
+      return min + segment * 0xFFFFFFFF + _random.nextInt(0xFFFFFFFF);
+    } else {
+      // Select from low segment (final segment)
+      return min + high * 0xFFFFFFFF + _random.nextInt(low.toInt());
+    }
   }
 
   /// Generates a random double between [min] and [max].
@@ -144,6 +172,12 @@ class RandomGenerator {
 
   /// Gets the underlying Random instance.
   Random get random => _random;
+
+  /// Generates a random alphanumeric string.
+  String alphanumeric(int length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    return string(length: length, chars: chars);
+  }
 
   /// Generates a random hex string of the specified length.
   String hexString({required int length}) {

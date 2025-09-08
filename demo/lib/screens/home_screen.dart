@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_faker/smart_faker.dart';
 import 'core_features_screen.dart';
 import 'person_generator_screen.dart';
 import 'internet_generator_screen.dart';
@@ -21,6 +20,11 @@ import 'schema_demo_screen.dart';
 import 'smart_relationships_screen.dart';
 import 'export_demo_screen.dart';
 import 'taiwan_demo_screen.dart';
+import 'social_media_demo_screen.dart';
+import 'ecommerce_demo_screen.dart';
+import 'healthcare_demo_screen.dart';
+import 'pattern_demo_screen.dart';
+import 'schema_validation_demo_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -240,6 +244,16 @@ class HomeScreen extends StatelessWidget {
                 enabled: true,
               ),
               FeatureTile(
+                title: 'Schema Validation',
+                subtitle: 'Custom regex patterns for field validation',
+                icon: Icons.verified_user,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const SchemaValidationDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
                 title: 'Smart Relationships',
                 subtitle: 'Context-aware data generation',
                 icon: Icons.link,
@@ -266,6 +280,46 @@ class HomeScreen extends StatelessWidget {
                 onTap: () => _navigateToScreen(
                   context,
                   const TaiwanDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'Social Media Module',
+                subtitle: 'Social media profiles, posts, and engagement',
+                icon: Icons.share,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const SocialMediaDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'E-commerce Module',
+                subtitle: 'Orders, products, shipping, and reviews',
+                icon: Icons.shopping_cart,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const EcommerceDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'Healthcare Module',
+                subtitle: 'Medical records, appointments, and healthcare data',
+                icon: Icons.local_hospital,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const HealthcareDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'Pattern Module',
+                subtitle: 'Generate data from regex patterns',
+                icon: Icons.pattern,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const PatternDemoScreen(),
                 ),
                 enabled: true,
               ),
@@ -302,7 +356,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Version: 0.2.0',
+              'Version: 0.3.0',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -344,7 +398,7 @@ class HomeScreen extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: 'SmartFaker Demo',
-      applicationVersion: '0.2.0',
+      applicationVersion: '0.3.0',
       applicationLegalese: '© 2024 SmartFaker',
       children: const [
         SizedBox(height: 16),

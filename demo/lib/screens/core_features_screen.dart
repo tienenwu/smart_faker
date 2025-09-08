@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:smart_faker/smart_faker.dart';
 import '../widgets/code_viewer.dart';
 import '../widgets/copy_button.dart';

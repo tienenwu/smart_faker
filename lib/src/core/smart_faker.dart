@@ -22,6 +22,10 @@ import '../modules/food_module.dart';
 import '../modules/music_module.dart';
 import '../modules/export_module.dart';
 import '../modules/taiwan_module.dart';
+import '../modules/social_media_module.dart';
+import '../modules/ecommerce_module.dart';
+import '../modules/healthcare_module.dart';
+import '../modules/pattern_module.dart';
 
 /// The main SmartFaker class that provides access to all data generation modules.
 ///
@@ -175,4 +179,19 @@ class SmartFaker {
     }
     return TaiwanModule(_randomGenerator);
   }
+
+  /// Gets the social media module for generating social media-related data.
+  SocialMediaModule get social =>
+      SocialMediaModule(_randomGenerator, _localeManager);
+
+  /// Gets the e-commerce module for generating e-commerce related data.
+  EcommerceModule get ecommerce =>
+      EcommerceModule(_randomGenerator, _localeManager);
+
+  /// Gets the healthcare module for generating healthcare-related data.
+  HealthcareModule get healthcare =>
+      HealthcareModule(_randomGenerator, _localeManager);
+
+  /// Gets the pattern module for generating data from regex patterns.
+  PatternModule get pattern => PatternModule(_randomGenerator, _localeManager);
 }

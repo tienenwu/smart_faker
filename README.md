@@ -5,7 +5,7 @@
 
 A powerful and intelligent fake data generator for Flutter and Dart applications. SmartFaker provides comprehensive test data generation with smart relationships, internationalization support, and schema-based generation.
 
-**Version:** 0.2.0  
+**Version:** 0.3.0  
 **Last Updated:** 2025-09-08
 
 ## 📦 Resources
@@ -23,9 +23,10 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
 - 🔄 **Reproducible Results**: Seed-based generation for consistent test data
 - 🏗️ **Factory Patterns**: Multiple ways to integrate with your data classes
 - ⚡ **High Performance**: Optimized for generating large datasets
-- 🎨 **Rich Data Types**: 15+ modules covering person, internet, location, commerce, finance, and more
+- 🎨 **Rich Data Types**: 20+ modules covering person, internet, location, commerce, finance, and more
 - 📤 **Data Export**: Export to CSV, JSON, SQL, XML, YAML, Markdown formats (New in v0.2.0!)
 - 🇹🇼 **Taiwan Module**: Comprehensive Taiwan-specific data generation including ID numbers, tax IDs, and more (New in v0.2.0!)
+- 🎯 **Pattern Module**: Generate data from regex patterns for validation-ready fake data (New in v0.3.0!)
 
 ## Installation
 
@@ -33,7 +34,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.2.0
+  smart_faker: ^0.3.0
 ```
 
 Then run:
@@ -400,6 +401,92 @@ faker.taiwan.healthInsuranceNumber() // "AB12345678"
 
 // Enhanced Taiwan phone numbers
 faker.phone.number()            // "0912-345-678" (with real carrier prefixes)
+```
+
+### Pattern Module (New!)
+```dart
+// Generate data from regex patterns
+faker.pattern.fromRegex(r'^\d{5}$')         // "12345"
+faker.pattern.fromRegex(r'^[A-Z]{3}-\d{4}$') // "ABC-1234"
+faker.pattern.fromRegex(r'^09\d{8}$')       // "0912345678"
+
+// Use preset patterns for common formats
+faker.pattern.taiwanPhone()      // "0912-345-678"
+faker.pattern.taiwanIdFormat()   // "A123456789"
+faker.pattern.usPhone()          // "(555) 123-4567"
+faker.pattern.japanPhone()       // "090-1234-5678"
+faker.pattern.emailFormat()      // "john.doe@example.com"
+faker.pattern.visaFormat()       // "4532 1234 5678 9012"
+faker.pattern.mastercardFormat() // "5412 3456 7890 1234"
+faker.pattern.orderIdFormat()    // "ORD-1234567890"
+faker.pattern.skuFormat()        // "SKU-123456"
+faker.pattern.ipv4Format()       // "192.168.1.1"
+faker.pattern.macAddressFormat() // "00:1B:44:11:3A:B7"
+faker.pattern.hexColorFormat()   // "#FF5733"
+faker.pattern.uuidFormat()       // "550e8400-e29b-41d4-a716-446655440000"
+
+// Custom order ID with prefix
+faker.pattern.orderIdFormat(prefix: 'INV') // "INV-1234567890"
+
+// Custom invoice with year
+faker.pattern.invoiceFormat(year: 2025)    // "INV-20251234567"
+```
+
+### Schema Validation (New in v0.3.0!)
+```dart
+// Define schema with regex pattern validation
+final schema = SchemaDefinitionBuilder('User')
+  .field(
+    'taiwanId',
+    FakerFieldType.custom,
+    pattern: r'^[A-Z][12]\d{8}$',  // Regex pattern for generation
+    validator: FieldValidators.taiwanId,  // Validation function
+    validationMessage: 'Invalid Taiwan ID format',
+  )
+  .field(
+    'email',
+    FakerFieldType.email,
+    validator: FieldValidators.email,
+  )
+  .field(
+    'phone',
+    FakerFieldType.custom,
+    pattern: r'^09\d{8}$',
+    validator: FieldValidators.regex(r'^09\d{8}$'),
+  )
+  .field(
+    'age',
+    FakerFieldType.integer,
+    min: 18,
+    max: 65,
+    validator: FieldValidators.range(min: 18, max: 65),
+  )
+  .build();
+
+// Built-in validators
+FieldValidators.email(value)        // Email validation
+FieldValidators.phone(value)        // Phone validation
+FieldValidators.url(value)          // URL validation
+FieldValidators.creditCard(value)   // Credit card validation
+FieldValidators.uuid(value)         // UUID validation
+FieldValidators.taiwanId(value)     // Taiwan ID validation
+FieldValidators.ipv4(value)         // IPv4 validation
+FieldValidators.macAddress(value)   // MAC address validation
+FieldValidators.hexColor(value)     // Hex color validation
+
+// Utility validators
+FieldValidators.length(min: 3, max: 20)  // Length validation
+FieldValidators.range(min: 0, max: 100)  // Number range validation
+FieldValidators.inList(['A', 'B', 'C'])  // Value in list validation
+FieldValidators.regex(r'^[A-Z]{3}$')     // Custom regex validation
+FieldValidators.combine([...])           // Combine multiple validators
+
+// Use preset patterns
+FieldPatterns.taiwanId     // '^[A-Z][12]\\d{8}$'
+FieldPatterns.visa          // '^4\\d{15}$'
+FieldPatterns.email         // '^[\\w\\.-]+@[\\w\\.-]+\\.\\w+$'
+FieldPatterns.ipv4          // IPv4 pattern
+FieldPatterns.macAddress    // MAC address pattern
 ```
 
 ### Additional Modules

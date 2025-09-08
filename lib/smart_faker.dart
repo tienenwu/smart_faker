@@ -40,6 +40,12 @@ export 'src/modules/color_module.dart';
 export 'src/modules/crypto_module.dart';
 export 'src/modules/food_module.dart';
 export 'src/modules/music_module.dart';
+export 'src/modules/export_module.dart';
+export 'src/modules/taiwan_module.dart';
+export 'src/modules/social_media_module.dart';
+export 'src/modules/ecommerce_module.dart';
+export 'src/modules/healthcare_module.dart';
+export 'src/modules/pattern_module.dart';
 
 // Model exports
 export 'src/modules/models/coordinates.dart';

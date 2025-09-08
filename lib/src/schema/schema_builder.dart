@@ -1,5 +1,6 @@
 import '../core/smart_faker.dart';
 import '../annotations/faker_field.dart';
+export 'field_validators.dart';
 
 /// Schema definition for generating structured data.
 class Schema {
@@ -42,6 +43,12 @@ class FieldDefinition {
   /// Additional options for field generation.
   final Map<String, dynamic>? options;
 
+  /// Custom validator function.
+  final bool Function(dynamic)? validator;
+
+  /// Validation error message.
+  final String? validationMessage;
+
   FieldDefinition({
     required this.type,
     this.required = true,
@@ -51,6 +58,8 @@ class FieldDefinition {
     this.pattern,
     this.reference,
     this.options,
+    this.validator,
+    this.validationMessage,
   });
 }
 
@@ -146,8 +155,32 @@ class SchemaBuilder {
       return fieldDef.defaultValue;
     }
 
-    // Generate based on type
-    final value = _generateByType(fieldDef);
+    // Generate based on pattern if provided
+    dynamic value;
+    if (fieldDef.pattern != null && fieldDef.pattern!.isNotEmpty) {
+      // Use pattern module to generate from regex
+      value = faker.pattern.fromRegex(fieldDef.pattern!);
+    } else {
+      // Generate based on type
+      value = _generateByType(fieldDef);
+    }
+
+    // Validate if validator is provided
+    if (fieldDef.validator != null) {
+      int attempts = 0;
+      while (!fieldDef.validator!(value) && attempts < 100) {
+        if (fieldDef.pattern != null) {
+          value = faker.pattern.fromRegex(fieldDef.pattern!);
+        } else {
+          value = _generateByType(fieldDef);
+        }
+        attempts++;
+      }
+      if (attempts >= 100) {
+        throw Exception(
+            'Could not generate valid value for field $fieldName: ${fieldDef.validationMessage ?? "validation failed"}');
+      }
+    }
 
     // Cache if needed
     if (fieldDef.reference != null) {
@@ -361,6 +394,8 @@ class SchemaDefinitionBuilder {
     String? pattern,
     String? reference,
     Map<String, dynamic>? options,
+    bool Function(dynamic)? validator,
+    String? validationMessage,
   }) {
     fields[name] = FieldDefinition(
       type: type,
@@ -371,6 +406,8 @@ class SchemaDefinitionBuilder {
       pattern: pattern,
       reference: reference,
       options: options,
+      validator: validator,
+      validationMessage: validationMessage,
     );
     return this;
   }

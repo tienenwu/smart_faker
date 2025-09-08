@@ -1,5 +1,35 @@
 # Changelog
 
+## [0.3.0] - 2025-09-08
+
+### Added
+- **Pattern Module**: Generate data from regex patterns
+  - Custom regex pattern parser and generator
+  - Support for character classes, quantifiers, alternation
+  - 17+ preset patterns for common formats (phone, ID, credit card, etc.)
+  - Taiwan-specific patterns (ID, phone, invoice)
+  - Network patterns (IPv4, MAC address)
+  - Product patterns (SKU, barcode, tracking numbers)
+  
+- **Schema Validation**: Field-level validation with regex patterns
+  - Custom validators for schema fields
+  - Regex pattern validation support
+  - Built-in validators (email, phone, URL, credit card, UUID, etc.)
+  - Validator combinators (combine, range, length, inList)
+  - Custom error messages for validation failures
+  - Pattern-based field generation with validation
+  
+- **Field Validators**: Comprehensive validation utilities
+  - FieldValidators class with 15+ built-in validators
+  - FieldPatterns class with 30+ common regex patterns
+  - Support for custom validator functions
+  - Validation with retry mechanism
+
+### Enhanced
+- SchemaBuilder now supports pattern and validator properties
+- Improved type safety with validation constraints
+- Better error handling for invalid patterns
+
 ## [0.2.0] - 2025-09-08
 
 ### Added

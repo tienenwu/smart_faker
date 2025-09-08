@@ -5,7 +5,7 @@
 
 一個強大且智慧的 Flutter 和 Dart 應用程式假資料生成器。SmartFaker 提供全面的測試資料生成功能，包含智慧關聯、國際化支援和基於模式的生成。
 
-**版本：** 0.1.1  
+**版本：** 0.3.0  
 **最後更新：** 2025-09-08
 
 ## 📦 資源
@@ -23,7 +23,10 @@
 - 🔄 **可重現結果**：基於種子的生成，確保測試資料一致
 - 🏗️ **工廠模式**：多種整合資料類別的方式
 - ⚡ **高效能**：針對大型資料集最佳化
-- 🎨 **豐富的資料類型**：15+ 個模組涵蓋人員、網路、地點、商務、金融等
+- 🎨 **豐富的資料類型**：20+ 個模組涵蓋人員、網路、地點、商務、金融等
+- 📤 **資料匯出**：匯出為 CSV、JSON、SQL、XML、YAML、Markdown 格式（v0.2.0 新功能！）
+- 🇹🇼 **台灣模組**：完整的台灣特定資料生成，包括身分證字號、統一編號等（v0.2.0 新功能！）
+- 🎯 **模式模組**：從正規表示式生成符合驗證規則的假資料（v0.3.0 新功能！）
 
 ## 安裝
 
@@ -31,7 +34,7 @@
 
 ```yaml
 dependencies:
-  smart_faker: ^0.1.1
+  smart_faker: ^0.3.0
 ```
 
 然後執行：
@@ -275,6 +278,35 @@ faker.location.latitude()      // 40.7128
 faker.location.longitude()     // -74.0060
 faker.location.coordinates()   // Coordinates 物件
 faker.location.timeZone()      // "America/New_York"
+```
+
+### 模式模組（Pattern Module）- v0.3.0 新功能！
+```dart
+// 從正規表示式生成資料
+faker.pattern.fromRegex(r'^\d{5}$')         // "12345"
+faker.pattern.fromRegex(r'^[A-Z]{3}-\d{4}$') // "ABC-1234"
+faker.pattern.fromRegex(r'^09\d{8}$')       // "0912345678"
+
+// 使用預設模式生成常見格式
+faker.pattern.taiwanPhone()      // "0912-345-678"
+faker.pattern.taiwanIdFormat()   // "A123456789"
+faker.pattern.usPhone()          // "(555) 123-4567"
+faker.pattern.japanPhone()       // "090-1234-5678"
+faker.pattern.emailFormat()      // "john.doe@example.com"
+faker.pattern.visaFormat()       // "4532 1234 5678 9012"
+faker.pattern.mastercardFormat() // "5412 3456 7890 1234"
+faker.pattern.orderIdFormat()    // "ORD-1234567890"
+faker.pattern.skuFormat()        // "SKU-123456"
+faker.pattern.ipv4Format()       // "192.168.1.1"
+faker.pattern.macAddressFormat() // "00:1B:44:11:3A:B7"
+faker.pattern.hexColorFormat()   // "#FF5733"
+faker.pattern.uuidFormat()       // "550e8400-e29b-41d4-a716-446655440000"
+
+// 自訂訂單編號前綴
+faker.pattern.orderIdFormat(prefix: 'INV') // "INV-1234567890"
+
+// 自訂發票年份
+faker.pattern.invoiceFormat(year: 2025)    // "INV-20251234567"
 ```
 
 ### 其他模組
