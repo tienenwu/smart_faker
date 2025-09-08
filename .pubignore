@@ -1,0 +1,14 @@
+# Exclude demo app from package publication
+demo/
+
+# Exclude build artifacts
+build/
+
+# Exclude development files
+.idea/
+*.iml
+
+# Exclude generated test files
+users.csv
+users.json
+users.sql

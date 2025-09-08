@@ -33,49 +33,55 @@ void main() {
   // Comments & Reactions
   print('\n💬 Comments & Reactions:');
   for (int i = 0; i < 3; i++) {
-    print('  ${faker.social.username(includeAt: false)}: ${faker.social.comment()}');
+    print(
+        '  ${faker.social.username(includeAt: false)}: ${faker.social.comment()}');
   }
-  print('Reactions: ${List.generate(5, (_) => faker.social.reaction()).join(' ')}');
+  print(
+      'Reactions: ${List.generate(5, (_) => faker.social.reaction()).join(' ')}');
   print('Emojis: ${List.generate(10, (_) => faker.social.emoji()).join(' ')}');
 
   // Generate Multiple Influencer Profiles
   print('\n🌟 Influencer Profiles:');
   print('-' * 40);
-  
+
   final tiers = ['nano', 'micro', 'mid', 'macro'];
   for (final tier in tiers) {
     final followers = faker.social.followers(tier: tier);
     final following = faker.social.following(followerCount: followers);
     final engagement = faker.social.engagementRate();
-    
+
     print('$tier Influencer:');
     print('  Username: ${faker.social.username()}');
     print('  Followers: ${_formatNumber(followers)}');
     print('  Following: ${_formatNumber(following)}');
     print('  Engagement: $engagement');
-    print('  Verified: ${faker.social.verified(probability: tier == 'macro' ? 0.9 : 0.3)}');
+    print(
+        '  Verified: ${faker.social.verified(probability: tier == 'macro' ? 0.9 : 0.3)}');
     print('');
   }
 
   // Social Media Campaign Data
   print('📈 Campaign Simulation:');
   print('-' * 40);
-  
-  final posts = List.generate(5, (index) => {
-    'day': index + 1,
-    'content': faker.social.post(),
-    'hashtags': faker.social.hashtags(3),
-    'likes': faker.social.likes(tier: 'small'),
-    'comments': faker.random.integer(min: 10, max: 100),
-    'shares': faker.random.integer(min: 5, max: 50),
-    'platform': faker.social.platform(),
-  });
+
+  final posts = List.generate(
+      5,
+      (index) => {
+            'day': index + 1,
+            'content': faker.social.post(),
+            'hashtags': faker.social.hashtags(3),
+            'likes': faker.social.likes(tier: 'small'),
+            'comments': faker.random.integer(min: 10, max: 100),
+            'shares': faker.random.integer(min: 5, max: 50),
+            'platform': faker.social.platform(),
+          });
 
   for (final post in posts) {
     print('Day ${post['day']} - ${post['platform']}:');
     print('  Content: ${post['content']}');
     print('  Tags: ${(post['hashtags'] as List).join(' ')}');
-    print('  Engagement: ${post['likes']} likes, ${post['comments']} comments, ${post['shares']} shares');
+    print(
+        '  Engagement: ${post['likes']} likes, ${post['comments']} comments, ${post['shares']} shares');
   }
 
   print('\n✨ Social Media module examples completed!');

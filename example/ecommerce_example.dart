@@ -19,7 +19,8 @@ void main() {
   // Shipping & Payment
   print('\n🚚 Shipping & Payment:');
   print('Shipping Method: ${faker.ecommerce.shippingMethod()}');
-  print('Shipping Cost: \$${faker.ecommerce.shippingCost().toStringAsFixed(2)}');
+  print(
+      'Shipping Cost: \$${faker.ecommerce.shippingCost().toStringAsFixed(2)}');
   print('Payment Method: ${faker.ecommerce.paymentMethod()}');
 
   // Shopping Cart
@@ -66,12 +67,13 @@ void main() {
   // Generate Multiple Orders
   print('\n📊 Order Batch Generation:');
   print('-' * 40);
-  
+
   final orders = List.generate(5, (index) {
     final items = faker.ecommerce.cart(items: 2);
-    final subtotal = items.fold(0.0, (sum, item) => sum + (item['subtotal'] as double));
+    final subtotal =
+        items.fold(0.0, (sum, item) => sum + (item['subtotal'] as double));
     final shipping = faker.ecommerce.shippingCost();
-    
+
     return {
       'orderId': faker.ecommerce.orderId(),
       'customer': faker.person.fullName(),

@@ -219,8 +219,9 @@ class ExportModule {
     if (value is bool) return value ? '1' : '0';
     if (value is num) return value.toString();
     if (value is DateTime) return "'${value.toIso8601String()}'";
-    if (value is List || value is Map)
+    if (value is List || value is Map) {
       return "'${jsonEncode(value).replaceAll("'", "''")}'";
+    }
 
     return "'${value.toString().replaceAll("'", "''")}'";
   }

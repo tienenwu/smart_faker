@@ -128,7 +128,8 @@ void main() {
 
       test('generates email format', () {
         final email = faker.pattern.emailFormat();
-        expect(email, matches(RegExp(r'^[a-z]{3,10}\.[a-z]{3,10}@[a-z]{5,10}\.com$')));
+        expect(email,
+            matches(RegExp(r'^[a-z]{3,10}\.[a-z]{3,10}@[a-z]{5,10}\.com$')));
       });
 
       test('generates Visa card format', () {
@@ -189,7 +190,10 @@ void main() {
 
       test('generates MAC address format', () {
         final mac = faker.pattern.macAddressFormat();
-        expect(mac, matches(RegExp(r'^[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}$')));
+        expect(
+            mac,
+            matches(RegExp(
+                r'^[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}:[0-9A-F]{2}$')));
       });
 
       test('generates hex color format', () {
@@ -199,18 +203,21 @@ void main() {
 
       test('generates UUID format', () {
         final uuid = faker.pattern.uuidFormat();
-        expect(uuid, matches(RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')));
+        expect(
+            uuid,
+            matches(RegExp(
+                r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$')));
       });
     });
 
     group('Real-world Patterns', () {
       test('generates various Taiwan phone formats', () {
         final patterns = [
-          r'^09\d{8}$',           // Mobile without dashes
-          r'^09\d{2}-\d{6}$',     // Mobile with one dash
+          r'^09\d{8}$', // Mobile without dashes
+          r'^09\d{2}-\d{6}$', // Mobile with one dash
           r'^09\d{2}-\d{3}-\d{3}$', // Mobile with two dashes
-          r'^02-\d{4}-\d{4}$',    // Taipei landline
-          r'^07-\d{3}-\d{4}$',    // Kaohsiung landline
+          r'^02-\d{4}-\d{4}$', // Taipei landline
+          r'^07-\d{3}-\d{4}$', // Kaohsiung landline
         ];
 
         for (final pattern in patterns) {
@@ -303,11 +310,11 @@ void main() {
     group('Performance', () {
       test('generates patterns quickly', () {
         final stopwatch = Stopwatch()..start();
-        
+
         for (int i = 0; i < 1000; i++) {
           faker.pattern.fromRegex(r'^[A-Z]{3}-\d{6}$');
         }
-        
+
         stopwatch.stop();
         // Should complete 1000 generations in under 1 second
         expect(stopwatch.elapsedMilliseconds, lessThan(1000));
@@ -315,13 +322,12 @@ void main() {
 
       test('handles complex patterns efficiently', () {
         final stopwatch = Stopwatch()..start();
-        
+
         for (int i = 0; i < 100; i++) {
           faker.pattern.fromRegex(
-            r'^([A-Z]{2,4}|[0-9]{3,5})-\d{4}-[a-z]+@[a-z]+\.(com|org|net)$'
-          );
+              r'^([A-Z]{2,4}|[0-9]{3,5})-\d{4}-[a-z]+@[a-z]+\.(com|org|net)$');
         }
-        
+
         stopwatch.stop();
         // Should complete 100 complex generations in under 1 second
         expect(stopwatch.elapsedMilliseconds, lessThan(1000));

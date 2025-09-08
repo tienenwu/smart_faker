@@ -71,7 +71,8 @@ void main() {
       .field(
         'category',
         FakerFieldType.custom,
-        validator: FieldValidators.inList(['Electronics', 'Clothing', 'Food', 'Books']),
+        validator: FieldValidators.inList(
+            ['Electronics', 'Clothing', 'Food', 'Books']),
         defaultValue: 'Electronics',
       )
       .build();
@@ -97,13 +98,15 @@ void main() {
       .field(
         'status',
         FakerFieldType.custom,
-        validator: FieldValidators.inList(['pending', 'processing', 'shipped', 'delivered']),
+        validator: FieldValidators.inList(
+            ['pending', 'processing', 'shipped', 'delivered']),
         defaultValue: 'pending',
       )
       .field(
         'paymentMethod',
         FakerFieldType.custom,
-        validator: FieldValidators.inList(['credit_card', 'paypal', 'bank_transfer']),
+        validator:
+            FieldValidators.inList(['credit_card', 'paypal', 'bank_transfer']),
       )
       .field(
         'creditCard',

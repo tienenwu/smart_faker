@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.3.2] - 2025-09-08
+
+### Fixed
+- Excluded demo app and build artifacts from package publication
+- Reduced package size from 2MB to 148KB
+- Added .pubignore file to properly exclude development files
+
+## [0.3.1] - 2025-09-08
+
+### Fixed
+- Fixed static analysis issue: Added missing braces to if statement in export module
+- Improved code formatting and linter compliance
+- Enhanced pub.dev score from 40/50 to near perfect
+
 ## [0.3.0] - 2025-09-08
 
 ### Added

@@ -60,38 +60,38 @@ void main() {
   print('Patient ID: ${record['patientId']}');
   print('MRN: ${record['mrn']}');
   print('Blood Type: ${record['bloodType']}');
-  
+
   final allergies = record['allergies'] as List;
   if (allergies.isNotEmpty) {
     print('Allergies: ${allergies.join(', ')}');
   } else {
     print('Allergies: None');
   }
-  
+
   print('\nCurrent Medications:');
   final meds = record['currentMedications'] as List;
   for (final med in meds) {
     print('  - ${med['name']}: ${med['dosage']}');
   }
-  
+
   print('\nDiagnoses:');
   final diagnoses = record['diagnoses'] as List;
   for (final diagnosis in diagnoses) {
     print('  - $diagnosis');
   }
-  
+
   print('\nVital Signs:');
   final vitals = record['vitalSigns'] as Map;
   print('  Blood Pressure: ${vitals['bloodPressure']}');
   print('  Heart Rate: ${vitals['heartRate']} bpm');
   print('  Temperature: ${vitals['temperature']}');
   print('  BMI: ${vitals['bmi']}');
-  
+
   print('\nInsurance:');
   final insurance = record['insurance'] as Map;
   print('  Provider: ${insurance['provider']}');
   print('  Policy #: ${insurance['policyNumber']}');
-  
+
   print('\nPrimary Doctor: ${record['primaryDoctor']}');
   final lastVisit = DateTime.parse(record['lastVisit'] as String);
   print('Last Visit: ${DateFormat('MMM dd, yyyy').format(lastVisit)}');
@@ -99,7 +99,7 @@ void main() {
   // Localization Examples
   print('\n🌏 Localization Examples:');
   print('-' * 40);
-  
+
   // Chinese (Traditional)
   final fakerZh = SmartFaker(locale: 'zh_TW', seed: 12345);
   print('\n繁體中文:');
@@ -108,7 +108,7 @@ void main() {
   print('醫院: ${fakerZh.healthcare.hospitalName()}');
   print('診斷: ${fakerZh.healthcare.diagnosis()}');
   print('藥物: ${fakerZh.healthcare.medication()}');
-  
+
   // Japanese
   final fakerJa = SmartFaker(locale: 'ja_JP', seed: 12345);
   print('\n日本語:');

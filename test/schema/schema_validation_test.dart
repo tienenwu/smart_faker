@@ -84,7 +84,8 @@ void main() {
           .field(
             'status',
             FakerFieldType.custom,
-            validator: FieldValidators.inList(['pending', 'active', 'inactive']),
+            validator:
+                FieldValidators.inList(['pending', 'active', 'inactive']),
             defaultValue: 'pending',
           )
           .field(
@@ -133,7 +134,7 @@ void main() {
           .build();
 
       builder.registerSchema(schema);
-      
+
       expect(
         () => builder.generate('FailingValidation'),
         throwsA(
@@ -217,7 +218,8 @@ void main() {
       expect(FieldValidators.phone('0912345678'), isTrue);
       expect(FieldValidators.phone('+886912345678'), isTrue);
       expect(FieldValidators.phone('(02) 1234-5678'), isTrue);
-      expect(FieldValidators.phone('123'), isTrue); // Short numbers can be valid
+      expect(
+          FieldValidators.phone('123'), isTrue); // Short numbers can be valid
       expect(FieldValidators.phone('not a phone'), isFalse);
     });
 
