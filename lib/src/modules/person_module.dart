@@ -8,12 +8,19 @@ import '../locales/ja_jp/person_data.dart';
 
 /// Module for generating person-related data.
 class PersonModule {
+  /// Creates a new instance of [PersonModule].
+  /// 
+  /// [randomGenerator] is used for generating random values.
+  /// [localeManager] handles localization of person data.
   PersonModule({
     required this.randomGenerator,
     required this.localeManager,
   });
 
+  /// Random generator instance for generating random values.
   final RandomGenerator randomGenerator;
+  
+  /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
   /// Generates a first name.

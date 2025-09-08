@@ -3,12 +3,19 @@ import '../core/random_generator.dart';
 
 /// Module for generating internet-related data.
 class InternetModule {
+  /// Creates a new instance of [InternetModule].
+  /// 
+  /// [randomGenerator] is used for generating random values.
+  /// [localeManager] handles localization of internet data.
   InternetModule({
     required this.randomGenerator,
     required this.localeManager,
   });
 
+  /// Random generator instance for generating random values.
   final RandomGenerator randomGenerator;
+  
+  /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
   // Common email providers

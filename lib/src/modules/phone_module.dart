@@ -3,11 +3,19 @@ import '../core/random_generator.dart';
 
 /// Module for generating phone-related data.
 class PhoneModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
+  /// Creates a new instance of [PhoneModule].
+  /// 
+  /// [random] is used for generating random values.
+  /// [localeManager] handles localization of phone data.
   PhoneModule(this.random, this.localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => localeManager.currentLocale;
 
   /// Generates a phone number based on locale.

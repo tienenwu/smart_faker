@@ -3,11 +3,19 @@ import '../core/random_generator.dart';
 
 /// Module for generating color-related data.
 class ColorModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
+  /// Creates a new instance of [ColorModule].
+  /// 
+  /// [random] is used for generating random values.
+  /// [localeManager] handles localization of color names.
   ColorModule(this.random, this.localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => localeManager.currentLocale;
 
   /// Generates a hex color code.

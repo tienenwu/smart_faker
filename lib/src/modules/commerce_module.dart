@@ -6,11 +6,19 @@ import '../locales/ja_jp/commerce_data.dart';
 
 /// Module for generating commerce-related fake data.
 class CommerceModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator _random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
+  /// Creates a new instance of [CommerceModule].
+  /// 
+  /// [_random] is used for generating random values.
+  /// [_localeManager] handles localization of commerce data.
   CommerceModule(this._random, this._localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => _localeManager.currentLocale;
 
   /// Generates a product name.

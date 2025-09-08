@@ -8,11 +8,19 @@ import 'models/coordinates.dart';
 
 /// Module for generating location-related fake data.
 class LocationModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator _random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
+  /// Creates a new instance of [LocationModule].
+  /// 
+  /// [_random] is used for generating random values.
+  /// [_localeManager] handles localization of location data.
   LocationModule(this._random, this._localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => _localeManager.currentLocale;
 
   /// Generates a street address.

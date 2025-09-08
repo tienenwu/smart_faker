@@ -6,11 +6,19 @@ import '../locales/ja_jp/datetime_data.dart';
 
 /// Module for generating date and time related fake data.
 class DateTimeModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator _random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
+  /// Creates a new instance of [DateTimeModule].
+  /// 
+  /// [_random] is used for generating random values.
+  /// [_localeManager] handles localization of date and time data.
   DateTimeModule(this._random, this._localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => _localeManager.currentLocale;
 
   /// Generates a date in the past.

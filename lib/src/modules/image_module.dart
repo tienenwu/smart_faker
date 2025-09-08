@@ -3,11 +3,19 @@ import '../core/random_generator.dart';
 
 /// Module for generating image-related data.
 class ImageModule {
+  /// Random generator instance for generating random values.
   final RandomGenerator random;
+  
+  /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
+  /// Creates a new instance of [ImageModule].
+  /// 
+  /// [random] is used for generating random values.
+  /// [localeManager] handles localization of image data.
   ImageModule(this.random, this.localeManager);
 
+  /// Gets the current locale code.
   String get currentLocale => localeManager.currentLocale;
 
   /// Generates an image URL.
