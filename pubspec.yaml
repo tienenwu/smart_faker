@@ -3,6 +3,7 @@ description: "An intelligent test data generator for Flutter/Dart with schema-ba
 version: 0.1.1
 homepage: https://github.com/tienenwu/smart_faker
 repository: https://github.com/tienenwu/smart_faker
+publisher: tienenwu.me
 
 environment:
   sdk: ^3.5.0
