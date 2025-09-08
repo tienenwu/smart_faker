@@ -5,12 +5,12 @@ import '../core/random_generator.dart';
 class FinanceModule {
   /// Random generator instance for generating random values.
   final RandomGenerator random;
-  
+
   /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
   /// Creates a new instance of [FinanceModule].
-  /// 
+  ///
   /// [random] is used for generating random values.
   /// [localeManager] handles localization of finance data.
   FinanceModule(this.random, this.localeManager);
@@ -23,7 +23,7 @@ class FinanceModule {
     final issuer = creditCardIssuer();
     String prefix;
     int length;
-    
+
     switch (issuer) {
       case 'Visa':
         prefix = '4';
@@ -45,11 +45,12 @@ class FinanceModule {
         prefix = '4';
         length = 16;
     }
-    
+
     final remaining = length - prefix.length - 1;
-    final middle = List.generate(remaining, (_) => random.nextInt(10).toString()).join();
+    final middle =
+        List.generate(remaining, (_) => random.nextInt(10).toString()).join();
     final withoutChecksum = prefix + middle;
-    
+
     // Calculate Luhn checksum
     int sum = 0;
     bool alternate = false;
@@ -63,16 +64,16 @@ class FinanceModule {
       alternate = !alternate;
     }
     final checksum = (10 - (sum % 10)) % 10;
-    
+
     final fullNumber = withoutChecksum + checksum.toString();
-    
+
     // Format with spaces
     final formatted = <String>[];
     for (int i = 0; i < fullNumber.length; i += 4) {
       final end = (i + 4 > fullNumber.length) ? fullNumber.length : i + 4;
       formatted.add(fullNumber.substring(i, end));
     }
-    
+
     return formatted.join(' ');
   }
 
@@ -106,8 +107,9 @@ class FinanceModule {
     // Generate valid routing number with checksum
     final firstTwo = random.nextInt(12) + 1; // 01-12
     final middle = random.nextInt(9999999);
-    final base = '${firstTwo.toString().padLeft(2, '0')}${middle.toString().padLeft(7, '0')}';
-    
+    final base =
+        '${firstTwo.toString().padLeft(2, '0')}${middle.toString().padLeft(7, '0')}';
+
     // Calculate checksum
     int sum = 0;
     final weights = [3, 7, 1, 3, 7, 1, 3, 7];
@@ -115,7 +117,7 @@ class FinanceModule {
       sum += int.parse(base[i]) * weights[i];
     }
     final checksum = (10 - (sum % 10)) % 10;
-    
+
     return base.substring(0, 8) + checksum.toString();
   }
 
@@ -123,11 +125,12 @@ class FinanceModule {
   String iban() {
     final countryCode = random.element(['GB', 'DE', 'FR', 'IT', 'ES']);
     final checkDigits = random.nextInt(99).toString().padLeft(2, '0');
-    final bankCode = random.string(length: 4, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+    final bankCode =
+        random.string(length: 4, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     final accountNumber = random.nextInt(999999).toString().padLeft(6, '0');
     final restLength = countryCode == 'GB' ? 8 : 10;
     final rest = random.nextInt(99999999).toString().padLeft(restLength, '0');
-    
+
     return '$countryCode$checkDigits$bankCode$accountNumber$rest';
   }
 
@@ -135,11 +138,13 @@ class FinanceModule {
   String bic() {
     final bank = random.string(length: 4, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ');
     final country = random.element(['US', 'GB', 'DE', 'FR', 'JP']);
-    final location = random.string(length: 2, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
-    final branch = random.nextBool() 
-        ? random.string(length: 3, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    final location =
+        random.string(length: 2, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789');
+    final branch = random.nextBool()
+        ? random.string(
+            length: 3, chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
         : '';
-    
+
     return '$bank$country$location$branch';
   }
 
@@ -191,15 +196,17 @@ class FinanceModule {
     final prefix = random.element(['1', '3']);
     final chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
     final length = random.nextInt(10) + 25; // 25-34 characters
-    final address = List.generate(length, (_) => chars[random.nextInt(chars.length)]).join();
-    
+    final address =
+        List.generate(length, (_) => chars[random.nextInt(chars.length)])
+            .join();
+
     return '$prefix$address';
   }
 
   /// Generates an Ethereum address.
   String ethereumAddress() {
-    final hex = List.generate(40, (_) => 
-      random.nextInt(16).toRadixString(16)).join();
+    final hex =
+        List.generate(40, (_) => random.nextInt(16).toRadixString(16)).join();
     return '0x$hex';
   }
 
@@ -243,7 +250,7 @@ class FinanceModule {
         'P2P transfer',
       ],
     };
-    
+
     return random.element(descriptions[type] ?? ['Transaction']);
   }
 

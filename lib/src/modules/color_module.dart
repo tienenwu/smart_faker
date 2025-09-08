@@ -5,12 +5,12 @@ import '../core/random_generator.dart';
 class ColorModule {
   /// Random generator instance for generating random values.
   final RandomGenerator random;
-  
+
   /// Locale manager for handling localization.
   final LocaleManager localeManager;
 
   /// Creates a new instance of [ColorModule].
-  /// 
+  ///
   /// [random] is used for generating random values.
   /// [localeManager] handles localization of color names.
   ColorModule(this.random, this.localeManager);
@@ -104,7 +104,7 @@ class ColorModule {
   /// Generates a warm color.
   String warm() {
     // Warm colors have hues in the red-yellow range (0-60, 300-360)
-    final h = random.boolean() 
+    final h = random.boolean()
         ? random.integer(min: 0, max: 60)
         : random.integer(min: 300, max: 360);
     final s = random.integer(min: 50, max: 100);
@@ -157,7 +157,7 @@ class ColorModule {
   List<String> monochromatic() {
     final baseHue = hue();
     final baseSat = random.integer(min: 40, max: 80);
-    
+
     return List.generate(5, (i) {
       final lightness = 20 + (i * 15);
       return _hslToHex(baseHue, baseSat, lightness);
@@ -169,7 +169,7 @@ class ColorModule {
     final baseHue = hue();
     final sat = random.integer(min: 50, max: 80);
     final light = random.integer(min: 40, max: 60);
-    
+
     return [
       _hslToHex(baseHue, sat, light),
       _hslToHex((baseHue + 30) % 360, sat, light),
@@ -182,7 +182,7 @@ class ColorModule {
     final baseHue = hue();
     final sat = random.integer(min: 50, max: 80);
     final light = random.integer(min: 40, max: 60);
-    
+
     return [
       _hslToHex(baseHue, sat, light),
       _hslToHex((baseHue + 180) % 360, sat, light),
@@ -194,7 +194,7 @@ class ColorModule {
     final baseHue = hue();
     final sat = random.integer(min: 50, max: 80);
     final light = random.integer(min: 40, max: 60);
-    
+
     return [
       _hslToHex(baseHue, sat, light),
       _hslToHex((baseHue + 120) % 360, sat, light),
@@ -207,7 +207,7 @@ class ColorModule {
     final baseHue = hue();
     final sat = random.integer(min: 50, max: 80);
     final light = random.integer(min: 40, max: 60);
-    
+
     return [
       _hslToHex(baseHue, sat, light),
       _hslToHex((baseHue + 90) % 360, sat, light),
@@ -221,7 +221,7 @@ class ColorModule {
     final baseHue = hue();
     final sat = random.integer(min: 50, max: 80);
     final light = random.integer(min: 40, max: 60);
-    
+
     return [
       _hslToHex(baseHue, sat, light),
       _hslToHex((baseHue + 150) % 360, sat, light),
@@ -254,66 +254,147 @@ class ColorModule {
     final hNorm = h / 360.0;
     final sNorm = s / 100.0;
     final lNorm = l / 100.0;
-    
+
     double r, g, b;
-    
+
     if (sNorm == 0) {
       r = g = b = lNorm;
     } else {
       double hue2rgb(double p, double q, double t) {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
-        if (t < 1/6) return p + (q - p) * 6 * t;
-        if (t < 1/2) return q;
-        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
       }
-      
-      final q = lNorm < 0.5 
-          ? lNorm * (1 + sNorm) 
-          : lNorm + sNorm - lNorm * sNorm;
+
+      final q =
+          lNorm < 0.5 ? lNorm * (1 + sNorm) : lNorm + sNorm - lNorm * sNorm;
       final p = 2 * lNorm - q;
-      
-      r = hue2rgb(p, q, hNorm + 1/3);
+
+      r = hue2rgb(p, q, hNorm + 1 / 3);
       g = hue2rgb(p, q, hNorm);
-      b = hue2rgb(p, q, hNorm - 1/3);
+      b = hue2rgb(p, q, hNorm - 1 / 3);
     }
-    
+
     final rInt = (r * 255).round();
     final gInt = (g * 255).round();
     final bInt = (b * 255).round();
-    
+
     return '#${rInt.toRadixString(16).padLeft(2, '0').toUpperCase()}'
-           '${gInt.toRadixString(16).padLeft(2, '0').toUpperCase()}'
-           '${bInt.toRadixString(16).padLeft(2, '0').toUpperCase()}';
+        '${gInt.toRadixString(16).padLeft(2, '0').toUpperCase()}'
+        '${bInt.toRadixString(16).padLeft(2, '0').toUpperCase()}';
   }
 
   static final List<String> _cssColors = [
-    'red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink',
-    'brown', 'black', 'white', 'gray', 'cyan', 'magenta', 'lime',
-    'indigo', 'violet', 'turquoise', 'gold', 'silver', 'maroon',
-    'navy', 'teal', 'olive', 'aqua', 'fuchsia', 'crimson',
-    'coral', 'salmon', 'khaki', 'lavender', 'plum', 'mint',
-    'ivory', 'pearl',
+    'red',
+    'green',
+    'blue',
+    'yellow',
+    'orange',
+    'purple',
+    'pink',
+    'brown',
+    'black',
+    'white',
+    'gray',
+    'cyan',
+    'magenta',
+    'lime',
+    'indigo',
+    'violet',
+    'turquoise',
+    'gold',
+    'silver',
+    'maroon',
+    'navy',
+    'teal',
+    'olive',
+    'aqua',
+    'fuchsia',
+    'crimson',
+    'coral',
+    'salmon',
+    'khaki',
+    'lavender',
+    'plum',
+    'mint',
+    'ivory',
+    'pearl',
   ];
 
   static final List<String> _materialPalettes = [
-    'red', 'pink', 'purple', 'deepPurple', 'indigo', 'blue',
-    'lightBlue', 'cyan', 'teal', 'green', 'lightGreen', 'lime',
-    'yellow', 'amber', 'orange', 'deepOrange', 'brown', 'grey', 'blueGrey',
+    'red',
+    'pink',
+    'purple',
+    'deepPurple',
+    'indigo',
+    'blue',
+    'lightBlue',
+    'cyan',
+    'teal',
+    'green',
+    'lightGreen',
+    'lime',
+    'yellow',
+    'amber',
+    'orange',
+    'deepOrange',
+    'brown',
+    'grey',
+    'blueGrey',
   ];
 
   static final List<String> _materialShades = [
-    '50', '100', '200', '300', '400', '500', '600', '700', '800', '900',
+    '50',
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
   ];
 
   static final List<String> _tailwindColors = [
-    'slate', 'gray', 'zinc', 'neutral', 'stone', 'red', 'orange',
-    'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan',
-    'sky', 'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+    'slate',
+    'gray',
+    'zinc',
+    'neutral',
+    'stone',
+    'red',
+    'orange',
+    'amber',
+    'yellow',
+    'lime',
+    'green',
+    'emerald',
+    'teal',
+    'cyan',
+    'sky',
+    'blue',
+    'indigo',
+    'violet',
+    'purple',
+    'fuchsia',
+    'pink',
+    'rose',
   ];
 
   static final List<String> _tailwindShades = [
-    '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950',
+    '50',
+    '100',
+    '200',
+    '300',
+    '400',
+    '500',
+    '600',
+    '700',
+    '800',
+    '900',
+    '950',
   ];
 }

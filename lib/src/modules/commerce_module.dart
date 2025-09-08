@@ -8,12 +8,12 @@ import '../locales/ja_jp/commerce_data.dart';
 class CommerceModule {
   /// Random generator instance for generating random values.
   final RandomGenerator _random;
-  
+
   /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
   /// Creates a new instance of [CommerceModule].
-  /// 
+  ///
   /// [_random] is used for generating random values.
   /// [_localeManager] handles localization of commerce data.
   CommerceModule(this._random, this._localeManager);
@@ -26,7 +26,7 @@ class CommerceModule {
     final adjective = productAdjective();
     final material = productMaterial();
     final product = _getProductName();
-    
+
     // Sometimes use adjective, sometimes material, sometimes both
     final choice = _random.integer(min: 0, max: 3);
     switch (choice) {
@@ -92,7 +92,8 @@ class CommerceModule {
   String productAdjective() {
     switch (currentLocale) {
       case 'zh_TW':
-        return _random.element(TraditionalChineseCommerceData.productAdjectives);
+        return _random
+            .element(TraditionalChineseCommerceData.productAdjectives);
       case 'ja_JP':
         return _random.element(JapaneseCommerceData.productAdjectives);
       default: // en_US
@@ -105,7 +106,7 @@ class CommerceModule {
     final name = productName();
     final category = this.category();
     final material = productMaterial();
-    
+
     switch (currentLocale) {
       case 'zh_TW':
         return '這個$name是我們$category系列中最受歡迎的產品之一。採用優質$material製成，確保持久耐用。';
@@ -127,7 +128,7 @@ class CommerceModule {
   String priceString({double min = 1.0, double max = 1000.0}) {
     final priceValue = price(min: min, max: max);
     final symbol = _getCurrencySymbol();
-    
+
     switch (currentLocale) {
       case 'ja_JP':
         // Japanese Yen doesn't use decimals
@@ -155,9 +156,9 @@ class CommerceModule {
 
   /// Generates a SKU (Stock Keeping Unit).
   String sku() {
-    final letters = List.generate(3, (_) => 
-      String.fromCharCode(65 + _random.integer(min: 0, max: 25))
-    ).join();
+    final letters = List.generate(3,
+            (_) => String.fromCharCode(65 + _random.integer(min: 0, max: 25)))
+        .join();
     final numbers = _random.integer(min: 100000, max: 999999);
     return '$letters-$numbers';
   }
@@ -166,14 +167,14 @@ class CommerceModule {
   String barcode() {
     // Generate first 12 digits
     final digits = List.generate(12, (_) => _random.integer(min: 0, max: 9));
-    
+
     // Calculate EAN-13 checksum
     int sum = 0;
     for (int i = 0; i < 12; i++) {
       sum += (i % 2 == 0) ? digits[i] : digits[i] * 3;
     }
     int checkDigit = (10 - (sum % 10)) % 10;
-    
+
     return digits.join() + checkDigit.toString();
   }
 
@@ -183,10 +184,10 @@ class CommerceModule {
     final group = _random.integer(min: 0, max: 9);
     final publisher = _random.integer(min: 10000, max: 99999);
     final title = _random.integer(min: 100, max: 999);
-    
+
     // Calculate check digit (simplified)
     final checkDigit = _random.integer(min: 0, max: 9);
-    
+
     return '978-$group-$publisher-$title-$checkDigit';
   }
 
@@ -207,10 +208,10 @@ class CommerceModule {
     final r = _random.integer(min: 0, max: 255);
     final g = _random.integer(min: 0, max: 255);
     final b = _random.integer(min: 0, max: 255);
-    
+
     return '#${r.toRadixString(16).padLeft(2, '0').toUpperCase()}'
-           '${g.toRadixString(16).padLeft(2, '0').toUpperCase()}'
-           '${b.toRadixString(16).padLeft(2, '0').toUpperCase()}';
+        '${g.toRadixString(16).padLeft(2, '0').toUpperCase()}'
+        '${b.toRadixString(16).padLeft(2, '0').toUpperCase()}';
   }
 
   /// Generates an RGB color string.
@@ -218,7 +219,7 @@ class CommerceModule {
     final r = _random.integer(min: 0, max: 255);
     final g = _random.integer(min: 0, max: 255);
     final b = _random.integer(min: 0, max: 255);
-    
+
     return 'rgb($r, $g, $b)';
   }
 

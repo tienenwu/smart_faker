@@ -22,14 +22,21 @@ void main() {
 
       test('should generate vehicle type', () {
         final type = faker.vehicle.type();
-        expect(['Sedan', 'SUV', 'Truck', 'Van', 'Coupe', 'Convertible', 'Hatchback'], 
-          contains(type));
+        expect([
+          'Sedan',
+          'SUV',
+          'Truck',
+          'Van',
+          'Coupe',
+          'Convertible',
+          'Hatchback'
+        ], contains(type));
       });
 
       test('should generate vehicle fuel type', () {
         final fuel = faker.vehicle.fuel();
-        expect(['Gasoline', 'Diesel', 'Electric', 'Hybrid', 'Hydrogen'], 
-          contains(fuel));
+        expect(['Gasoline', 'Diesel', 'Electric', 'Hybrid', 'Hydrogen'],
+            contains(fuel));
       });
 
       test('should generate vehicle color', () {
@@ -39,8 +46,8 @@ void main() {
 
       test('should generate vehicle transmission', () {
         final transmission = faker.vehicle.transmission();
-        expect(['Manual', 'Automatic', 'CVT', 'Semi-Automatic'], 
-          contains(transmission));
+        expect(['Manual', 'Automatic', 'CVT', 'Semi-Automatic'],
+            contains(transmission));
       });
     });
 
@@ -102,21 +109,21 @@ void main() {
       test('should generate English vehicle data', () {
         final faker = SmartFaker(locale: 'en_US');
         final plate = faker.vehicle.licensePlate();
-        
+
         expect(plate, matches(RegExp(r'^[A-Z]{3}-\d{4}$')));
       });
 
       test('should generate Traditional Chinese vehicle data', () {
         final faker = SmartFaker(locale: 'zh_TW');
         final plate = faker.vehicle.licensePlate();
-        
+
         expect(plate, matches(RegExp(r'^[A-Z]{3}-\d{4}$')));
       });
 
       test('should generate Japanese vehicle data', () {
         final faker = SmartFaker(locale: 'ja_JP');
         final plate = faker.vehicle.licensePlate();
-        
+
         expect(plate, matches(RegExp(r'^.{2} \d{2}-\d{2}$')));
       });
     });
@@ -125,8 +132,9 @@ void main() {
       test('should generate reproducible vehicle data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
-        expect(faker1.vehicle.manufacturer(), equals(faker2.vehicle.manufacturer()));
+
+        expect(faker1.vehicle.manufacturer(),
+            equals(faker2.vehicle.manufacturer()));
         expect(faker1.vehicle.vin(), equals(faker2.vehicle.vin()));
         expect(faker1.vehicle.year(), equals(faker2.vehicle.year()));
       });

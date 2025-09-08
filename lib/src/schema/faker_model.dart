@@ -27,10 +27,10 @@ abstract class FakerModel {
 /// Mixin to add fake data generation to any class
 mixin FakeDataMixin {
   static final SmartFaker _defaultFaker = SmartFaker();
-  
+
   /// Gets the default faker instance
   SmartFaker get faker => _defaultFaker;
-  
+
   /// Creates a new faker with specific seed
   SmartFaker fakerWithSeed(int seed) => SmartFaker(seed: seed);
 }
@@ -42,7 +42,7 @@ extension FakerExtension<T> on T {
     final faker = SmartFaker(seed: seed);
     return factory(faker);
   }
-  
+
   /// Generates a list of fake objects
   static List<T> fakeList<T>(
     T Function(SmartFaker) factory, {

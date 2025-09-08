@@ -7,36 +7,37 @@ class DateTimeGeneratorScreen extends StatefulWidget {
   const DateTimeGeneratorScreen({super.key});
 
   @override
-  State<DateTimeGeneratorScreen> createState() => _DateTimeGeneratorScreenState();
+  State<DateTimeGeneratorScreen> createState() =>
+      _DateTimeGeneratorScreenState();
 }
 
 class _DateTimeGeneratorScreenState extends State<DateTimeGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Past and Future
   DateTime? pastDate;
   DateTime? futureDate;
   DateTime? recentDate;
   DateTime? soonDate;
-  
+
   // Between dates
   DateTime? betweenDate;
   final startDate = DateTime(2020, 1, 1);
   final endDate = DateTime(2025, 12, 31);
-  
+
   // Weekdays and Months
   String weekday = '';
   String weekdayAbbr = '';
   String month = '';
   String monthAbbr = '';
-  
+
   // Time components
   int hour = 0;
   int minute = 0;
   int second = 0;
   String timeString = '';
-  
+
   // Timestamps
   int unixTimestamp = 0;
   String iso8601 = '';
@@ -63,22 +64,22 @@ class _DateTimeGeneratorScreenState extends State<DateTimeGeneratorScreen> {
       futureDate = faker.dateTime.future();
       recentDate = faker.dateTime.recent();
       soonDate = faker.dateTime.soon();
-      
+
       // Between dates
       betweenDate = faker.dateTime.between(from: startDate, to: endDate);
-      
+
       // Weekdays and Months
       weekday = faker.dateTime.weekday();
       weekdayAbbr = faker.dateTime.weekdayAbbr();
       month = faker.dateTime.month();
       monthAbbr = faker.dateTime.monthAbbr();
-      
+
       // Time components
       hour = faker.dateTime.hour();
       minute = faker.dateTime.minute();
       second = faker.dateTime.second();
       timeString = faker.dateTime.timeString();
-      
+
       // Timestamps
       unixTimestamp = faker.dateTime.unixTimestamp();
       iso8601 = faker.dateTime.iso8601();
@@ -124,15 +125,18 @@ class _DateTimeGeneratorScreenState extends State<DateTimeGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {

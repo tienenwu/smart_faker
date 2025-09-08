@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.1.3] - 2025-09-08
+
+### Fixed
+- Removed redundant default clause in switch statement
+- Fixed code formatting issues
+- Achieved perfect 160/160 pub.dev score
+
+## [0.1.2] - 2025-09-08
+
+### Improved
+- Updated `intl` dependency to ^0.20.0 for better compatibility
+- Added missing dartdoc comments to achieve 100% API documentation coverage
+  - Added documentation for `Coordinates.latitude` and `Coordinates.longitude`
+  - Added documentation for all `FieldDefinition` properties
+- Enhanced pub.dev score to 160/160 points
+
 ## [0.1.1] - 2025-09-08
 
 ### Added

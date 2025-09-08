@@ -118,7 +118,7 @@ void main() {
       test('should generate reproducible lorem text with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.lorem.word(), equals(faker2.lorem.word()));
         expect(faker1.lorem.sentence(), equals(faker2.lorem.sentence()));
         expect(faker1.lorem.paragraph(), equals(faker2.lorem.paragraph()));

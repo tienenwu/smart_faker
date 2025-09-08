@@ -12,31 +12,31 @@ class CompanyGeneratorScreen extends StatefulWidget {
 class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Company basics
   String companyName = '';
   String companySuffix = '';
   String companyNameWithSuffix = '';
-  
+
   // Company details
   String catchphrase = '';
   String buzzword = '';
   String bs = '';
   String industry = '';
   String department = '';
-  
+
   // Company identifiers
   String ein = '';
   String dunsNumber = '';
   String sicCode = '';
   String naicsCode = '';
-  
+
   // Company size
   String companySize = '';
   int employeeCount = 0;
   String employeeCountRange = '';
   String revenueRange = '';
-  
+
   // Mission and values
   String missionStatement = '';
   List<String> companyValues = [];
@@ -62,26 +62,26 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
       companyName = faker.company.name();
       companySuffix = faker.company.suffix();
       companyNameWithSuffix = faker.company.nameWithSuffix();
-      
+
       // Company details
       catchphrase = faker.company.catchphrase();
       buzzword = faker.company.buzzword();
       bs = faker.company.bs();
       industry = faker.company.industry();
       department = faker.company.department();
-      
+
       // Company identifiers
       ein = faker.company.ein();
       dunsNumber = faker.company.dunsNumber();
       sicCode = faker.company.sicCode();
       naicsCode = faker.company.naicsCode();
-      
+
       // Company size
       companySize = faker.company.companySize();
       employeeCount = faker.company.employeeCount();
       employeeCountRange = faker.company.employeeCountRange();
       revenueRange = faker.company.revenueRange();
-      
+
       // Mission and values
       missionStatement = faker.company.missionStatement();
       companyValues = faker.company.values();
@@ -115,15 +115,18 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {
@@ -254,7 +257,7 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
     final sizes = ['Startup', 'Small', 'Medium', 'Large', 'Enterprise'];
     final index = sizes.indexOf(companySize);
     final progress = index >= 0 ? (index + 1) / sizes.length : 0.0;
-    
+
     return Column(
       children: [
         LinearProgressIndicator(
@@ -272,9 +275,10 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
               size,
               style: TextStyle(
                 fontSize: 10,
-                fontWeight: size == companySize ? FontWeight.bold : FontWeight.normal,
-                color: size == companySize 
-                    ? Theme.of(context).colorScheme.secondary 
+                fontWeight:
+                    size == companySize ? FontWeight.bold : FontWeight.normal,
+                color: size == companySize
+                    ? Theme.of(context).colorScheme.secondary
                     : Colors.grey,
               ),
             );
@@ -337,7 +341,8 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy),
-                  onPressed: () => _copyToClipboard(missionStatement, 'Mission'),
+                  onPressed: () =>
+                      _copyToClipboard(missionStatement, 'Mission'),
                   tooltip: 'Copy to clipboard',
                 ),
               ],
@@ -371,7 +376,8 @@ class _CompanyGeneratorScreenState extends State<CompanyGeneratorScreen> {
               children: companyValues.map((value) {
                 return Chip(
                   label: Text(value),
-                  backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.tertiaryContainer,
                   labelStyle: TextStyle(
                     color: Theme.of(context).colorScheme.onTertiaryContainer,
                   ),

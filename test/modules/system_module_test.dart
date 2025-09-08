@@ -68,11 +68,24 @@ void main() {
 
       test('should generate OS name', () {
         final os = faker.system.operatingSystem();
-        expect(['Windows', 'macOS', 'Linux', 'Ubuntu', 'Debian', 'Fedora', 
-                'CentOS', 'RedHat', 'openSUSE', 'Arch Linux',
-                'Android', 'iOS', 'Windows Phone',
-                'FreeBSD', 'OpenBSD', 'NetBSD'], 
-          contains(os));
+        expect([
+          'Windows',
+          'macOS',
+          'Linux',
+          'Ubuntu',
+          'Debian',
+          'Fedora',
+          'CentOS',
+          'RedHat',
+          'openSUSE',
+          'Arch Linux',
+          'Android',
+          'iOS',
+          'Windows Phone',
+          'FreeBSD',
+          'OpenBSD',
+          'NetBSD'
+        ], contains(os));
       });
     });
 
@@ -100,10 +113,11 @@ void main() {
       test('should generate reproducible system data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.system.fileName(), equals(faker2.system.fileName()));
         expect(faker1.system.semver(), equals(faker2.system.semver()));
-        expect(faker1.system.processName(), equals(faker2.system.processName()));
+        expect(
+            faker1.system.processName(), equals(faker2.system.processName()));
       });
     });
   });

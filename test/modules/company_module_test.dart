@@ -18,8 +18,9 @@ void main() {
       test('should generate company suffix', () {
         final suffix = faker.company.suffix();
         expect(suffix, isNotEmpty);
-        expect(['Inc.', 'LLC', 'Corp.', 'Ltd.', 'Group', 'Holdings', 'Partners'], 
-          contains(suffix));
+        expect(
+            ['Inc.', 'LLC', 'Corp.', 'Ltd.', 'Group', 'Holdings', 'Partners'],
+            contains(suffix));
       });
 
       test('should generate company with suffix', () {
@@ -82,8 +83,8 @@ void main() {
     group('Company Size and Type', () {
       test('should generate company size', () {
         final size = faker.company.companySize();
-        expect(['Startup', 'Small', 'Medium', 'Large', 'Enterprise'], 
-          contains(size));
+        expect(['Startup', 'Small', 'Medium', 'Large', 'Enterprise'],
+            contains(size));
       });
 
       test('should generate employee count', () {
@@ -124,7 +125,7 @@ void main() {
         final faker = SmartFaker(locale: 'en_US');
         final name = faker.company.name();
         final suffix = faker.company.suffix();
-        
+
         expect(name, isNotEmpty);
         expect(['Inc.', 'LLC', 'Corp.', 'Ltd.'], contains(suffix));
       });
@@ -133,7 +134,7 @@ void main() {
         final faker = SmartFaker(locale: 'zh_TW');
         final name = faker.company.name();
         final suffix = faker.company.suffix();
-        
+
         expect(name, isNotEmpty);
         expect(['有限公司', '股份有限公司', '企業', '集團'], contains(suffix));
       });
@@ -142,7 +143,7 @@ void main() {
         final faker = SmartFaker(locale: 'ja_JP');
         final name = faker.company.name();
         final suffix = faker.company.suffix();
-        
+
         expect(name, isNotEmpty);
         expect(['株式会社', '有限会社', 'グループ', 'ホールディングス'], contains(suffix));
       });
@@ -152,11 +153,13 @@ void main() {
       test('should generate reproducible company data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.company.name(), equals(faker2.company.name()));
-        expect(faker1.company.catchphrase(), equals(faker2.company.catchphrase()));
+        expect(
+            faker1.company.catchphrase(), equals(faker2.company.catchphrase()));
         expect(faker1.company.ein(), equals(faker2.company.ein()));
-        expect(faker1.company.employeeCount(), equals(faker2.company.employeeCount()));
+        expect(faker1.company.employeeCount(),
+            equals(faker2.company.employeeCount()));
       });
     });
   });

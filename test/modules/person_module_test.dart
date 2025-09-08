@@ -33,7 +33,7 @@ void main() {
       test('should generate gender-specific first names', () {
         final maleName = faker.person.firstName(gender: Gender.male);
         final femaleName = faker.person.firstName(gender: Gender.female);
-        
+
         expect(maleName, isNotEmpty);
         expect(femaleName, isNotEmpty);
       });
@@ -82,7 +82,7 @@ void main() {
     group('Complete Person Generation', () {
       test('should generate complete person object', () {
         final person = faker.person.generatePerson();
-        
+
         expect(person.firstName, isNotEmpty);
         expect(person.lastName, isNotEmpty);
         expect(person.fullName, isNotEmpty);
@@ -95,10 +95,12 @@ void main() {
 
       test('should generate consistent person data', () {
         final person = faker.person.generatePerson(age: 22);
-        
+
         // Young person should have junior job title
-        expect(person.jobTitle.toLowerCase(), 
-          anyOf(contains('junior'), contains('intern'), contains('assistant')));
+        expect(
+            person.jobTitle.toLowerCase(),
+            anyOf(
+                contains('junior'), contains('intern'), contains('assistant')));
       });
     });
 
@@ -106,7 +108,7 @@ void main() {
       test('should generate reproducible names with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.person.firstName(), equals(faker2.person.firstName()));
         expect(faker1.person.lastName(), equals(faker2.person.lastName()));
         expect(faker1.person.fullName(), equals(faker2.person.fullName()));

@@ -23,9 +23,12 @@ void main() {
       test('should generate RGB color', () {
         final rgb = faker.color.rgb();
         expect(rgb, matches(RegExp(r'^rgb\(\d{1,3}, \d{1,3}, \d{1,3}\)$')));
-        
+
         // Parse and validate RGB values
-        final values = RegExp(r'\d+').allMatches(rgb).map((m) => int.parse(m.group(0)!)).toList();
+        final values = RegExp(r'\d+')
+            .allMatches(rgb)
+            .map((m) => int.parse(m.group(0)!))
+            .toList();
         expect(values.length, 3);
         for (final value in values) {
           expect(value, greaterThanOrEqualTo(0));
@@ -35,7 +38,10 @@ void main() {
 
       test('should generate RGBA color', () {
         final rgba = faker.color.rgba();
-        expect(rgba, matches(RegExp(r'^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, [01](\.\d+)?\)$')));
+        expect(
+            rgba,
+            matches(
+                RegExp(r'^rgba\(\d{1,3}, \d{1,3}, \d{1,3}, [01](\.\d+)?\)$')));
       });
 
       test('should generate HSL color', () {
@@ -45,7 +51,10 @@ void main() {
 
       test('should generate HSLA color', () {
         final hsla = faker.color.hsla();
-        expect(hsla, matches(RegExp(r'^hsla\(\d{1,3}, \d{1,3}%, \d{1,3}%, [01](\.\d+)?\)$')));
+        expect(
+            hsla,
+            matches(RegExp(
+                r'^hsla\(\d{1,3}, \d{1,3}%, \d{1,3}%, [01](\.\d+)?\)$')));
       });
 
       test('should generate HSV color', () {
@@ -55,7 +64,10 @@ void main() {
 
       test('should generate CMYK color', () {
         final cmyk = faker.color.cmyk();
-        expect(cmyk, matches(RegExp(r'^cmyk\(\d{1,3}%, \d{1,3}%, \d{1,3}%, \d{1,3}%\)$')));
+        expect(
+            cmyk,
+            matches(
+                RegExp(r'^cmyk\(\d{1,3}%, \d{1,3}%, \d{1,3}%, \d{1,3}%\)$')));
       });
     });
 
@@ -63,19 +75,51 @@ void main() {
       test('should generate CSS color name', () {
         final color = faker.color.cssName();
         expect(color, isNotEmpty);
-        expect(['red', 'green', 'blue', 'yellow', 'orange', 'purple', 'pink', 
-                'brown', 'black', 'white', 'gray', 'cyan', 'magenta', 'lime',
-                'indigo', 'violet', 'turquoise', 'gold', 'silver', 'maroon',
-                'navy', 'teal', 'olive', 'aqua', 'fuchsia', 'crimson',
-                'coral', 'salmon', 'khaki', 'lavender', 'plum', 'mint',
-                'ivory', 'pearl'], 
-          contains(color.toLowerCase()));
+        expect([
+          'red',
+          'green',
+          'blue',
+          'yellow',
+          'orange',
+          'purple',
+          'pink',
+          'brown',
+          'black',
+          'white',
+          'gray',
+          'cyan',
+          'magenta',
+          'lime',
+          'indigo',
+          'violet',
+          'turquoise',
+          'gold',
+          'silver',
+          'maroon',
+          'navy',
+          'teal',
+          'olive',
+          'aqua',
+          'fuchsia',
+          'crimson',
+          'coral',
+          'salmon',
+          'khaki',
+          'lavender',
+          'plum',
+          'mint',
+          'ivory',
+          'pearl'
+        ], contains(color.toLowerCase()));
       });
 
       test('should generate material color', () {
         final material = faker.color.material();
         expect(material, isNotEmpty);
-        expect(material, contains(RegExp(r'^(red|pink|purple|deepPurple|indigo|blue|lightBlue|cyan|teal|green|lightGreen|lime|yellow|amber|orange|deepOrange|brown|grey|blueGrey)\[\d{2,3}\]$')));
+        expect(
+            material,
+            contains(RegExp(
+                r'^(red|pink|purple|deepPurple|indigo|blue|lightBlue|cyan|teal|green|lightGreen|lime|yellow|amber|orange|deepOrange|brown|grey|blueGrey)\[\d{2,3}\]$')));
       });
 
       test('should generate tailwind color', () {
@@ -202,7 +246,7 @@ void main() {
       test('should generate reproducible colors with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.color.hex(), equals(faker2.color.hex()));
         expect(faker1.color.rgb(), equals(faker2.color.rgb()));
         expect(faker1.color.cssName(), equals(faker2.color.cssName()));

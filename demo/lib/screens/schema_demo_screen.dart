@@ -30,89 +30,89 @@ class _SchemaDemoScreenState extends State<SchemaDemoScreen> {
   void _registerSchemas() {
     // User schema
     final userSchema = SchemaBuilder.defineSchema('User')
-      .id()
-      .withName()
-      .withContact()
-      .field('age', FakerFieldType.integer, min: 18, max: 65)
-      .field('bio', FakerFieldType.paragraph, required: false)
-      .hasMany('posts', 'Post')
-      .withTimestamps()
-      .build();
+        .id()
+        .withName()
+        .withContact()
+        .field('age', FakerFieldType.integer, min: 18, max: 65)
+        .field('bio', FakerFieldType.paragraph, required: false)
+        .hasMany('posts', 'Post')
+        .withTimestamps()
+        .build();
 
     // Post schema
     final postSchema = SchemaBuilder.defineSchema('Post')
-      .id()
-      .field('title', FakerFieldType.sentence)
-      .field('content', FakerFieldType.paragraph)
-      .field('tags', FakerFieldType.list, options: {
-        'count': 3,
-        'itemType': FakerFieldType.word,
-      })
-      .field('likes', FakerFieldType.integer, min: 0, max: 1000)
-      .belongsTo('authorId', 'User', foreignKey: 'id')
-      .withTimestamps()
-      .build();
+        .id()
+        .field('title', FakerFieldType.sentence)
+        .field('content', FakerFieldType.paragraph)
+        .field('tags', FakerFieldType.list, options: {
+          'count': 3,
+          'itemType': FakerFieldType.word,
+        })
+        .field('likes', FakerFieldType.integer, min: 0, max: 1000)
+        .belongsTo('authorId', 'User', foreignKey: 'id')
+        .withTimestamps()
+        .build();
 
     // Product schema
     final productSchema = SchemaBuilder.defineSchema('Product')
-      .id()
-      .field('name', FakerFieldType.productName)
-      .field('description', FakerFieldType.paragraph)
-      .field('price', FakerFieldType.price, min: 9.99, max: 999.99)
-      .field('sku', FakerFieldType.sku)
-      .field('barcode', FakerFieldType.barcode)
-      .field('inStock', FakerFieldType.boolean)
-      .field('quantity', FakerFieldType.integer, min: 0, max: 100)
-      .field('category', FakerFieldType.word)
-      .field('tags', FakerFieldType.list, options: {
-        'count': 5,
-        'itemType': FakerFieldType.word,
-      })
-      .withTimestamps()
-      .build();
+        .id()
+        .field('name', FakerFieldType.productName)
+        .field('description', FakerFieldType.paragraph)
+        .field('price', FakerFieldType.price, min: 9.99, max: 999.99)
+        .field('sku', FakerFieldType.sku)
+        .field('barcode', FakerFieldType.barcode)
+        .field('inStock', FakerFieldType.boolean)
+        .field('quantity', FakerFieldType.integer, min: 0, max: 100)
+        .field('category', FakerFieldType.word)
+        .field('tags', FakerFieldType.list, options: {
+          'count': 5,
+          'itemType': FakerFieldType.word,
+        })
+        .withTimestamps()
+        .build();
 
     // Company schema
     final companySchema = SchemaBuilder.defineSchema('Company')
-      .id()
-      .field('name', FakerFieldType.companyName)
-      .field('industry', FakerFieldType.industry)
-      .field('catchphrase', FakerFieldType.catchPhrase)
-      .field('website', FakerFieldType.url)
-      .field('email', FakerFieldType.email)
-      .field('phone', FakerFieldType.phone)
-      .withAddress()
-      .field('employees', FakerFieldType.integer, min: 10, max: 10000)
-      .field('revenue', FakerFieldType.amount, min: 100000, max: 10000000)
-      .hasMany('departments', 'Department')
-      .withTimestamps()
-      .build();
+        .id()
+        .field('name', FakerFieldType.companyName)
+        .field('industry', FakerFieldType.industry)
+        .field('catchphrase', FakerFieldType.catchPhrase)
+        .field('website', FakerFieldType.url)
+        .field('email', FakerFieldType.email)
+        .field('phone', FakerFieldType.phone)
+        .withAddress()
+        .field('employees', FakerFieldType.integer, min: 10, max: 10000)
+        .field('revenue', FakerFieldType.amount, min: 100000, max: 10000000)
+        .hasMany('departments', 'Department')
+        .withTimestamps()
+        .build();
 
     // Department schema
     final departmentSchema = SchemaBuilder.defineSchema('Department')
-      .id()
-      .field('name', FakerFieldType.word)
-      .field('manager', FakerFieldType.fullName)
-      .field('budget', FakerFieldType.amount, min: 50000, max: 1000000)
-      .field('headcount', FakerFieldType.integer, min: 5, max: 100)
-      .belongsTo('companyId', 'Company', foreignKey: 'id')
-      .build();
+        .id()
+        .field('name', FakerFieldType.word)
+        .field('manager', FakerFieldType.fullName)
+        .field('budget', FakerFieldType.amount, min: 50000, max: 1000000)
+        .field('headcount', FakerFieldType.integer, min: 5, max: 100)
+        .belongsTo('companyId', 'Company', foreignKey: 'id')
+        .build();
 
     // Order schema
     final orderSchema = SchemaBuilder.defineSchema('Order')
-      .id()
-      .field('orderNumber', FakerFieldType.uuid)
-      .field('status', FakerFieldType.word)
-      .field('total', FakerFieldType.amount, min: 10, max: 5000)
-      .field('items', FakerFieldType.list, options: {
-        'count': 3,
-        'itemType': FakerFieldType.productName,
-      })
-      .field('shippingAddress', FakerFieldType.address)
-      .field('billingAddress', FakerFieldType.address)
-      .field('paymentMethod', FakerFieldType.creditCard)
-      .belongsTo('customerId', 'User', foreignKey: 'id')
-      .withTimestamps()
-      .build();
+        .id()
+        .field('orderNumber', FakerFieldType.uuid)
+        .field('status', FakerFieldType.word)
+        .field('total', FakerFieldType.amount, min: 10, max: 5000)
+        .field('items', FakerFieldType.list, options: {
+          'count': 3,
+          'itemType': FakerFieldType.productName,
+        })
+        .field('shippingAddress', FakerFieldType.address)
+        .field('billingAddress', FakerFieldType.address)
+        .field('paymentMethod', FakerFieldType.creditCard)
+        .belongsTo('customerId', 'User', foreignKey: 'id')
+        .withTimestamps()
+        .build();
 
     // Register all schemas
     schemaBuilder.registerSchema(userSchema);
@@ -138,7 +138,8 @@ class _SchemaDemoScreenState extends State<SchemaDemoScreen> {
   }
 
   void _copyToClipboard() {
-    final data = _convertToJsonEncodable(showList ? generatedList : generatedData);
+    final data =
+        _convertToJsonEncodable(showList ? generatedList : generatedData);
     final jsonStr = const JsonEncoder.withIndent('  ').convert(data);
     Clipboard.setData(ClipboardData(text: jsonStr));
     ScaffoldMessenger.of(context).showSnackBar(
@@ -150,7 +151,8 @@ class _SchemaDemoScreenState extends State<SchemaDemoScreen> {
     if (obj is DateTime) {
       return obj.toIso8601String();
     } else if (obj is Map) {
-      return obj.map((key, value) => MapEntry(key, _convertToJsonEncodable(value)));
+      return obj
+          .map((key, value) => MapEntry(key, _convertToJsonEncodable(value)));
     } else if (obj is List) {
       return obj.map((e) => _convertToJsonEncodable(e)).toList();
     }
@@ -183,7 +185,14 @@ class _SchemaDemoScreenState extends State<SchemaDemoScreen> {
                   child: DropdownButton<String>(
                     value: selectedSchema,
                     isExpanded: true,
-                    items: ['User', 'Post', 'Product', 'Company', 'Department', 'Order']
+                    items: [
+                      'User',
+                      'Post',
+                      'Product',
+                      'Company',
+                      'Department',
+                      'Order'
+                    ]
                         .map((schema) => DropdownMenuItem(
                               value: schema,
                               child: Text(schema),
@@ -245,14 +254,16 @@ class _SchemaDemoScreenState extends State<SchemaDemoScreen> {
               ),
               child: SingleChildScrollView(
                 child: SelectableText(
-                  const JsonEncoder.withIndent('  ')
-                      .convert(_convertToJsonEncodable(showList ? generatedList : generatedData)),
+                  const JsonEncoder.withIndent('  ').convert(
+                      _convertToJsonEncodable(
+                          showList ? generatedList : generatedData)),
                   style: TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 12,
                     color: Theme.of(context).brightness == Brightness.dark
-                        ? Colors.green[400]  // Green text for dark mode (like code editors)
-                        : Colors.black87,     // Dark text for light mode
+                        ? Colors.green[
+                            400] // Green text for dark mode (like code editors)
+                        : Colors.black87, // Dark text for light mode
                   ),
                 ),
               ),

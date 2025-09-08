@@ -127,7 +127,7 @@ void main() {
       test('should generate valid IPv4 address', () {
         final ip = faker.internet.ipv4();
         expect(ip, matches(RegExp(r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')));
-        
+
         // Each octet should be 0-255
         final octets = ip.split('.');
         for (final octet in octets) {
@@ -139,24 +139,23 @@ void main() {
 
       test('should generate valid IPv6 address', () {
         final ip = faker.internet.ipv6();
-        expect(ip, matches(RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$')));
+        expect(
+            ip, matches(RegExp(r'^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$')));
       });
 
       test('should generate private IPv4 address', () {
         final ip = faker.internet.privateIpv4();
         // Should be in private ranges: 10.x.x.x, 172.16-31.x.x, or 192.168.x.x
-        expect(ip, matches(RegExp(
-          r'^(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|'
-          r'172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}|'
-          r'192\.168\.\d{1,3}\.\d{1,3})$'
-        )));
+        expect(
+            ip,
+            matches(RegExp(r'^(10\.\d{1,3}\.\d{1,3}\.\d{1,3}|'
+                r'172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3}|'
+                r'192\.168\.\d{1,3}\.\d{1,3})$')));
       });
 
       test('should generate MAC address', () {
         final mac = faker.internet.macAddress();
-        expect(mac, matches(RegExp(
-          r'^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$'
-        )));
+        expect(mac, matches(RegExp(r'^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$')));
       });
 
       test('should generate port number', () {
@@ -193,7 +192,7 @@ void main() {
       test('should generate reproducible data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.internet.email(), equals(faker2.internet.email()));
         expect(faker1.internet.username(), equals(faker2.internet.username()));
         expect(faker1.internet.password(), equals(faker2.internet.password()));

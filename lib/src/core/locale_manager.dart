@@ -35,11 +35,11 @@ class LocaleManager {
   /// Gets data with fallback support.
   T? getData<T>(String category, String field, {String? locale}) {
     locale ??= _currentLocale;
-    
+
     // Try exact locale first
     var data = _loadedLocales[locale]?.getData(category, field);
     if (data != null) return data as T;
-    
+
     // Try language without region (e.g., 'en' from 'en_US')
     final language = locale.split('_').first;
     for (final loadedLocale in _loadedLocales.keys) {
@@ -48,14 +48,14 @@ class LocaleManager {
         if (data != null) return data as T;
       }
     }
-    
+
     // Fallback to English
     return _loadedLocales['en_US']?.getData(category, field) as T?;
   }
 
   void _loadLocale(String locale) {
     if (_loadedLocales.containsKey(locale)) return;
-    
+
     // In Phase 4, we'll implement actual locale loading
     // For now, we'll create a placeholder
     _loadedLocales[locale] = LocaleData(locale);

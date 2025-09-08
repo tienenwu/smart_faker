@@ -168,7 +168,7 @@ void main() {
       test('should generate reproducible image data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.image.url(), equals(faker2.image.url()));
         expect(faker1.image.hexColor(), equals(faker2.image.hexColor()));
         expect(faker1.image.avatar(), equals(faker2.image.avatar()));

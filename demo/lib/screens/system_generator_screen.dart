@@ -62,7 +62,7 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
 
   Widget _buildDataItem(String label, dynamic value, {IconData? icon}) {
     final displayValue = value.toString();
-    
+
     return Card(
       child: ListTile(
         leading: icon != null
@@ -81,7 +81,8 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
     );
   }
 
-  Widget _buildSection(String title, Map<String, dynamic> data, {IconData? sectionIcon}) {
+  Widget _buildSection(String title, Map<String, dynamic> data,
+      {IconData? sectionIcon}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -108,10 +109,12 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
           if (entry.key.contains('Operating')) itemIcon = Icons.computer;
           if (entry.key.contains('Version')) itemIcon = Icons.label;
           if (entry.key.contains('Cron')) itemIcon = Icons.schedule;
-          if (entry.key.contains('Environment')) itemIcon = Icons.settings_system_daydream;
-          
+          if (entry.key.contains('Environment'))
+            itemIcon = Icons.settings_system_daydream;
+
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             child: _buildDataItem(entry.key, entry.value, icon: itemIcon),
           );
         }),
@@ -136,8 +139,8 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
           Text(
             'Cron Expression Breakdown',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSecondaryContainer,
-            ),
+                  color: Theme.of(context).colorScheme.onSecondaryContainer,
+                ),
           ),
           const SizedBox(height: 8),
           Text(
@@ -195,7 +198,10 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
             range,
             style: TextStyle(
               fontSize: 12,
-              color: Theme.of(context).colorScheme.onSecondaryContainer.withOpacity(0.7),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSecondaryContainer
+                  .withOpacity(0.7),
             ),
           ),
         ],
@@ -205,8 +211,9 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cronExpression = generatedData['System Info']?['Cron Expression'] ?? '';
-    
+    final cronExpression =
+        generatedData['System Info']?['Cron Expression'] ?? '';
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('System Generator'),
@@ -233,9 +240,12 @@ class _SystemGeneratorScreenState extends State<SystemGeneratorScreen> {
       ),
       body: ListView(
         children: [
-          _buildSection('File System', generatedData['File System'] ?? {}, sectionIcon: Icons.folder_open),
-          _buildSection('Versions', generatedData['Versions'] ?? {}, sectionIcon: Icons.new_releases),
-          _buildSection('System Info', generatedData['System Info'] ?? {}, sectionIcon: Icons.computer),
+          _buildSection('File System', generatedData['File System'] ?? {},
+              sectionIcon: Icons.folder_open),
+          _buildSection('Versions', generatedData['Versions'] ?? {},
+              sectionIcon: Icons.new_releases),
+          _buildSection('System Info', generatedData['System Info'] ?? {},
+              sectionIcon: Icons.computer),
           if (cronExpression.isNotEmpty) _buildCronExplanation(cronExpression),
         ],
       ),

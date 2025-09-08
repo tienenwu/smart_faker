@@ -71,19 +71,26 @@ void main() {
       test('should generate time signature', () {
         final time = faker.music.timeSignature();
         expect(['4/4', '3/4', '6/8', '2/4', '5/4', '7/8', '9/8', '12/8'],
-          contains(time));
+            contains(time));
       });
 
       test('should generate tempo marking', () {
         final tempo = faker.music.tempoMarking();
-        expect(['Largo', 'Adagio', 'Andante', 'Moderato', 'Allegro', 'Vivace', 'Presto'],
-          contains(tempo));
+        expect([
+          'Largo',
+          'Adagio',
+          'Andante',
+          'Moderato',
+          'Allegro',
+          'Vivace',
+          'Presto'
+        ], contains(tempo));
       });
 
       test('should generate dynamics marking', () {
         final dynamics = faker.music.dynamics();
         expect(['pp', 'p', 'mp', 'mf', 'f', 'ff', 'ppp', 'fff'],
-          contains(dynamics));
+            contains(dynamics));
       });
     });
 
@@ -123,8 +130,9 @@ void main() {
     group('Music Formats', () {
       test('should generate audio format', () {
         final format = faker.music.audioFormat();
-        expect(['MP3', 'FLAC', 'WAV', 'AAC', 'OGG', 'WMA', 'ALAC', 'DSD', 'AIFF'],
-          contains(format));
+        expect(
+            ['MP3', 'FLAC', 'WAV', 'AAC', 'OGG', 'WMA', 'ALAC', 'DSD', 'AIFF'],
+            contains(format));
       });
 
       test('should generate streaming service', () {
@@ -147,13 +155,13 @@ void main() {
       test('should generate classical period', () {
         final period = faker.music.classicalPeriod();
         expect(['Baroque', 'Classical', 'Romantic', 'Modern', 'Contemporary'],
-          contains(period));
+            contains(period));
       });
 
       test('should generate orchestra section', () {
         final section = faker.music.orchestraSection();
-        expect(['Strings', 'Woodwinds', 'Brass', 'Percussion'],
-          contains(section));
+        expect(
+            ['Strings', 'Woodwinds', 'Brass', 'Percussion'], contains(section));
       });
 
       test('should generate musical form', () {
@@ -170,8 +178,8 @@ void main() {
 
       test('should generate rhyme scheme', () {
         final scheme = faker.music.rhymeScheme();
-        expect(['ABAB', 'ABBA', 'AABB', 'ABCB', 'AAAA', 'ABAC'],
-          contains(scheme));
+        expect(
+            ['ABAB', 'ABBA', 'AABB', 'ABCB', 'AAAA', 'ABAC'], contains(scheme));
       });
     });
 
@@ -179,7 +187,7 @@ void main() {
       test('should generate reproducible music data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.music.songName(), equals(faker2.music.songName()));
         expect(faker1.music.artistName(), equals(faker2.music.artistName()));
         expect(faker1.music.genre(), equals(faker2.music.genre()));

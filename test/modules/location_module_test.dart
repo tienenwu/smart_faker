@@ -110,11 +110,11 @@ void main() {
           longitude: base.longitude,
           radius: 10, // 10km
         );
-        
+
         // Calculate approximate distance (simplified)
         final latDiff = (base.latitude - nearby.latitude).abs();
         final lonDiff = (base.longitude - nearby.longitude).abs();
-        
+
         // Rough check - within reasonable range
         expect(latDiff, lessThan(0.2)); // ~20km
         expect(lonDiff, lessThan(0.2));
@@ -131,15 +131,22 @@ void main() {
       test('should generate direction', () {
         final direction = faker.location.direction();
         expect(direction, isNotEmpty);
-        expect(['North', 'South', 'East', 'West', 
-                'Northeast', 'Northwest', 'Southeast', 'Southwest'],
-                contains(direction));
+        expect([
+          'North',
+          'South',
+          'East',
+          'West',
+          'Northeast',
+          'Northwest',
+          'Southeast',
+          'Southwest'
+        ], contains(direction));
       });
 
       test('should generate cardinal direction', () {
         final cardinal = faker.location.cardinalDirection();
-        expect(['N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW'],
-                contains(cardinal));
+        expect(
+            ['N', 'S', 'E', 'W', 'NE', 'NW', 'SE', 'SW'], contains(cardinal));
       });
     });
 
@@ -157,12 +164,14 @@ void main() {
         final address = faker.location.fullAddress();
         expect(address, isNotEmpty);
         // Taiwan format includes 區, 市, 路, 號
-        expect(address, anyOf(
-          contains('區'),
-          contains('市'),
-          contains('路'),
-          contains('號'),
-        ));
+        expect(
+            address,
+            anyOf(
+              contains('區'),
+              contains('市'),
+              contains('路'),
+              contains('號'),
+            ));
       });
 
       test('should generate Japanese address format', () {
@@ -170,13 +179,15 @@ void main() {
         final address = faker.location.fullAddress();
         expect(address, isNotEmpty);
         // Japanese format includes 都, 府, 県, 市, 区
-        expect(address, anyOf(
-          contains('都'),
-          contains('府'),
-          contains('県'),
-          contains('市'),
-          contains('区'),
-        ));
+        expect(
+            address,
+            anyOf(
+              contains('都'),
+              contains('府'),
+              contains('県'),
+              contains('市'),
+              contains('区'),
+            ));
       });
     });
 
@@ -184,17 +195,14 @@ void main() {
       test('should generate reproducible data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
-        expect(faker1.location.streetAddress(), 
-               equals(faker2.location.streetAddress()));
-        expect(faker1.location.city(), 
-               equals(faker2.location.city()));
-        expect(faker1.location.zipCode(), 
-               equals(faker2.location.zipCode()));
-        expect(faker1.location.latitude(), 
-               equals(faker2.location.latitude()));
-        expect(faker1.location.longitude(), 
-               equals(faker2.location.longitude()));
+
+        expect(faker1.location.streetAddress(),
+            equals(faker2.location.streetAddress()));
+        expect(faker1.location.city(), equals(faker2.location.city()));
+        expect(faker1.location.zipCode(), equals(faker2.location.zipCode()));
+        expect(faker1.location.latitude(), equals(faker2.location.latitude()));
+        expect(
+            faker1.location.longitude(), equals(faker2.location.longitude()));
       });
     });
   });

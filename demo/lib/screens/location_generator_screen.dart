@@ -6,7 +6,8 @@ class LocationGeneratorScreen extends StatefulWidget {
   const LocationGeneratorScreen({super.key});
 
   @override
-  State<LocationGeneratorScreen> createState() => _LocationGeneratorScreenState();
+  State<LocationGeneratorScreen> createState() =>
+      _LocationGeneratorScreenState();
 }
 
 class _LocationGeneratorScreenState extends State<LocationGeneratorScreen> {
@@ -121,15 +122,18 @@ class _LocationGeneratorScreenState extends State<LocationGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {
@@ -298,7 +302,8 @@ class _LocationGeneratorScreenState extends State<LocationGeneratorScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy),
-                  onPressed: () => _copyToClipboard(fullAddress, 'Full address'),
+                  onPressed: () =>
+                      _copyToClipboard(fullAddress, 'Full address'),
                   tooltip: 'Copy to clipboard',
                 ),
               ],

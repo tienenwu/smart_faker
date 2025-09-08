@@ -10,12 +10,12 @@ import 'models/coordinates.dart';
 class LocationModule {
   /// Random generator instance for generating random values.
   final RandomGenerator _random;
-  
+
   /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
   /// Creates a new instance of [LocationModule].
-  /// 
+  ///
   /// [_random] is used for generating random values.
   /// [_localeManager] handles localization of location data.
   LocationModule(this._random, this._localeManager);
@@ -27,23 +27,26 @@ class LocationModule {
   String streetAddress() {
     final buildingNumber = this.buildingNumber();
     final streetName = this.streetName();
-    
+
     switch (currentLocale) {
       case 'zh_TW':
-        final district = _random.element(TraditionalChineseLocationData.districts);
+        final district =
+            _random.element(TraditionalChineseLocationData.districts);
         final road = _random.element(TraditionalChineseLocationData.roadNames);
-        final roadType = _random.element(TraditionalChineseLocationData.roadTypes);
-        final section = _random.nextBool() 
+        final roadType =
+            _random.element(TraditionalChineseLocationData.roadTypes);
+        final section = _random.nextBool()
             ? _random.element(TraditionalChineseLocationData.sections)
             : '';
         final number = '${_random.integer(min: 1, max: 500)}號';
         return '$district$road$roadType$section$number';
-        
+
       case 'ja_JP':
         final district = _random.element(JapaneseLocationData.districts);
-        final number = '${_random.integer(min: 1, max: 20)}-${_random.integer(min: 1, max: 30)}-${_random.integer(min: 1, max: 20)}';
+        final number =
+            '${_random.integer(min: 1, max: 20)}-${_random.integer(min: 1, max: 30)}-${_random.integer(min: 1, max: 20)}';
         return '$district$number';
-        
+
       default: // en_US
         return '$buildingNumber $streetName';
     }
@@ -54,13 +57,14 @@ class LocationModule {
     switch (currentLocale) {
       case 'zh_TW':
         final road = _random.element(TraditionalChineseLocationData.roadNames);
-        final roadType = _random.element(TraditionalChineseLocationData.roadTypes);
+        final roadType =
+            _random.element(TraditionalChineseLocationData.roadTypes);
         return '$road$roadType';
-        
+
       case 'ja_JP':
         final district = _random.element(JapaneseLocationData.districts);
         return district;
-        
+
       default: // en_US
         final name = _random.element(EnglishLocationData.streetNames);
         final suffix = _random.element(EnglishLocationData.streetSuffixes);
@@ -73,10 +77,10 @@ class LocationModule {
     switch (currentLocale) {
       case 'zh_TW':
         return '${_random.integer(min: 1, max: 500)}號';
-        
+
       case 'ja_JP':
         return '${_random.integer(min: 1, max: 20)}-${_random.integer(min: 1, max: 30)}';
-        
+
       default: // en_US
         return _random.integer(min: 100, max: 9999).toString();
     }
@@ -89,18 +93,20 @@ class LocationModule {
         final floor = _random.integer(min: 1, max: 30);
         final room = _random.integer(min: 1, max: 10);
         return '${floor}樓之$room';
-        
+
       case 'ja_JP':
-        final buildingName = _random.element(JapaneseLocationData.buildingNames);
-        final buildingType = _random.element(JapaneseLocationData.buildingTypes);
+        final buildingName =
+            _random.element(JapaneseLocationData.buildingNames);
+        final buildingType =
+            _random.element(JapaneseLocationData.buildingTypes);
         final floor = _random.integer(min: 1, max: 20);
         final room = _random.integer(min: 101, max: 999);
         return '$buildingName$buildingType ${floor}F-$room';
-        
+
       default: // en_US
         final types = ['Apt.', 'Suite', 'Unit'];
         final type = _random.element(types);
-        final number = type == 'Suite' 
+        final number = type == 'Suite'
             ? _random.integer(min: 100, max: 999).toString()
             : '${_random.integer(min: 1, max: 20)}${String.fromCharCode(65 + _random.integer(min: 0, max: 25))}';
         return '$type $number';
@@ -116,7 +122,7 @@ class LocationModule {
         final streetAddr = streetAddress();
         final secondary = _random.nextBool() ? ', ${secondaryAddress()}' : '';
         return '$postalCode $city$streetAddr$secondary';
-        
+
       case 'ja_JP':
         final postalCode = this.postalCode();
         final prefecture = _random.element(JapaneseLocationData.prefectures);
@@ -124,14 +130,14 @@ class LocationModule {
         final streetAddr = streetAddress();
         final secondary = _random.nextBool() ? ' ${secondaryAddress()}' : '';
         return '〒$postalCode $prefecture$city$streetAddr$secondary';
-        
+
       default: // en_US
         final streetAddr = streetAddress();
         final secondary = _random.nextBool() ? secondaryAddress() : null;
         final cityName = city();
         final stateAbbr = this.stateAbbr();
         final zip = zipCode();
-        
+
         if (secondary != null) {
           return '$streetAddr, $secondary, $cityName, $stateAbbr $zip';
         } else {
@@ -147,10 +153,10 @@ class LocationModule {
         return _random.nextBool()
             ? _random.element(TraditionalChineseLocationData.cities)
             : _random.element(TraditionalChineseLocationData.counties);
-        
+
       case 'ja_JP':
         return _random.element(JapaneseLocationData.cities);
-        
+
       default: // en_US
         return _random.element(EnglishLocationData.cities);
     }
@@ -163,14 +169,13 @@ class LocationModule {
         return _random.nextBool()
             ? _random.element(TraditionalChineseLocationData.cities)
             : _random.element(TraditionalChineseLocationData.counties);
-        
+
       case 'ja_JP':
         return _random.element(JapaneseLocationData.prefectures);
-        
+
       default: // en_US
-        return EnglishLocationData.states.keys.elementAt(
-          _random.integer(min: 0, max: EnglishLocationData.states.length - 1)
-        );
+        return EnglishLocationData.states.keys.elementAt(_random.integer(
+            min: 0, max: EnglishLocationData.states.length - 1));
     }
   }
 
@@ -185,19 +190,20 @@ class LocationModule {
         if (city.contains('台南')) return '南';
         if (city.contains('高雄')) return '高';
         return city.substring(0, min(2, city.length));
-        
+
       case 'ja_JP':
         // Return short form for Japanese prefectures
         final prefecture = _random.element(JapaneseLocationData.prefectures);
         if (prefecture == '東京都') return '東京';
         if (prefecture == '大阪府') return '大阪';
         if (prefecture == '京都府') return '京都';
-        return prefecture.replaceAll('県', '').substring(0, min(2, prefecture.length));
-        
+        return prefecture
+            .replaceAll('県', '')
+            .substring(0, min(2, prefecture.length));
+
       default: // en_US
-        return EnglishLocationData.states.values.elementAt(
-          _random.integer(min: 0, max: EnglishLocationData.states.length - 1)
-        );
+        return EnglishLocationData.states.values.elementAt(_random.integer(
+            min: 0, max: EnglishLocationData.states.length - 1));
     }
   }
 
@@ -205,15 +211,35 @@ class LocationModule {
   String country() {
     switch (currentLocale) {
       case 'zh_TW':
-        final countries = ['台灣', '中國', '日本', '韓國', '美國', 
-                          '英國', '法國', '德國', '加拿大', '澳洲'];
+        final countries = [
+          '台灣',
+          '中國',
+          '日本',
+          '韓國',
+          '美國',
+          '英國',
+          '法國',
+          '德國',
+          '加拿大',
+          '澳洲'
+        ];
         return _random.element(countries);
-        
+
       case 'ja_JP':
-        final countries = ['日本', 'アメリカ', 'イギリス', 'フランス', 'ドイツ',
-                          '中国', '韓国', 'カナダ', 'オーストラリア', 'イタリア'];
+        final countries = [
+          '日本',
+          'アメリカ',
+          'イギリス',
+          'フランス',
+          'ドイツ',
+          '中国',
+          '韓国',
+          'カナダ',
+          'オーストラリア',
+          'イタリア'
+        ];
         return _random.element(countries);
-        
+
       default: // en_US
         return _random.element(EnglishLocationData.countries);
     }
@@ -223,17 +249,38 @@ class LocationModule {
   String countryCode() {
     switch (currentLocale) {
       case 'zh_TW':
-        final codes = ['TW', 'CN', 'JP', 'KR', 'US', 'GB', 'FR', 'DE', 'CA', 'AU'];
+        final codes = [
+          'TW',
+          'CN',
+          'JP',
+          'KR',
+          'US',
+          'GB',
+          'FR',
+          'DE',
+          'CA',
+          'AU'
+        ];
         return _random.element(codes);
-        
+
       case 'ja_JP':
-        final codes = ['JP', 'US', 'GB', 'FR', 'DE', 'CN', 'KR', 'CA', 'AU', 'IT'];
+        final codes = [
+          'JP',
+          'US',
+          'GB',
+          'FR',
+          'DE',
+          'CN',
+          'KR',
+          'CA',
+          'AU',
+          'IT'
+        ];
         return _random.element(codes);
-        
+
       default: // en_US
-        return EnglishLocationData.countryCodes.values.elementAt(
-          _random.integer(min: 0, max: EnglishLocationData.countryCodes.length - 1)
-        );
+        return EnglishLocationData.countryCodes.values.elementAt(_random
+            .integer(min: 0, max: EnglishLocationData.countryCodes.length - 1));
     }
   }
 
@@ -242,10 +289,10 @@ class LocationModule {
     switch (currentLocale) {
       case 'zh_TW':
         return _random.element(TraditionalChineseLocationData.postalCodes);
-        
+
       case 'ja_JP':
         return _random.element(JapaneseLocationData.postalCodes);
-        
+
       default: // en_US
         final basic = _random.integer(min: 10000, max: 99999).toString();
         if (_random.nextBool()) {
@@ -261,11 +308,11 @@ class LocationModule {
     switch (currentLocale) {
       case 'zh_TW':
         return _random.element(TraditionalChineseLocationData.postalCodes);
-        
+
       case 'ja_JP':
         final code = _random.element(JapaneseLocationData.postalCodes);
         return code.replaceAll('-', '');
-        
+
       default: // en_US
         return zipCode();
     }
@@ -307,19 +354,19 @@ class LocationModule {
     // Convert radius from km to degrees (rough approximation)
     // 1 degree latitude ≈ 111 km
     final radiusInDegrees = radius / 111.0;
-    
+
     // Generate random angle and distance
     final angle = _random.nextDouble() * 2 * pi;
     final distance = _random.nextDouble() * radiusInDegrees;
-    
+
     // Calculate new coordinates
     final newLat = latitude + distance * cos(angle);
     final newLon = longitude + distance * sin(angle);
-    
+
     // Ensure coordinates are within valid ranges
     final clampedLat = newLat.clamp(-90.0, 90.0);
     final clampedLon = newLon.clamp(-180.0, 180.0);
-    
+
     return Coordinates(
       latitude: clampedLat,
       longitude: clampedLon,
@@ -331,10 +378,10 @@ class LocationModule {
     switch (currentLocale) {
       case 'zh_TW':
         return 'Asia/Taipei';
-        
+
       case 'ja_JP':
         return 'Asia/Tokyo';
-        
+
       default: // en_US
         return _random.element(EnglishLocationData.timezones);
     }
@@ -342,18 +389,26 @@ class LocationModule {
 
   /// Generates a compass direction.
   String direction() {
-    final directions = ['North', 'South', 'East', 'West',
-                       'Northeast', 'Northwest', 'Southeast', 'Southwest'];
-    
+    final directions = [
+      'North',
+      'South',
+      'East',
+      'West',
+      'Northeast',
+      'Northwest',
+      'Southeast',
+      'Southwest'
+    ];
+
     switch (currentLocale) {
       case 'zh_TW':
         final zhDirections = ['北', '南', '東', '西', '東北', '西北', '東南', '西南'];
         return _random.element(zhDirections);
-        
+
       case 'ja_JP':
         final jaDirections = ['北', '南', '東', '西', '北東', '北西', '南東', '南西'];
         return _random.element(jaDirections);
-        
+
       default: // en_US
         return _random.element(directions);
     }

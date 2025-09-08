@@ -1,16 +1,16 @@
 /// SmartFaker - An intelligent test data generator for Flutter/Dart
-/// 
+///
 /// SmartFaker provides comprehensive test data generation with features like:
 /// - Schema-based generation
 /// - Smart relationships between data
 /// - Comprehensive internationalization (10+ languages)
 /// - Type-safe API
 /// - Reproducible results with seeding
-/// 
+///
 /// Example usage:
 /// ```dart
 /// import 'package:smart_faker/smart_faker.dart';
-/// 
+///
 /// final faker = SmartFaker();
 /// final name = faker.person.fullName();
 /// final email = faker.internet.email();

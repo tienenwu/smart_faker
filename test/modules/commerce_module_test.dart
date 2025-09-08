@@ -76,7 +76,7 @@ void main() {
       test('should generate barcode (EAN-13)', () {
         final barcode = faker.commerce.barcode();
         expect(barcode, matches(RegExp(r'^\d{13}$')));
-        
+
         // Validate EAN-13 checksum
         int sum = 0;
         for (int i = 0; i < 12; i++) {
@@ -107,9 +107,12 @@ void main() {
       test('should generate RGB color', () {
         final rgb = faker.commerce.rgbColor();
         expect(rgb, matches(RegExp(r'^rgb\(\d{1,3}, \d{1,3}, \d{1,3}\)$')));
-        
+
         // Extract and validate RGB values
-        final values = RegExp(r'\d+').allMatches(rgb).map((m) => int.parse(m[0]!)).toList();
+        final values = RegExp(r'\d+')
+            .allMatches(rgb)
+            .map((m) => int.parse(m[0]!))
+            .toList();
         expect(values.length, equals(3));
         for (var value in values) {
           expect(value, greaterThanOrEqualTo(0));
@@ -141,7 +144,7 @@ void main() {
         final faker = SmartFaker(locale: 'en_US');
         final product = faker.commerce.productName();
         final price = faker.commerce.priceString();
-        
+
         expect(product, isNotEmpty);
         expect(price, startsWith('\$'));
       });
@@ -150,7 +153,7 @@ void main() {
         final faker = SmartFaker(locale: 'zh_TW');
         final product = faker.commerce.productName();
         final price = faker.commerce.priceString();
-        
+
         expect(product, isNotEmpty);
         expect(price, startsWith('NT\$'));
       });
@@ -159,7 +162,7 @@ void main() {
         final faker = SmartFaker(locale: 'ja_JP');
         final product = faker.commerce.productName();
         final price = faker.commerce.priceString();
-        
+
         expect(product, isNotEmpty);
         expect(price, startsWith('¥'));
       });
@@ -169,8 +172,9 @@ void main() {
       test('should generate reproducible commerce data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
-        expect(faker1.commerce.productName(), equals(faker2.commerce.productName()));
+
+        expect(faker1.commerce.productName(),
+            equals(faker2.commerce.productName()));
         expect(faker1.commerce.price(), equals(faker2.commerce.price()));
         expect(faker1.commerce.sku(), equals(faker2.commerce.sku()));
         expect(faker1.commerce.color(), equals(faker2.commerce.color()));

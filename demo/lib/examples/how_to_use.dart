@@ -9,7 +9,7 @@ class User {
   final String email;
   final int age;
   final DateTime createdAt;
-  
+
   const User({
     required this.id,
     required this.name,
@@ -17,7 +17,7 @@ class User {
     required this.age,
     required this.createdAt,
   });
-  
+
   // Add this to generate fake data!
   factory User.fake() {
     final faker = SmartFaker();
@@ -29,7 +29,7 @@ class User {
       createdAt: faker.dateTime.past(),
     );
   }
-  
+
   // Can also add batch generation
   static List<User> fakeList(int count) {
     return List.generate(count, (_) => User.fake());
@@ -46,7 +46,7 @@ class Product {
   final double price;
   final String category;
   final int stock;
-  
+
   const Product({
     required this.id,
     required this.name,
@@ -82,7 +82,7 @@ class Order {
   final double total;
   final String status;
   final DateTime orderDate;
-  
+
   const Order({
     required this.id,
     required this.userId,
@@ -97,7 +97,7 @@ class OrderItem {
   final String productId;
   final int quantity;
   final double price;
-  
+
   const OrderItem({
     required this.productId,
     required this.quantity,
@@ -115,84 +115,85 @@ void main() {
   print('User: ${user.name} (${user.email})');
   print('Age: ${user.age}');
   print('Created: ${user.createdAt}');
-  
+
   // Generate multiple fake users
   final users = User.fakeList(3);
   print('\nGenerated ${users.length} users:');
   for (final u in users) {
     print('  - ${u.name}: ${u.email}');
   }
-  
+
   print('\n=== Example 2: Using Extension ===');
   // Generate fake product
   final product = ProductFaker.fake();
   print('Product: ${product.name}');
   print('Price: \$${product.price.toStringAsFixed(2)}');
   print('Stock: ${product.stock}');
-  
+
   print('\n=== Example 3: Using SchemaBuilder ===');
   final faker = SmartFaker();
   final builder = SchemaBuilder(faker);
-  
+
   // Define User schema
   final userSchema = SchemaBuilder.defineSchema('User')
-    .field('id', FakerFieldType.uuid)
-    .field('name', FakerFieldType.fullName)
-    .field('email', FakerFieldType.email)
-    .field('age', FakerFieldType.integer, min: 18, max: 65)
-    .withTimestamps()
-    .build();
-  
+      .field('id', FakerFieldType.uuid)
+      .field('name', FakerFieldType.fullName)
+      .field('email', FakerFieldType.email)
+      .field('age', FakerFieldType.integer, min: 18, max: 65)
+      .withTimestamps()
+      .build();
+
   // Define Product schema
   final productSchema = SchemaBuilder.defineSchema('Product')
-    .field('id', FakerFieldType.uuid)
-    .field('name', FakerFieldType.productName)
-    .field('price', FakerFieldType.price, min: 10, max: 1000)
-    .field('stock', FakerFieldType.integer, min: 0, max: 100)
-    .build();
-  
+      .field('id', FakerFieldType.uuid)
+      .field('name', FakerFieldType.productName)
+      .field('price', FakerFieldType.price, min: 10, max: 1000)
+      .field('stock', FakerFieldType.integer, min: 0, max: 100)
+      .build();
+
   // Define Order schema (with relationships)
   final orderSchema = SchemaBuilder.defineSchema('Order')
-    .field('id', FakerFieldType.uuid)
-    .belongsTo('userId', 'User')  // Related to User
-    .hasMany('products', 'Product')  // Related to multiple Products
-    .field('total', FakerFieldType.amount, min: 10, max: 5000)
-    .field('status', FakerFieldType.word)
-    .withTimestamps()
-    .build();
-  
+      .field('id', FakerFieldType.uuid)
+      .belongsTo('userId', 'User') // Related to User
+      .hasMany('products', 'Product') // Related to multiple Products
+      .field('total', FakerFieldType.amount, min: 10, max: 5000)
+      .field('status', FakerFieldType.word)
+      .withTimestamps()
+      .build();
+
   // Register all schemas
   builder.registerSchema(userSchema);
   builder.registerSchema(productSchema);
   builder.registerSchema(orderSchema);
-  
+
   // Generate order data with relationships
   final orderData = builder.generate('Order');
   print('Order ID: ${orderData['id']}');
   print('User ID: ${orderData['userId']}');
   print('Products: ${(orderData['products'] as List).length} items');
   print('Total: \$${orderData['total']}');
-  
+
   print('\n=== Example 4: Specify locale ===');
   // Generate Chinese data
   final chineseFaker = SmartFaker(locale: 'zh_TW');
   print('Chinese name: ${chineseFaker.person.fullName()}');
   print('Chinese address: ${chineseFaker.location.streetAddress()}');
   print('Chinese company: ${chineseFaker.company.name()}');
-  
+
   // Generate Japanese data
   final japaneseFaker = SmartFaker(locale: 'ja_JP');
   print('Japanese name: ${japaneseFaker.person.fullName()}');
   print('Japanese address: ${japaneseFaker.location.streetAddress()}');
-  
+
   print('\n=== Example 5: Reproducible data (using seed) ===');
   // Using the same seed produces identical data
   final faker1 = SmartFaker(seed: 42);
   final faker2 = SmartFaker(seed: 42);
-  
+
   print('Faker1 name: ${faker1.person.fullName()}');
   print('Faker2 name: ${faker2.person.fullName()}');
-  print('Are they the same? ${faker1.person.fullName() == faker2.person.fullName()}');
+  print(
+      'Are they the same? ${faker1.person.fullName() == faker2.person.fullName()}');
 }
 
 // ============================================
@@ -203,21 +204,25 @@ class TestDataGenerator {
     // Generate fake data for testing
     final testUsers = User.fakeList(10);
     final testProducts = List.generate(20, (_) => ProductFaker.fake());
-    
+
     // For API testing
     final mockApiResponse = {
-      'users': testUsers.map((u) => {
-        'id': u.id,
-        'name': u.name,
-        'email': u.email,
-      }).toList(),
-      'products': testProducts.map((p) => {
-        'id': p.id,
-        'name': p.name,
-        'price': p.price,
-      }).toList(),
+      'users': testUsers
+          .map((u) => {
+                'id': u.id,
+                'name': u.name,
+                'email': u.email,
+              })
+          .toList(),
+      'products': testProducts
+          .map((p) => {
+                'id': p.id,
+                'name': p.name,
+                'price': p.price,
+              })
+          .toList(),
     };
-    
+
     print('Generated ${testUsers.length} users for testing');
     print('Generated ${testProducts.length} products for testing');
   }

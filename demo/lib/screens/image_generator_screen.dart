@@ -32,11 +32,16 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
           'Data URI': faker.image.dataUri().substring(0, 50) + '...',
         },
         'Local Avatars': {
-          'Circle Small (48px)': faker.image.localAvatar(size: 48, shape: 'circle'),
-          'Circle Medium (128px)': faker.image.localAvatar(size: 128, shape: 'circle'),
-          'Circle Large (256px)': faker.image.localAvatar(size: 256, shape: 'circle'),
-          'Square Small (64px)': faker.image.localAvatar(size: 64, shape: 'square'),
-          'Square Medium (128px)': faker.image.localAvatar(size: 128, shape: 'square'),
+          'Circle Small (48px)':
+              faker.image.localAvatar(size: 48, shape: 'circle'),
+          'Circle Medium (128px)':
+              faker.image.localAvatar(size: 128, shape: 'circle'),
+          'Circle Large (256px)':
+              faker.image.localAvatar(size: 256, shape: 'circle'),
+          'Square Small (64px)':
+              faker.image.localAvatar(size: 64, shape: 'square'),
+          'Square Medium (128px)':
+              faker.image.localAvatar(size: 128, shape: 'square'),
           'Custom Name': faker.image.localAvatar(name: 'JD', size: 128),
         },
         'Categories': {
@@ -77,14 +82,15 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
 
   Widget _buildColorPreview(String colorString) {
     Color? color;
-    
+
     if (colorString.startsWith('#')) {
       // Hex color
       final hex = colorString.substring(1);
       color = Color(int.parse('FF$hex', radix: 16));
     } else if (colorString.startsWith('rgb')) {
       // RGB color
-      final match = RegExp(r'rgb\((\d+), (\d+), (\d+)\)').firstMatch(colorString);
+      final match =
+          RegExp(r'rgb\((\d+), (\d+), (\d+)\)').firstMatch(colorString);
       if (match != null) {
         final r = int.parse(match.group(1)!);
         final g = int.parse(match.group(2)!);
@@ -93,7 +99,8 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
       }
     } else if (colorString.startsWith('hsl')) {
       // HSL color - simplified conversion
-      final match = RegExp(r'hsl\((\d+), (\d+)%, (\d+)%\)').firstMatch(colorString);
+      final match =
+          RegExp(r'hsl\((\d+), (\d+)%, (\d+)%\)').firstMatch(colorString);
       if (match != null) {
         final h = double.parse(match.group(1)!) / 360;
         final s = double.parse(match.group(2)!) / 100;
@@ -124,9 +131,10 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
     );
   }
 
-  Widget _buildDataItem(String label, dynamic value, {bool isColor = false, bool isAvatar = false}) {
+  Widget _buildDataItem(String label, dynamic value,
+      {bool isColor = false, bool isAvatar = false}) {
     final displayValue = value.toString();
-    
+
     if (isAvatar && displayValue.startsWith('data:image/svg+xml;base64,')) {
       // Decode and display SVG avatar
       return Card(
@@ -169,11 +177,11 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
         ),
       );
     }
-    
+
     return Card(
       child: ListTile(
         title: Text(label),
-        subtitle: isColor 
+        subtitle: isColor
             ? _buildColorPreview(displayValue)
             : Text(
                 displayValue,
@@ -194,26 +202,29 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
       // Extract base64 part
       final base64Start = dataUri.indexOf(',') + 1;
       final base64String = dataUri.substring(base64Start);
-      
+
       // Decode base64 to get SVG string
       final svgBytes = base64Decode(base64String);
       final svgString = utf8.decode(svgBytes);
-      
+
       // Parse SVG to extract key information
-      final bgColorMatch = RegExp(r'fill="(#[0-9A-Fa-f]{6})"').firstMatch(svgString);
-      final textMatch = RegExp(r'<text[^>]*>([^<]+)</text>').firstMatch(svgString);
+      final bgColorMatch =
+          RegExp(r'fill="(#[0-9A-Fa-f]{6})"').firstMatch(svgString);
+      final textMatch =
+          RegExp(r'<text[^>]*>([^<]+)</text>').firstMatch(svgString);
       final isCircle = svgString.contains('<circle');
-      
+
       final bgColor = bgColorMatch?.group(1) ?? '#4ECDC4';
       final text = textMatch?.group(1) ?? 'A';
-      
+
       // Convert hex to Color
       final color = Color(int.parse(bgColor.replaceAll('#', 'FF'), radix: 16));
-      
+
       // Calculate text color based on background
-      final luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+      final luminance =
+          (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
       final textColor = luminance > 0.5 ? Colors.grey.shade800 : Colors.white;
-      
+
       // Render as native Flutter widget
       return Container(
         width: 80,
@@ -247,7 +258,8 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
     }
   }
 
-  Widget _buildSection(String title, Map<String, dynamic> data, {bool isColor = false, bool isAvatar = false}) {
+  Widget _buildSection(String title, Map<String, dynamic> data,
+      {bool isColor = false, bool isAvatar = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -258,10 +270,12 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
-        ...data.entries.map((entry) => 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-            child: _buildDataItem(entry.key, entry.value, isColor: isColor, isAvatar: isAvatar),
+        ...data.entries.map(
+          (entry) => Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+            child: _buildDataItem(entry.key, entry.value,
+                isColor: isColor, isAvatar: isAvatar),
           ),
         ),
       ],
@@ -297,7 +311,8 @@ class _ImageGeneratorScreenState extends State<ImageGeneratorScreen> {
       body: ListView(
         children: [
           _buildSection('Image URLs', generatedData['URLs'] ?? {}),
-          _buildSection('Local Avatars', generatedData['Local Avatars'] ?? {}, isAvatar: true),
+          _buildSection('Local Avatars', generatedData['Local Avatars'] ?? {},
+              isAvatar: true),
           _buildSection('Image Categories', generatedData['Categories'] ?? {}),
           _buildSection('Colors', generatedData['Colors'] ?? {}, isColor: true),
         ],

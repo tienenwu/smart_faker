@@ -19,7 +19,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.past(years: 2);
         final twoYearsAgo = now.subtract(const Duration(days: 730));
-        
+
         expect(date.isBefore(now), isTrue);
         expect(date.isAfter(twoYearsAgo), isTrue);
       });
@@ -33,7 +33,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.future(years: 2);
         final twoYearsLater = now.add(const Duration(days: 730));
-        
+
         expect(date.isAfter(now), isTrue);
         expect(date.isBefore(twoYearsLater), isTrue);
       });
@@ -44,7 +44,7 @@ void main() {
         final start = DateTime(2020, 1, 1);
         final end = DateTime(2022, 12, 31);
         final date = faker.dateTime.between(from: start, to: end);
-        
+
         expect(date.isAfter(start) || date.isAtSameMomentAs(start), isTrue);
         expect(date.isBefore(end) || date.isAtSameMomentAs(end), isTrue);
       });
@@ -52,7 +52,7 @@ void main() {
       test('should handle same date for from and to', () {
         final sameDate = DateTime(2021, 6, 15);
         final date = faker.dateTime.between(from: sameDate, to: sameDate);
-        
+
         expect(date, equals(sameDate));
       });
     });
@@ -62,7 +62,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.recent();
         final sevenDaysAgo = now.subtract(const Duration(days: 7));
-        
+
         expect(date.isBefore(now) || date.isAtSameMomentAs(now), isTrue);
         expect(date.isAfter(sevenDaysAgo), isTrue);
       });
@@ -71,7 +71,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.recent(days: 30);
         final thirtyDaysAgo = now.subtract(const Duration(days: 30));
-        
+
         expect(date.isBefore(now) || date.isAtSameMomentAs(now), isTrue);
         expect(date.isAfter(thirtyDaysAgo), isTrue);
       });
@@ -80,7 +80,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.soon();
         final sevenDaysLater = now.add(const Duration(days: 7));
-        
+
         expect(date.isAfter(now) || date.isAtSameMomentAs(now), isTrue);
         expect(date.isBefore(sevenDaysLater), isTrue);
       });
@@ -89,7 +89,7 @@ void main() {
         final now = DateTime.now();
         final date = faker.dateTime.soon(days: 30);
         final thirtyDaysLater = now.add(const Duration(days: 30));
-        
+
         expect(date.isAfter(now) || date.isAtSameMomentAs(now), isTrue);
         expect(date.isBefore(thirtyDaysLater), isTrue);
       });
@@ -100,25 +100,39 @@ void main() {
         final weekday = faker.dateTime.weekday();
         expect(weekday, isNotEmpty);
         expect([
-          'Monday', 'Tuesday', 'Wednesday', 'Thursday',
-          'Friday', 'Saturday', 'Sunday'
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+          'Sunday'
         ], contains(weekday));
       });
 
       test('should generate weekday abbreviation', () {
         final abbr = faker.dateTime.weekdayAbbr();
         expect(abbr, isNotEmpty);
-        expect(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            contains(abbr));
+        expect(
+            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'], contains(abbr));
       });
 
       test('should generate month name', () {
         final month = faker.dateTime.month();
         expect(month, isNotEmpty);
         expect([
-          'January', 'February', 'March', 'April',
-          'May', 'June', 'July', 'August',
-          'September', 'October', 'November', 'December'
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+          'July',
+          'August',
+          'September',
+          'October',
+          'November',
+          'December'
         ], contains(month));
       });
 
@@ -126,8 +140,18 @@ void main() {
         final abbr = faker.dateTime.monthAbbr();
         expect(abbr, isNotEmpty);
         expect([
-          'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-          'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'May',
+          'Jun',
+          'Jul',
+          'Aug',
+          'Sep',
+          'Oct',
+          'Nov',
+          'Dec'
         ], contains(abbr));
       });
     });
@@ -161,7 +185,7 @@ void main() {
       test('should generate unix timestamp', () {
         final timestamp = faker.dateTime.unixTimestamp();
         expect(timestamp, isPositive);
-        
+
         // Should be between 1970 and reasonable future
         final minTimestamp = 0;
         final maxTimestamp = DateTime(2100).millisecondsSinceEpoch ~/ 1000;
@@ -171,9 +195,8 @@ void main() {
 
       test('should generate ISO 8601 string', () {
         final iso = faker.dateTime.iso8601();
-        expect(iso, matches(RegExp(
-          r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$'
-        )));
+        expect(iso,
+            matches(RegExp(r'^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$')));
       });
     });
 
@@ -182,7 +205,7 @@ void main() {
         final faker = SmartFaker(locale: 'en_US');
         final weekday = faker.dateTime.weekday();
         final month = faker.dateTime.month();
-        
+
         expect(weekday, isNotEmpty);
         expect(month, isNotEmpty);
       });
@@ -191,7 +214,7 @@ void main() {
         final faker = SmartFaker(locale: 'zh_TW');
         final weekday = faker.dateTime.weekday();
         final month = faker.dateTime.month();
-        
+
         expect(weekday, contains('星期'));
         expect(month, contains('月'));
       });
@@ -200,7 +223,7 @@ void main() {
         final faker = SmartFaker(locale: 'ja_JP');
         final weekday = faker.dateTime.weekday();
         final month = faker.dateTime.month();
-        
+
         expect(weekday, contains('曜日'));
         expect(month, contains('月'));
       });
@@ -210,18 +233,18 @@ void main() {
       test('should generate reproducible dates with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         // For dates, compare days since epoch instead of exact milliseconds
         final past1 = faker1.dateTime.past();
         final past2 = faker2.dateTime.past();
-        expect(past1.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000), 
-               equals(past2.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000)));
-        
+        expect(past1.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000),
+            equals(past2.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000)));
+
         final future1 = faker1.dateTime.future();
         final future2 = faker2.dateTime.future();
-        expect(future1.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000), 
-               equals(future2.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000)));
-        
+        expect(future1.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000),
+            equals(future2.millisecondsSinceEpoch ~/ (24 * 60 * 60 * 1000)));
+
         expect(faker1.dateTime.weekday(), equals(faker2.dateTime.weekday()));
         expect(faker1.dateTime.month(), equals(faker2.dateTime.month()));
       });

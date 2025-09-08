@@ -80,7 +80,7 @@ void main() {
       test('should generate meal type', () {
         final meal = faker.food.mealType();
         expect(['breakfast', 'brunch', 'lunch', 'dinner', 'snack', 'dessert'],
-          contains(meal));
+            contains(meal));
       });
 
       test('should generate cooking method', () {
@@ -91,7 +91,7 @@ void main() {
       test('should generate taste', () {
         final taste = faker.food.taste();
         expect(['sweet', 'sour', 'salty', 'bitter', 'umami', 'spicy', 'savory'],
-          contains(taste));
+            contains(taste));
       });
 
       test('should generate texture', () {
@@ -102,7 +102,7 @@ void main() {
       test('should generate temperature', () {
         final temp = faker.food.temperature();
         expect(['hot', 'warm', 'room temperature', 'cold', 'frozen'],
-          contains(temp));
+            contains(temp));
       });
     });
 
@@ -142,16 +142,33 @@ void main() {
 
       test('should generate dietary restriction', () {
         final diet = faker.food.dietaryRestriction();
-        expect(['vegetarian', 'vegan', 'gluten-free', 'dairy-free', 
-                'nut-free', 'kosher', 'halal', 'low-carb', 'keto', 'paleo'],
-          contains(diet));
+        expect([
+          'vegetarian',
+          'vegan',
+          'gluten-free',
+          'dairy-free',
+          'nut-free',
+          'kosher',
+          'halal',
+          'low-carb',
+          'keto',
+          'paleo'
+        ], contains(diet));
       });
 
       test('should generate allergen', () {
         final allergen = faker.food.allergen();
-        expect(['milk', 'eggs', 'fish', 'shellfish', 'tree nuts', 
-                'peanuts', 'wheat', 'soybeans', 'sesame'],
-          contains(allergen));
+        expect([
+          'milk',
+          'eggs',
+          'fish',
+          'shellfish',
+          'tree nuts',
+          'peanuts',
+          'wheat',
+          'soybeans',
+          'sesame'
+        ], contains(allergen));
       });
     });
 
@@ -168,8 +185,7 @@ void main() {
 
       test('should generate difficulty level', () {
         final difficulty = faker.food.difficulty();
-        expect(['easy', 'medium', 'hard', 'expert'],
-          contains(difficulty));
+        expect(['easy', 'medium', 'hard', 'expert'], contains(difficulty));
       });
 
       test('should generate serving count', () {
@@ -214,10 +230,11 @@ void main() {
       test('should generate reproducible food data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.food.dish(), equals(faker2.food.dish()));
         expect(faker1.food.ingredient(), equals(faker2.food.ingredient()));
-        expect(faker1.food.restaurantName(), equals(faker2.food.restaurantName()));
+        expect(
+            faker1.food.restaurantName(), equals(faker2.food.restaurantName()));
       });
     });
   });

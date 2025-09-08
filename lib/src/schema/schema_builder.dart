@@ -18,13 +18,28 @@ class Schema {
 
 /// Field definition for schema.
 class FieldDefinition {
+  /// The type of the field.
   final FakerFieldType type;
+
+  /// Whether the field is required.
   final bool required;
+
+  /// Default value for the field.
   final dynamic defaultValue;
+
+  /// Minimum value for numeric fields.
   final dynamic min;
+
+  /// Maximum value for numeric fields.
   final dynamic max;
+
+  /// Pattern for string generation.
   final String? pattern;
+
+  /// Reference to another field or schema.
   final String? reference;
+
+  /// Additional options for field generation.
   final Map<String, dynamic>? options;
 
   FieldDefinition({
@@ -101,12 +116,13 @@ class SchemaBuilder {
 
     // Cache the generated data
     _generatedData.putIfAbsent(schemaName, () => []).add(result);
-    
+
     return result;
   }
 
   /// Generates a list of data for a schema.
-  List<Map<String, dynamic>> generateList(String schemaName, {required int count}) {
+  List<Map<String, dynamic>> generateList(String schemaName,
+      {required int count}) {
     final results = <Map<String, dynamic>>[];
     for (int i = 0; i < count; i++) {
       results.add(generate(schemaName));
@@ -132,12 +148,12 @@ class SchemaBuilder {
 
     // Generate based on type
     final value = _generateByType(fieldDef);
-    
+
     // Cache if needed
     if (fieldDef.reference != null) {
       _cache[fieldName] = value;
     }
-    
+
     return value;
   }
 
@@ -162,7 +178,7 @@ class SchemaBuilder {
         return faker.image.avatar();
       case FakerFieldType.jobTitle:
         return faker.person.jobTitle();
-      
+
       // Location types
       case FakerFieldType.address:
         return faker.location.streetAddress();
@@ -176,7 +192,7 @@ class SchemaBuilder {
         return faker.location.latitude();
       case FakerFieldType.longitude:
         return faker.location.longitude();
-      
+
       // DateTime types
       case FakerFieldType.date:
         return faker.dateTime.past().toIso8601String().split('T')[0];
@@ -186,7 +202,7 @@ class SchemaBuilder {
         return faker.dateTime.past();
       case FakerFieldType.timestamp:
         return faker.dateTime.past().millisecondsSinceEpoch;
-      
+
       // Commerce types
       case FakerFieldType.productName:
         return faker.commerce.productName();
@@ -198,7 +214,7 @@ class SchemaBuilder {
         return faker.commerce.sku();
       case FakerFieldType.barcode:
         return faker.commerce.barcode();
-      
+
       // Company types
       case FakerFieldType.companyName:
         return faker.company.name();
@@ -206,7 +222,7 @@ class SchemaBuilder {
         return faker.company.industry();
       case FakerFieldType.catchPhrase:
         return faker.company.catchphrase();
-      
+
       // Finance types
       case FakerFieldType.creditCard:
         return faker.finance.creditCardNumber();
@@ -220,7 +236,7 @@ class SchemaBuilder {
         return faker.finance.amount(min: min, max: max);
       case FakerFieldType.bitcoinAddress:
         return faker.crypto.bitcoinAddress();
-      
+
       // Internet types
       case FakerFieldType.url:
         return faker.internet.url();
@@ -230,7 +246,7 @@ class SchemaBuilder {
         return faker.internet.macAddress();
       case FakerFieldType.userAgent:
         return faker.internet.userAgent();
-      
+
       // Lorem types
       case FakerFieldType.word:
         return faker.lorem.word();
@@ -245,7 +261,7 @@ class SchemaBuilder {
           words.add(faker.lorem.word());
         }
         return words.join(' ');
-      
+
       // Number types
       case FakerFieldType.integer:
         final min = fieldDef.min as int? ?? 0;
@@ -257,7 +273,7 @@ class SchemaBuilder {
         return min + (faker.random.nextDouble() * (max - min));
       case FakerFieldType.boolean:
         return faker.random.boolean();
-      
+
       // Special types
       case FakerFieldType.uuid:
         return faker.random.uuid();
@@ -269,10 +285,9 @@ class SchemaBuilder {
         return _generateMap(fieldDef.options ?? {});
       case FakerFieldType.custom:
         return fieldDef.options?['value'] ?? 'custom_value';
-      
+
       // Default
       case FakerFieldType.auto:
-      default:
         return faker.lorem.word();
     }
   }
@@ -297,8 +312,9 @@ class SchemaBuilder {
 
   List<dynamic> _generateList(FieldDefinition fieldDef) {
     final count = fieldDef.options?['count'] as int? ?? 5;
-    final itemType = fieldDef.options?['itemType'] as FakerFieldType? ?? FakerFieldType.word;
-    
+    final itemType =
+        fieldDef.options?['itemType'] as FakerFieldType? ?? FakerFieldType.word;
+
     final list = [];
     for (int i = 0; i < count; i++) {
       list.add(_generateByType(FieldDefinition(type: itemType)));
@@ -308,7 +324,7 @@ class SchemaBuilder {
 
   Map<String, dynamic> _generateMap(Map<String, dynamic> options) {
     final map = <String, dynamic>{};
-    
+
     options.forEach((key, value) {
       if (value is FakerFieldType) {
         map[key] = _generateByType(FieldDefinition(type: value));
@@ -316,7 +332,7 @@ class SchemaBuilder {
         map[key] = value;
       }
     });
-    
+
     return map;
   }
 
@@ -394,7 +410,8 @@ class SchemaDefinitionBuilder {
   }
 
   /// Adds a relationship.
-  SchemaDefinitionBuilder hasOne(String field, String targetSchema, {String? foreignKey}) {
+  SchemaDefinitionBuilder hasOne(String field, String targetSchema,
+      {String? foreignKey}) {
     relationships.add(Relationship(
       field: field,
       targetSchema: targetSchema,
@@ -405,7 +422,8 @@ class SchemaDefinitionBuilder {
   }
 
   /// Adds a has-many relationship.
-  SchemaDefinitionBuilder hasMany(String field, String targetSchema, {String? foreignKey}) {
+  SchemaDefinitionBuilder hasMany(String field, String targetSchema,
+      {String? foreignKey}) {
     relationships.add(Relationship(
       field: field,
       targetSchema: targetSchema,
@@ -416,7 +434,8 @@ class SchemaDefinitionBuilder {
   }
 
   /// Adds a belongs-to relationship.
-  SchemaDefinitionBuilder belongsTo(String field, String targetSchema, {String? foreignKey}) {
+  SchemaDefinitionBuilder belongsTo(String field, String targetSchema,
+      {String? foreignKey}) {
     relationships.add(Relationship(
       field: field,
       targetSchema: targetSchema,

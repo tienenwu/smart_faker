@@ -12,31 +12,31 @@ class FinanceGeneratorScreen extends StatefulWidget {
 class _FinanceGeneratorScreenState extends State<FinanceGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Credit card
   String creditCardNumber = '';
   String creditCardCVV = '';
   String creditCardIssuer = '';
   String maskedNumber = '';
-  
+
   // Bank account
   String accountNumber = '';
   String routingNumber = '';
   String iban = '';
   String bic = '';
-  
+
   // Currency
   String currencyCode = '';
   String currencyName = '';
   String currencySymbol = '';
   double amount = 0.0;
   String formattedAmount = '';
-  
+
   // Cryptocurrency
   String bitcoinAddress = '';
   String ethereumAddress = '';
   String cryptoCurrency = '';
-  
+
   // Transaction
   String transactionType = '';
   String transactionDescription = '';
@@ -64,25 +64,25 @@ class _FinanceGeneratorScreenState extends State<FinanceGeneratorScreen> {
       creditCardCVV = faker.finance.creditCardCVV();
       creditCardIssuer = faker.finance.creditCardIssuer();
       maskedNumber = faker.finance.maskedNumber();
-      
+
       // Bank account
       accountNumber = faker.finance.accountNumber();
       routingNumber = faker.finance.routingNumber();
       iban = faker.finance.iban();
       bic = faker.finance.bic();
-      
+
       // Currency
       currencyCode = faker.finance.currencyCode();
       currencyName = faker.finance.currencyName();
       currencySymbol = faker.finance.currencySymbol();
       amount = faker.finance.amount(min: 100, max: 10000);
       formattedAmount = '$currencySymbol${amount.toStringAsFixed(2)}';
-      
+
       // Cryptocurrency
       bitcoinAddress = faker.finance.bitcoinAddress();
       ethereumAddress = faker.finance.ethereumAddress();
       cryptoCurrency = faker.finance.cryptoCurrency();
-      
+
       // Transaction
       transactionType = faker.finance.transactionType();
       transactionDescription = faker.finance.transactionDescription();
@@ -117,15 +117,18 @@ class _FinanceGeneratorScreenState extends State<FinanceGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {
@@ -374,7 +377,7 @@ class _FinanceGeneratorScreenState extends State<FinanceGeneratorScreen> {
   Widget _buildTransactionTypeIndicator() {
     Color indicatorColor;
     IconData icon;
-    
+
     switch (transactionType) {
       case 'deposit':
         indicatorColor = Colors.green;
@@ -396,7 +399,7 @@ class _FinanceGeneratorScreenState extends State<FinanceGeneratorScreen> {
         indicatorColor = Colors.grey;
         icon = Icons.monetization_on;
     }
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(

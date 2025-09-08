@@ -6,13 +6,14 @@ class CommerceGeneratorScreen extends StatefulWidget {
   const CommerceGeneratorScreen({super.key});
 
   @override
-  State<CommerceGeneratorScreen> createState() => _CommerceGeneratorScreenState();
+  State<CommerceGeneratorScreen> createState() =>
+      _CommerceGeneratorScreenState();
 }
 
 class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Product data
   String productName = '';
   String category = '';
@@ -20,24 +21,24 @@ class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
   String productMaterial = '';
   String productAdjective = '';
   String productDescription = '';
-  
+
   // Price data
   double price = 0.0;
   String priceString = '';
   int discountPercentage = 0;
   double discountedPrice = 0.0;
   String discountedPriceString = '';
-  
+
   // Codes
   String sku = '';
   String barcode = '';
   String isbn = '';
-  
+
   // Colors
   String colorName = '';
   String hexColor = '';
   String rgbColor = '';
-  
+
   // Store and Brand
   String storeName = '';
   String brandName = '';
@@ -67,13 +68,13 @@ class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
       productMaterial = faker.commerce.productMaterial();
       productAdjective = faker.commerce.productAdjective();
       productDescription = faker.commerce.productDescription();
-      
+
       // Price data
       price = faker.commerce.price(min: 10, max: 500);
       priceString = faker.commerce.priceString(min: 10, max: 500);
       discountPercentage = faker.commerce.discountPercentage();
       discountedPrice = price * (1 - discountPercentage / 100);
-      
+
       // Format discounted price based on locale
       switch (currentLocale) {
         case 'zh_TW':
@@ -85,17 +86,17 @@ class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
         default:
           discountedPriceString = '\$${discountedPrice.toStringAsFixed(2)}';
       }
-      
+
       // Codes
       sku = faker.commerce.sku();
       barcode = faker.commerce.barcode();
       isbn = faker.commerce.isbn();
-      
+
       // Colors
       colorName = faker.commerce.color();
       hexColor = faker.commerce.hexColor();
       rgbColor = faker.commerce.rgbColor();
-      
+
       // Store and Brand
       storeName = faker.commerce.storeName();
       brandName = faker.commerce.brand();
@@ -130,15 +131,18 @@ class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {
@@ -327,7 +331,8 @@ class _CommerceGeneratorScreenState extends State<CommerceGeneratorScreen> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy),
-                  onPressed: () => _copyToClipboard(productDescription, 'Description'),
+                  onPressed: () =>
+                      _copyToClipboard(productDescription, 'Description'),
                   tooltip: 'Copy to clipboard',
                 ),
               ],

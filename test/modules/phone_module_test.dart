@@ -63,10 +63,23 @@ void main() {
 
       test('should generate phone manufacturer', () {
         final manufacturer = faker.phone.manufacturer();
-        expect(['Apple', 'Samsung', 'Google', 'Xiaomi', 'OnePlus', 'Huawei', 
-                'Sony', 'LG', 'Motorola', 'Nokia', 'OPPO', 'Vivo', 
-                'Realme', 'ASUS', 'HTC'], 
-          contains(manufacturer));
+        expect([
+          'Apple',
+          'Samsung',
+          'Google',
+          'Xiaomi',
+          'OnePlus',
+          'Huawei',
+          'Sony',
+          'LG',
+          'Motorola',
+          'Nokia',
+          'OPPO',
+          'Vivo',
+          'Realme',
+          'ASUS',
+          'HTC'
+        ], contains(manufacturer));
       });
 
       test('should generate OS version', () {
@@ -112,7 +125,7 @@ void main() {
       test('should generate reproducible phone data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
+
         expect(faker1.phone.number(), equals(faker2.phone.number()));
         expect(faker1.phone.imei(), equals(faker2.phone.imei()));
         expect(faker1.phone.model(), equals(faker2.phone.model()));

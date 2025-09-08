@@ -6,45 +6,46 @@ class InternetGeneratorScreen extends StatefulWidget {
   const InternetGeneratorScreen({super.key});
 
   @override
-  State<InternetGeneratorScreen> createState() => _InternetGeneratorScreenState();
+  State<InternetGeneratorScreen> createState() =>
+      _InternetGeneratorScreenState();
 }
 
 class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
   final SmartFaker faker = SmartFaker();
-  
+
   // Email data
   String email = '';
   String safeEmail = '';
   String companyEmail = '';
-  
+
   // Account data
   String username = '';
   String password = '';
   String strongPassword = '';
-  
+
   // Web data
   String url = '';
   String domain = '';
   String ipv4 = '';
   String ipv6 = '';
   String macAddress = '';
-  
+
   // User agent
   String userAgent = '';
-  
+
   @override
   void initState() {
     super.initState();
     _generateAll();
   }
-  
+
   void _generateAll() {
     setState(() {
       // Email generation
       email = faker.internet.email();
       safeEmail = faker.internet.safeEmail();
       companyEmail = faker.internet.companyEmail(companyName: 'TechCorp');
-      
+
       // Account generation
       username = faker.internet.username();
       password = faker.internet.password();
@@ -52,19 +53,19 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
         length: 16,
         includeSpecial: true,
       );
-      
+
       // Web generation
       url = faker.internet.url(includePath: true);
       domain = faker.internet.domainName();
       ipv4 = faker.internet.ipv4();
       ipv6 = faker.internet.ipv6();
       macAddress = faker.internet.macAddress();
-      
+
       // User agent
       userAgent = faker.internet.userAgent();
     });
   }
-  
+
   void _copyToClipboard(String text) {
     Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
@@ -74,7 +75,7 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
       ),
     );
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +127,8 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
@@ -161,7 +163,8 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
                       label: const Text('Chrome'),
                       onPressed: () {
                         setState(() {
-                          userAgent = faker.internet.userAgent(browser: 'chrome');
+                          userAgent =
+                              faker.internet.userAgent(browser: 'chrome');
                         });
                       },
                     ),
@@ -169,7 +172,8 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
                       label: const Text('Firefox'),
                       onPressed: () {
                         setState(() {
-                          userAgent = faker.internet.userAgent(browser: 'firefox');
+                          userAgent =
+                              faker.internet.userAgent(browser: 'firefox');
                         });
                       },
                     ),
@@ -177,7 +181,8 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
                       label: const Text('Safari'),
                       onPressed: () {
                         setState(() {
-                          userAgent = faker.internet.userAgent(browser: 'safari');
+                          userAgent =
+                              faker.internet.userAgent(browser: 'safari');
                         });
                       },
                     ),
@@ -203,7 +208,7 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
       ),
     );
   }
-  
+
   Widget _buildCard({
     required String title,
     required IconData icon,
@@ -232,7 +237,7 @@ class _InternetGeneratorScreenState extends State<InternetGeneratorScreen> {
       ),
     );
   }
-  
+
   Widget _buildCopiableRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

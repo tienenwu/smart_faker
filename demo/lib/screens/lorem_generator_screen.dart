@@ -71,7 +71,7 @@ class _LoremGeneratorScreenState extends State<LoremGeneratorScreen> {
 
   Widget _buildDataItem(String label, dynamic value) {
     final displayValue = value.toString();
-    
+
     return Card(
       child: ExpansionTile(
         title: Text(label),
@@ -89,7 +89,8 @@ class _LoremGeneratorScreenState extends State<LoremGeneratorScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color:
+                        Theme.of(context).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: SelectableText(
@@ -132,9 +133,10 @@ class _LoremGeneratorScreenState extends State<LoremGeneratorScreen> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
-        ...data.entries.map((entry) => 
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+        ...data.entries.map(
+          (entry) => Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
             child: _buildDataItem(entry.key, entry.value),
           ),
         ),
@@ -186,7 +188,7 @@ class _LoremGeneratorScreenState extends State<LoremGeneratorScreen> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    selectedLocale == 'en_US' 
+                    selectedLocale == 'en_US'
                         ? 'Generating Lorem Ipsum text'
                         : selectedLocale == 'zh_TW'
                             ? '生成繁體中文示例文字'

@@ -11,7 +11,7 @@ class ColorGeneratorScreen extends StatefulWidget {
 
 class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
   late SmartFaker faker;
-  
+
   // Color formats
   String hexColor = '';
   String hexColorWithAlpha = '';
@@ -21,12 +21,12 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
   String hslaColor = '';
   String hsvColor = '';
   String cmykColor = '';
-  
+
   // Named colors
   String cssName = '';
   String materialColor = '';
   String tailwindColor = '';
-  
+
   // Color properties
   String randomColor = '';
   String warmColor = '';
@@ -35,7 +35,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
   String vibrantColor = '';
   String darkColor = '';
   String lightColor = '';
-  
+
   // Color schemes
   List<String> monochromaticScheme = [];
   List<String> analogousScheme = [];
@@ -62,12 +62,12 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
       hslaColor = faker.color.hsla();
       hsvColor = faker.color.hsv();
       cmykColor = faker.color.cmyk();
-      
+
       // Named colors
       cssName = faker.color.cssName();
       materialColor = faker.color.material();
       tailwindColor = faker.color.tailwind();
-      
+
       // Color properties
       randomColor = faker.color.randomColor();
       warmColor = faker.color.warm();
@@ -76,7 +76,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
       vibrantColor = faker.color.vibrant();
       darkColor = faker.color.dark();
       lightColor = faker.color.light();
-      
+
       // Color schemes
       monochromaticScheme = faker.color.monochromatic();
       analogousScheme = faker.color.analogous();
@@ -150,7 +150,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Named Colors Section
           Card(
             child: Padding(
@@ -171,7 +171,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Color Properties Section
           Card(
             child: Padding(
@@ -196,7 +196,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Color Schemes Section
           Card(
             child: Padding(
@@ -214,7 +214,8 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
                   _buildSchemeItem('Complementary', complementaryScheme),
                   _buildSchemeItem('Triadic', triadicScheme),
                   _buildSchemeItem('Tetradic', tetradicScheme),
-                  _buildSchemeItem('Split Complementary', splitComplementaryScheme),
+                  _buildSchemeItem(
+                      'Split Complementary', splitComplementaryScheme),
                 ],
               ),
             ),
@@ -234,7 +235,7 @@ class _ColorGeneratorScreenState extends State<ColorGeneratorScreen> {
     if (value.startsWith('#')) {
       color = _parseHexColor(value);
     }
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: InkWell(

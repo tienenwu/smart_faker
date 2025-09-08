@@ -23,8 +23,8 @@ void main() {
       test('should generate credit card issuer', () {
         final issuer = faker.finance.creditCardIssuer();
         expect(issuer, isNotEmpty);
-        expect(['Visa', 'Mastercard', 'American Express', 'Discover'], 
-          contains(issuer));
+        expect(['Visa', 'Mastercard', 'American Express', 'Discover'],
+            contains(issuer));
       });
 
       test('should generate masked credit card', () {
@@ -98,16 +98,15 @@ void main() {
       test('should generate crypto currency', () {
         final crypto = faker.finance.cryptoCurrency();
         expect(crypto, isNotEmpty);
-        expect(['Bitcoin', 'Ethereum', 'Litecoin', 'Ripple'], 
-          contains(crypto));
+        expect(['Bitcoin', 'Ethereum', 'Litecoin', 'Ripple'], contains(crypto));
       });
     });
 
     group('Transaction', () {
       test('should generate transaction type', () {
         final type = faker.finance.transactionType();
-        expect(['deposit', 'withdrawal', 'payment', 'transfer'], 
-          contains(type));
+        expect(
+            ['deposit', 'withdrawal', 'payment', 'transfer'], contains(type));
       });
 
       test('should generate transaction description', () {
@@ -125,21 +124,21 @@ void main() {
       test('should generate English finance data', () {
         final faker = SmartFaker(locale: 'en_US');
         final currency = faker.finance.currencySymbol();
-        
+
         expect(currency, equals('\$'));
       });
 
       test('should generate Traditional Chinese finance data', () {
         final faker = SmartFaker(locale: 'zh_TW');
         final currency = faker.finance.currencySymbol();
-        
+
         expect(currency, equals('NT\$'));
       });
 
       test('should generate Japanese finance data', () {
         final faker = SmartFaker(locale: 'ja_JP');
         final currency = faker.finance.currencySymbol();
-        
+
         expect(currency, equals('¥'));
       });
     });
@@ -148,10 +147,12 @@ void main() {
       test('should generate reproducible finance data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
-        expect(faker1.finance.creditCardNumber(), equals(faker2.finance.creditCardNumber()));
+
+        expect(faker1.finance.creditCardNumber(),
+            equals(faker2.finance.creditCardNumber()));
         expect(faker1.finance.amount(), equals(faker2.finance.amount()));
-        expect(faker1.finance.bitcoinAddress(), equals(faker2.finance.bitcoinAddress()));
+        expect(faker1.finance.bitcoinAddress(),
+            equals(faker2.finance.bitcoinAddress()));
       });
     });
   });

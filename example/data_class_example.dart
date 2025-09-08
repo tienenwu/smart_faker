@@ -11,7 +11,7 @@ class User {
   final String? bio;
   final DateTime createdAt;
   final bool isActive;
-  
+
   const User({
     required this.id,
     required this.firstName,
@@ -23,7 +23,7 @@ class User {
     required this.createdAt,
     required this.isActive,
   });
-  
+
   /// Factory constructor to create a User with fake data
   factory User.fake({int? seed, String? locale}) {
     final faker = SmartFaker(seed: seed, locale: locale ?? 'en_US');
@@ -39,7 +39,7 @@ class User {
       isActive: faker.random.boolean(),
     );
   }
-  
+
   /// Generate a list of fake users
   static List<User> fakeList({required int count, int? seed}) {
     return List.generate(count, (_) => User.fake(seed: seed));
@@ -56,7 +56,7 @@ class Product {
   final String category;
   final int stock;
   final List<String> tags;
-  
+
   const Product({
     required this.id,
     required this.name,
@@ -67,7 +67,7 @@ class Product {
     required this.stock,
     required this.tags,
   });
-  
+
   /// Static method to create Product with fake data
   static Product fromFaker(SmartFaker faker) {
     return Product(
@@ -81,13 +81,13 @@ class Product {
       tags: List.generate(3, (_) => faker.lorem.word()),
     );
   }
-  
+
   /// Generate fake product
   static Product fake({int? seed}) {
     final faker = SmartFaker(seed: seed);
     return fromFaker(faker);
   }
-  
+
   /// Generate list of fake products
   static List<Product> fakeList({required int count, int? seed}) {
     final faker = SmartFaker(seed: seed);
@@ -104,7 +104,7 @@ class Order {
   final String status;
   final DateTime orderDate;
   final String shippingAddress;
-  
+
   const Order({
     required this.id,
     required this.customerId,
@@ -128,12 +128,13 @@ extension OrderFaker on Order {
         (_) => faker.random.uuid(),
       ),
       total: faker.commerce.price(min: 10, max: 1000),
-      status: faker.random.element(['pending', 'processing', 'shipped', 'delivered']),
+      status: faker.random
+          .element(['pending', 'processing', 'shipped', 'delivered']),
       orderDate: faker.dateTime.recent(),
       shippingAddress: faker.location.streetAddress(),
     );
   }
-  
+
   static List<Order> fakeList({required int count, int? seed}) {
     return List.generate(count, (_) => fake(seed: seed));
   }
@@ -143,41 +144,41 @@ extension OrderFaker on Order {
 void schemaBuilderExample() {
   final faker = SmartFaker();
   final schemaBuilder = SchemaBuilder(faker);
-  
+
   // Define User schema
   final userSchema = SchemaBuilder.defineSchema('User')
-    .id()
-    .withName()
-    .withContact()
-    .field('age', FakerFieldType.integer, min: 18, max: 65)
-    .field('bio', FakerFieldType.paragraph, required: false)
-    .withTimestamps()
-    .build();
-  
+      .id()
+      .withName()
+      .withContact()
+      .field('age', FakerFieldType.integer, min: 18, max: 65)
+      .field('bio', FakerFieldType.paragraph, required: false)
+      .withTimestamps()
+      .build();
+
   // Define Product schema
   final productSchema = SchemaBuilder.defineSchema('Product')
-    .id()
-    .field('name', FakerFieldType.productName)
-    .field('price', FakerFieldType.price, min: 9.99, max: 999.99)
-    .field('description', FakerFieldType.paragraph)
-    .withTimestamps()
-    .build();
-  
+      .id()
+      .field('name', FakerFieldType.productName)
+      .field('price', FakerFieldType.price, min: 9.99, max: 999.99)
+      .field('description', FakerFieldType.paragraph)
+      .withTimestamps()
+      .build();
+
   // Define Order schema with relationships
   final orderSchema = SchemaBuilder.defineSchema('Order')
-    .id()
-    .belongsTo('userId', 'User')
-    .hasMany('products', 'Product')
-    .field('total', FakerFieldType.amount)
-    .field('status', FakerFieldType.word)
-    .withTimestamps()
-    .build();
-  
+      .id()
+      .belongsTo('userId', 'User')
+      .hasMany('products', 'Product')
+      .field('total', FakerFieldType.amount)
+      .field('status', FakerFieldType.word)
+      .withTimestamps()
+      .build();
+
   // Register schemas
   schemaBuilder.registerSchema(userSchema);
   schemaBuilder.registerSchema(productSchema);
   schemaBuilder.registerSchema(orderSchema);
-  
+
   // Generate data with relationships
   final order = schemaBuilder.generate('Order');
   print(order);
@@ -187,20 +188,20 @@ void main() {
   // Example 1: Generate single user
   final user = User.fake();
   print('User: ${user.firstName} ${user.lastName} - ${user.email}');
-  
+
   // Example 2: Generate list of products
   final products = Product.fakeList(count: 5);
   for (final product in products) {
     print('Product: ${product.name} - \$${product.price}');
   }
-  
+
   // Example 3: Generate order using extension
   final order = OrderFaker.fake();
   print('Order: ${order.id} - Total: \$${order.total}');
-  
+
   // Example 4: Use SchemaBuilder
   schemaBuilderExample();
-  
+
   // Example 5: Reproducible data with seed
   final user1 = User.fake(seed: 42);
   final user2 = User.fake(seed: 42);

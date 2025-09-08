@@ -71,8 +71,10 @@ class ModuleRegistry {
 
   void _initializeModules() {
     // Initialize all modules here
-    _person = PersonModule(randomGenerator: randomGenerator, localeManager: localeManager);
-    _internet = InternetModule(randomGenerator: randomGenerator, localeManager: localeManager);
+    _person = PersonModule(
+        randomGenerator: randomGenerator, localeManager: localeManager);
+    _internet = InternetModule(
+        randomGenerator: randomGenerator, localeManager: localeManager);
     _location = LocationModule(randomGenerator, localeManager);
     _dateTime = DateTimeModule(randomGenerator, localeManager);
     _commerce = CommerceModule(randomGenerator, localeManager);

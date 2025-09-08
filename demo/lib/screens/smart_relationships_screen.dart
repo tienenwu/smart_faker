@@ -7,17 +7,18 @@ class SmartRelationshipsScreen extends StatefulWidget {
   const SmartRelationshipsScreen({super.key});
 
   @override
-  State<SmartRelationshipsScreen> createState() => _SmartRelationshipsScreenState();
+  State<SmartRelationshipsScreen> createState() =>
+      _SmartRelationshipsScreenState();
 }
 
 class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
   final SmartFaker faker = SmartFaker(seed: 42);
   late RelationshipManager manager;
   late SmartRelationshipBuilder builder;
-  
+
   String selectedExample = 'ecommerce';
   Map<String, dynamic> generatedData = {};
-  
+
   @override
   void initState() {
     super.initState();
@@ -25,10 +26,10 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
     builder = SmartRelationshipBuilder(manager: manager, faker: faker);
     _generateExample();
   }
-  
+
   void _generateExample() {
     manager.clear(); // Clear previous data
-    
+
     switch (selectedExample) {
       case 'ecommerce':
         _generateEcommerceExample();
@@ -44,7 +45,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
         break;
     }
   }
-  
+
   void _generateEcommerceExample() {
     // Create customer
     final customer = {
@@ -53,40 +54,45 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       'email': faker.internet.email(),
       'registeredAt': faker.dateTime.past().toIso8601String(),
     };
-    
+
     // Create order with related items
     final order = builder.oneToMany(
       parentSchema: 'Order',
       childSchema: 'OrderItem',
       parent: {
-        'orderNumber': 'ORD-${manager.getNextCounter('Order').toString().padLeft(6, '0')}',
+        'orderNumber':
+            'ORD-${manager.getNextCounter('Order').toString().padLeft(6, '0')}',
         'customerId': customer['id'],
         'customerName': customer['name'],
-        'status': faker.random.element(['pending', 'processing', 'shipped', 'delivered']),
+        'status': faker.random
+            .element(['pending', 'processing', 'shipped', 'delivered']),
         'orderDate': faker.dateTime.recent().toIso8601String(),
       },
       childrenGenerator: (orderId) {
         final itemCount = faker.random.integer(min: 2, max: 5);
-        return List.generate(itemCount, (i) => {
-          'id': faker.random.uuid(),
-          'productName': faker.commerce.productName(),
-          'quantity': faker.random.integer(min: 1, max: 3),
-          'unitPrice': faker.commerce.price(min: 9.99, max: 199.99),
-        });
+        return List.generate(
+            itemCount,
+            (i) => {
+                  'id': faker.random.uuid(),
+                  'productName': faker.commerce.productName(),
+                  'quantity': faker.random.integer(min: 1, max: 3),
+                  'unitPrice': faker.commerce.price(min: 9.99, max: 199.99),
+                });
       },
     );
-    
+
     // Calculate total
-    final items = manager.getAllItems('OrderItem')
+    final items = manager
+        .getAllItems('OrderItem')
         .where((item) => item['orderId'] == order['id'])
         .toList();
-    
+
     double total = 0;
     for (final item in items) {
       total += (item['unitPrice'] as num) * (item['quantity'] as int);
     }
     order['total'] = total;
-    
+
     setState(() {
       generatedData = {
         'customer': customer,
@@ -95,19 +101,21 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       };
     });
   }
-  
+
   void _generateSocialMediaExample() {
     // Create users
-    final users = List.generate(5, (i) => {
-      'id': faker.random.uuid(),
-      'username': faker.internet.username(),
-      'displayName': faker.person.fullName(),
-      'bio': faker.lorem.sentence(),
-      'joinedAt': faker.dateTime.past().toIso8601String(),
-      'followersCount': 0,
-      'followingCount': 0,
-    });
-    
+    final users = List.generate(
+        5,
+        (i) => {
+              'id': faker.random.uuid(),
+              'username': faker.internet.username(),
+              'displayName': faker.person.fullName(),
+              'bio': faker.lorem.sentence(),
+              'joinedAt': faker.dateTime.past().toIso8601String(),
+              'followersCount': 0,
+              'followingCount': 0,
+            });
+
     // Create posts for each user
     final posts = <Map<String, dynamic>>[];
     for (final user in users) {
@@ -124,7 +132,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
         manager.storeData('Post', posts.last);
       }
     }
-    
+
     // Create follow relationships
     final followData = builder.manyToMany(
       schema1: 'User',
@@ -135,15 +143,16 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       foreign1Field: 'followerId',
       foreign2Field: 'followingId',
     );
-    
+
     // Update follower counts
     for (final follow in followData) {
       final follower = users.firstWhere((u) => u['id'] == follow['followerId']);
-      final following = users.firstWhere((u) => u['id'] == follow['followingId']);
+      final following =
+          users.firstWhere((u) => u['id'] == follow['followingId']);
       follower['followingCount'] = (follower['followingCount'] as int) + 1;
       following['followersCount'] = (following['followersCount'] as int) + 1;
     }
-    
+
     setState(() {
       generatedData = {
         'users': users,
@@ -152,7 +161,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       };
     });
   }
-  
+
   void _generateHierarchyExample() {
     final orgChart = builder.hierarchy(
       schema: 'Department',
@@ -162,11 +171,10 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
           ['Engineering', 'Marketing', 'Sales', 'HR'],
           ['Frontend', 'Backend', 'QA', 'Design'],
         ];
-        
-        final typeList = depth < departmentTypes.length 
-            ? departmentTypes[depth]
-            : ['Team'];
-        
+
+        final typeList =
+            depth < departmentTypes.length ? departmentTypes[depth] : ['Team'];
+
         return {
           'name': faker.random.element(typeList),
           'budget': faker.finance.amount(min: 50000, max: 500000),
@@ -176,20 +184,26 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       maxDepth: 2,
       childrenPerNode: 3,
     );
-    
+
     setState(() {
       generatedData = {
         'organization': orgChart,
       };
     });
   }
-  
+
   void _generateSequentialExample() {
     final events = builder.sequence(
       schema: 'Event',
       count: 5,
       itemGenerator: (index, previous) {
-        final eventTypes = ['user_signup', 'email_verified', 'profile_completed', 'first_purchase', 'subscription_upgraded'];
+        final eventTypes = [
+          'user_signup',
+          'email_verified',
+          'profile_completed',
+          'first_purchase',
+          'subscription_upgraded'
+        ];
         DateTime baseTime;
         if (previous != null && previous['timestamp'] != null) {
           // Parse the ISO string back to DateTime for calculation
@@ -197,32 +211,36 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
         } else {
           baseTime = faker.dateTime.past();
         }
-        
+
         return {
           'id': 'evt_${index + 1}',
-          'type': index < eventTypes.length ? eventTypes[index] : 'custom_event',
+          'type':
+              index < eventTypes.length ? eventTypes[index] : 'custom_event',
           'userId': previous?['userId'] ?? faker.random.uuid(),
           'previousEventId': previous?['id'],
-          'timestamp': baseTime.add(Duration(hours: faker.random.integer(min: 1, max: 24))).toIso8601String(),
+          'timestamp': baseTime
+              .add(Duration(hours: faker.random.integer(min: 1, max: 24)))
+              .toIso8601String(),
           'metadata': {
             'ip': faker.internet.ipv4(),
-            'sessionId': previous?['metadata']?['sessionId'] ?? faker.random.uuid(),
+            'sessionId':
+                previous?['metadata']?['sessionId'] ?? faker.random.uuid(),
           },
         };
       },
     );
-    
+
     setState(() {
       generatedData = {
         'events': events,
       };
     });
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Smart Relationships'),
@@ -271,7 +289,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
               },
             ),
           ),
-          
+
           // Description card
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -297,7 +315,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
               ),
             ),
           ),
-          
+
           // Generated data display
           Expanded(
             child: generatedData.isEmpty
@@ -312,7 +330,9 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
                             Container(
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.primaryContainer,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
                                 borderRadius: const BorderRadius.only(
                                   topLeft: Radius.circular(12),
                                   topRight: Radius.circular(12),
@@ -322,17 +342,24 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
                                 children: [
                                   Text(
                                     'Generated Data',
-                                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                   ),
                                   const Spacer(),
                                   IconButton(
                                     icon: const Icon(Icons.copy, size: 20),
                                     onPressed: () {
-                                      final jsonStr = const JsonEncoder.withIndent('  ').convert(generatedData);
-                                      Clipboard.setData(ClipboardData(text: jsonStr));
-                                      ScaffoldMessenger.of(context).showSnackBar(
+                                      final jsonStr =
+                                          const JsonEncoder.withIndent('  ')
+                                              .convert(generatedData);
+                                      Clipboard.setData(
+                                          ClipboardData(text: jsonStr));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
                                         const SnackBar(
                                           content: Text('Copied to clipboard'),
                                           duration: Duration(seconds: 2),
@@ -348,11 +375,14 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
                               constraints: const BoxConstraints(maxHeight: 500),
                               child: SingleChildScrollView(
                                 child: SelectableText(
-                                  const JsonEncoder.withIndent('  ').convert(generatedData),
+                                  const JsonEncoder.withIndent('  ')
+                                      .convert(generatedData),
                                   style: TextStyle(
                                     fontFamily: 'monospace',
                                     fontSize: 12,
-                                    color: isDarkMode ? Colors.greenAccent : Colors.black87,
+                                    color: isDarkMode
+                                        ? Colors.greenAccent
+                                        : Colors.black87,
                                   ),
                                 ),
                               ),
@@ -369,7 +399,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
       ),
     );
   }
-  
+
   String _getExampleDescription() {
     switch (selectedExample) {
       case 'ecommerce':
@@ -384,10 +414,10 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
         return '';
     }
   }
-  
+
   Widget _buildStatisticsCard() {
     Map<String, int> stats = {};
-    
+
     switch (selectedExample) {
       case 'ecommerce':
         stats = {
@@ -423,7 +453,7 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
         };
         break;
     }
-    
+
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -433,23 +463,23 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
             Text(
               'Statistics',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             ...stats.entries.map((entry) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(entry.key),
-                  Text(
-                    entry.value.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(entry.key),
+                      Text(
+                        entry.value.toString(),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )),
+                )),
           ],
         ),
       ),

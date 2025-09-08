@@ -54,19 +54,54 @@ void main() {
     group('Cryptocurrency', () {
       test('should generate crypto currency name', () {
         final name = faker.crypto.currencyName();
-        expect(['Bitcoin', 'Ethereum', 'Binance Coin', 'Cardano', 'Solana', 
-                'XRP', 'Polkadot', 'Dogecoin', 'Avalanche', 'Chainlink',
-                'Polygon', 'Tron', 'Litecoin', 'Shiba Inu', 'Wrapped Bitcoin',
-                'Uniswap', 'Cosmos', 'Ethereum Classic', 'Bitcoin Cash', 'Stellar'], 
-          contains(name));
+        expect([
+          'Bitcoin',
+          'Ethereum',
+          'Binance Coin',
+          'Cardano',
+          'Solana',
+          'XRP',
+          'Polkadot',
+          'Dogecoin',
+          'Avalanche',
+          'Chainlink',
+          'Polygon',
+          'Tron',
+          'Litecoin',
+          'Shiba Inu',
+          'Wrapped Bitcoin',
+          'Uniswap',
+          'Cosmos',
+          'Ethereum Classic',
+          'Bitcoin Cash',
+          'Stellar'
+        ], contains(name));
       });
 
       test('should generate crypto currency symbol', () {
         final symbol = faker.crypto.currencySymbol();
-        expect(['BTC', 'ETH', 'BNB', 'ADA', 'SOL', 'XRP', 'DOT', 'DOGE',
-                'AVAX', 'LINK', 'MATIC', 'TRX', 'LTC', 'SHIB', 'WBTC',
-                'UNI', 'ATOM', 'ETC', 'BCH', 'XLM'], 
-          contains(symbol));
+        expect([
+          'BTC',
+          'ETH',
+          'BNB',
+          'ADA',
+          'SOL',
+          'XRP',
+          'DOT',
+          'DOGE',
+          'AVAX',
+          'LINK',
+          'MATIC',
+          'TRX',
+          'LTC',
+          'SHIB',
+          'WBTC',
+          'UNI',
+          'ATOM',
+          'ETC',
+          'BCH',
+          'XLM'
+        ], contains(symbol));
       });
 
       test('should generate crypto currency pair', () {
@@ -192,7 +227,7 @@ void main() {
       test('should generate NFT rarity', () {
         final rarity = faker.crypto.nftRarity();
         expect(['Common', 'Uncommon', 'Rare', 'Epic', 'Legendary', 'Mythic'],
-          contains(rarity));
+            contains(rarity));
       });
 
       test('should generate IPFS hash', () {
@@ -206,9 +241,11 @@ void main() {
       test('should generate reproducible crypto data with seed', () {
         final faker1 = SmartFaker(seed: 42);
         final faker2 = SmartFaker(seed: 42);
-        
-        expect(faker1.crypto.bitcoinAddress(), equals(faker2.crypto.bitcoinAddress()));
-        expect(faker1.crypto.ethereumAddress(), equals(faker2.crypto.ethereumAddress()));
+
+        expect(faker1.crypto.bitcoinAddress(),
+            equals(faker2.crypto.bitcoinAddress()));
+        expect(faker1.crypto.ethereumAddress(),
+            equals(faker2.crypto.ethereumAddress()));
         expect(faker1.crypto.seedPhrase(), equals(faker2.crypto.seedPhrase()));
       });
     });

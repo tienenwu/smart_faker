@@ -12,7 +12,7 @@ class PhoneGeneratorScreen extends StatefulWidget {
 class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Phone data
   String phoneNumber = '';
   String mobileNumber = '';
@@ -20,14 +20,14 @@ class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
   String tollFreeNumber = '';
   String formattedNumber = '';
   String phoneExtension = '';
-  
+
   // Device data
   String imei = '';
   String imsi = '';
   String phoneModel = '';
   String manufacturer = '';
   String osVersion = '';
-  
+
   // Code data
   String countryCode = '';
   String areaCode = '';
@@ -48,14 +48,14 @@ class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
       tollFreeNumber = faker.phone.tollFree();
       formattedNumber = faker.phone.formatted();
       phoneExtension = faker.phone.extension();
-      
+
       // Device info
       imei = faker.phone.imei();
       imsi = faker.phone.imsi();
       phoneModel = faker.phone.model();
       manufacturer = faker.phone.manufacturer();
       osVersion = faker.phone.osVersion();
-      
+
       // Codes
       countryCode = faker.phone.countryCode();
       areaCode = faker.phone.areaCode();
@@ -127,7 +127,7 @@ class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Phone Numbers Section
           Card(
             child: Padding(
@@ -142,16 +142,19 @@ class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
                   const SizedBox(height: 16),
                   _buildPhoneItem('Phone Number', phoneNumber, Icons.phone),
                   _buildPhoneItem('Mobile', mobileNumber, Icons.phone_android),
-                  _buildPhoneItem('International', internationalNumber, Icons.language),
-                  _buildPhoneItem('Toll-Free', tollFreeNumber, Icons.phone_forwarded),
-                  _buildPhoneItem('Formatted', formattedNumber, Icons.format_list_numbered),
+                  _buildPhoneItem(
+                      'International', internationalNumber, Icons.language),
+                  _buildPhoneItem(
+                      'Toll-Free', tollFreeNumber, Icons.phone_forwarded),
+                  _buildPhoneItem(
+                      'Formatted', formattedNumber, Icons.format_list_numbered),
                   _buildPhoneItem('Extension', phoneExtension, Icons.dialpad),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Device Information Section
           Card(
             child: Padding(
@@ -174,7 +177,7 @@ class _PhoneGeneratorScreenState extends State<PhoneGeneratorScreen> {
             ),
           ),
           const SizedBox(height: 16),
-          
+
           // Codes Section
           Card(
             child: Padding(

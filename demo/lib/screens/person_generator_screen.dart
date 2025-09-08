@@ -12,7 +12,7 @@ class PersonGeneratorScreen extends StatefulWidget {
 class _PersonGeneratorScreenState extends State<PersonGeneratorScreen> {
   SmartFaker faker = SmartFaker();
   String currentLocale = 'en_US';
-  
+
   String firstName = '';
   String lastName = '';
   String fullName = '';
@@ -21,31 +21,31 @@ class _PersonGeneratorScreenState extends State<PersonGeneratorScreen> {
   String jobTitle = '';
   String jobDepartment = '';
   String completePerson = '';
-  
+
   @override
   void initState() {
     super.initState();
     _generateAll();
   }
-  
+
   void _generateAll() {
     setState(() {
       // Generate individual fields that are related
       gender = faker.person.gender();
       firstName = faker.person.firstName(gender: gender);
       lastName = faker.person.lastName();
-      
+
       // Combine firstName and lastName based on locale
       if (currentLocale == 'zh_TW' || currentLocale == 'ja_JP') {
         fullName = '$lastName$firstName'; // Asian name order
       } else {
         fullName = '$firstName $lastName'; // Western name order
       }
-      
+
       age = faker.person.age();
       jobTitle = faker.person.jobTitle();
       jobDepartment = faker.person.jobDepartment();
-      
+
       // Generate a completely separate person for the Complete Person card
       final person = faker.person.generatePerson();
       completePerson = '''
@@ -58,7 +58,7 @@ Phone: ${person.phone}
 ''';
     });
   }
-  
+
   void _changeLocale(String locale) {
     setState(() {
       currentLocale = locale;
@@ -66,7 +66,7 @@ Phone: ${person.phone}
       _generateAll();
     });
   }
-  
+
   String _getLocaleName(String locale) {
     switch (locale) {
       case 'en_US':
@@ -79,7 +79,7 @@ Phone: ${person.phone}
         return locale;
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +95,7 @@ Phone: ${person.phone}
                 value: 'en_US',
                 child: Row(
                   children: [
-                    currentLocale == 'en_US' 
+                    currentLocale == 'en_US'
                         ? const Icon(Icons.check, size: 20)
                         : const SizedBox(width: 20),
                     const SizedBox(width: 8),
@@ -107,7 +107,7 @@ Phone: ${person.phone}
                 value: 'zh_TW',
                 child: Row(
                   children: [
-                    currentLocale == 'zh_TW' 
+                    currentLocale == 'zh_TW'
                         ? const Icon(Icons.check, size: 20)
                         : const SizedBox(width: 20),
                     const SizedBox(width: 8),
@@ -119,7 +119,7 @@ Phone: ${person.phone}
                 value: 'ja_JP',
                 child: Row(
                   children: [
-                    currentLocale == 'ja_JP' 
+                    currentLocale == 'ja_JP'
                         ? const Icon(Icons.check, size: 20)
                         : const SizedBox(width: 20),
                     const SizedBox(width: 8),
@@ -151,7 +151,8 @@ Phone: ${person.phone}
                       'Current Locale: ${_getLocaleName(currentLocale)} ($currentLocale)',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onSecondaryContainer,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                     ),
                   ],
@@ -163,9 +164,9 @@ Phone: ${person.phone}
               child: Text(
                 '— Individual Field Generation (Related) —',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontStyle: FontStyle.italic,
-                ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic,
+                    ),
               ),
             ),
             const SizedBox(height: 16),
@@ -190,10 +191,12 @@ Phone: ${person.phone}
                           onPressed: () {
                             setState(() {
                               gender = Gender.male;
-                              firstName = faker.person.firstName(gender: Gender.male);
+                              firstName =
+                                  faker.person.firstName(gender: Gender.male);
                               // Keep the same lastName
                               // Update fullName with new combination
-                              if (currentLocale == 'zh_TW' || currentLocale == 'ja_JP') {
+                              if (currentLocale == 'zh_TW' ||
+                                  currentLocale == 'ja_JP') {
                                 fullName = '$lastName$firstName';
                               } else {
                                 fullName = '$firstName $lastName';
@@ -208,10 +211,12 @@ Phone: ${person.phone}
                           onPressed: () {
                             setState(() {
                               gender = Gender.female;
-                              firstName = faker.person.firstName(gender: Gender.female);
+                              firstName =
+                                  faker.person.firstName(gender: Gender.female);
                               // Keep the same lastName
                               // Update fullName with new combination
-                              if (currentLocale == 'zh_TW' || currentLocale == 'ja_JP') {
+                              if (currentLocale == 'zh_TW' ||
+                                  currentLocale == 'ja_JP') {
                                 fullName = '$lastName$firstName';
                               } else {
                                 fullName = '$firstName $lastName';
@@ -240,7 +245,8 @@ Phone: ${person.phone}
                     ),
                     const SizedBox(height: 16),
                     _buildDataRow('Age', age.toString()),
-                    _buildDataRow('Gender', gender == Gender.male ? 'Male' : 'Female'),
+                    _buildDataRow(
+                        'Gender', gender == Gender.male ? 'Male' : 'Female'),
                     const SizedBox(height: 16),
                     Wrap(
                       spacing: 8,
@@ -303,9 +309,9 @@ Phone: ${person.phone}
               child: Text(
                 '— Separate Complete Person Generation —',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontStyle: FontStyle.italic,
-                ),
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      fontStyle: FontStyle.italic,
+                    ),
               ),
             ),
             const SizedBox(height: 16),
@@ -320,7 +326,8 @@ Phone: ${person.phone}
                       children: [
                         Icon(
                           Icons.person_outline,
-                          color: Theme.of(context).colorScheme.onPrimaryContainer,
+                          color:
+                              Theme.of(context).colorScheme.onPrimaryContainer,
                         ),
                         const SizedBox(width: 8),
                         Text(
@@ -355,7 +362,7 @@ Phone: ${person.phone}
       ),
     );
   }
-  
+
   Widget _buildDataRow(String label, String value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),

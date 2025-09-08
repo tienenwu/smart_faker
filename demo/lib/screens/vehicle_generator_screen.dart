@@ -12,7 +12,7 @@ class VehicleGeneratorScreen extends StatefulWidget {
 class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
   late SmartFaker faker;
   String currentLocale = 'en_US';
-  
+
   // Vehicle info
   String manufacturer = '';
   String model = '';
@@ -20,12 +20,12 @@ class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
   String fuel = '';
   String color = '';
   String transmission = '';
-  
+
   // Identifiers
   String vin = '';
   String licensePlate = '';
   String registration = '';
-  
+
   // Specifications
   int year = 0;
   String engine = '';
@@ -58,12 +58,12 @@ class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
       fuel = faker.vehicle.fuel();
       color = faker.vehicle.color();
       transmission = faker.vehicle.transmission();
-      
+
       // Identifiers
       vin = faker.vehicle.vin();
       licensePlate = faker.vehicle.licensePlate();
       registration = faker.vehicle.registration();
-      
+
       // Specifications
       year = faker.vehicle.year();
       engine = faker.vehicle.engine();
@@ -101,15 +101,18 @@ class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
               items: const [
                 DropdownMenuItem(
                   value: 'en_US',
-                  child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+                  child: Text('🇺🇸 English',
+                      style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'zh_TW',
-                  child: Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇹🇼 繁體中文', style: TextStyle(color: Colors.white)),
                 ),
                 DropdownMenuItem(
                   value: 'ja_JP',
-                  child: Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
+                  child:
+                      Text('🇯🇵 日本語', style: TextStyle(color: Colors.white)),
                 ),
               ],
               onChanged: (value) {
@@ -185,7 +188,8 @@ class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(20),
@@ -315,7 +319,10 @@ class _VehicleGeneratorScreenState extends State<VehicleGeneratorScreen> {
             child: Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.5),
+                color: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerHighest
+                    .withOpacity(0.5),
                 borderRadius: BorderRadius.circular(4),
                 border: Border.all(
                   color: Theme.of(context).colorScheme.outline.withOpacity(0.3),

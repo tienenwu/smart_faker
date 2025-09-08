@@ -12,7 +12,7 @@ class FoodGeneratorScreen extends StatefulWidget {
 class _FoodGeneratorScreenState extends State<FoodGeneratorScreen> {
   late SmartFaker faker;
   final Map<String, String> _values = {};
-  
+
   @override
   void initState() {
     super.initState();
@@ -60,22 +60,24 @@ class _FoodGeneratorScreenState extends State<FoodGeneratorScreen> {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: _values.entries.map((entry) => Card(
-          margin: const EdgeInsets.only(bottom: 8),
-          child: ListTile(
-            title: Text(entry.key),
-            subtitle: Text(
-              entry.value,
-              style: const TextStyle(fontFamily: 'monospace'),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-            trailing: IconButton(
-              icon: const Icon(Icons.copy, size: 20),
-              onPressed: () => _copyToClipboard(entry.value),
-            ),
-          ),
-        )).toList(),
+        children: _values.entries
+            .map((entry) => Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    title: Text(entry.key),
+                    subtitle: Text(
+                      entry.value,
+                      style: const TextStyle(fontFamily: 'monospace'),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.copy, size: 20),
+                      onPressed: () => _copyToClipboard(entry.value),
+                    ),
+                  ),
+                ))
+            .toList(),
       ),
     );
   }

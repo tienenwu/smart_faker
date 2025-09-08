@@ -8,12 +8,12 @@ import '../locales/ja_jp/datetime_data.dart';
 class DateTimeModule {
   /// Random generator instance for generating random values.
   final RandomGenerator _random;
-  
+
   /// Locale manager for handling localization.
   final LocaleManager _localeManager;
 
   /// Creates a new instance of [DateTimeModule].
-  /// 
+  ///
   /// [_random] is used for generating random values.
   /// [_localeManager] handles localization of date and time data.
   DateTimeModule(this._random, this._localeManager);
@@ -44,11 +44,11 @@ class DateTimeModule {
       from = to;
       to = temp;
     }
-    
+
     if (from.isAtSameMomentAs(to)) {
       return from;
     }
-    
+
     final diffMillis = to.millisecondsSinceEpoch - from.millisecondsSinceEpoch;
     final randomMillis = _random.nextDouble() * diffMillis;
     return from.add(Duration(milliseconds: randomMillis.toInt()));
@@ -167,7 +167,7 @@ class DateTimeModule {
     result = result.replaceAll('HH', date.hour.toString().padLeft(2, '0'));
     result = result.replaceAll('mm', date.minute.toString().padLeft(2, '0'));
     result = result.replaceAll('ss', date.second.toString().padLeft(2, '0'));
-    
+
     // Locale-specific month and weekday names
     if (format.contains('MMMM')) {
       final months = _getMonthsList();
@@ -185,7 +185,7 @@ class DateTimeModule {
       final weekdaysAbbr = _getWeekdaysAbbrList();
       result = result.replaceAll('EEE', weekdaysAbbr[date.weekday - 1]);
     }
-    
+
     return result;
   }
 
