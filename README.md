@@ -5,7 +5,7 @@
 
 A powerful and intelligent fake data generator for Flutter and Dart applications. SmartFaker provides comprehensive test data generation with smart relationships, internationalization support, and schema-based generation.
 
-**Version:** 0.1.0  
+**Version:** 0.1.1  
 **Last Updated:** 2025-09-08
 
 ## Features
@@ -25,7 +25,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.1.0
+  smart_faker: ^0.1.1
 ```
 
 Then run:
