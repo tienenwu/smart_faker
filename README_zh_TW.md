@@ -8,6 +8,12 @@
 **版本：** 0.1.1  
 **最後更新：** 2025-09-08
 
+## 📦 資源
+
+- **GitHub 儲存庫：** [https://github.com/tienenwu/smart_faker](https://github.com/tienenwu/smart_faker)
+- **示範應用程式：** 在儲存庫的 `/demo` 資料夾中提供所有功能的完整範例
+- **API 文件：** [pub.dev/documentation/smart_faker](https://pub.dev/documentation/smart_faker/latest/)
+
 ## 功能特色
 
 - 🌍 **多語言支援**：英文、繁體中文、日文
@@ -420,6 +426,25 @@ Future<void> seedDatabase() async {
 - `en_US` - 英文（美國）- 預設
 - `zh_TW` - 繁體中文
 - `ja_JP` - 日文
+
+## 範例應用程式
+
+[GitHub 儲存庫](https://github.com/tienenwu/smart_faker/tree/main/demo)中提供了完整的示範應用程式。示範包含：
+
+- 所有資料生成模組
+- 即時範例的基於模式生成
+- 智慧關聯示範
+- 多語言支援
+- 自訂頭像生成
+- 展示不同使用案例的互動式表單
+
+執行示範：
+
+```bash
+git clone https://github.com/tienenwu/smart_faker.git
+cd smart_faker/demo
+flutter run
+```
 
 ## 貢獻
 

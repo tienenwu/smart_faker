@@ -8,6 +8,12 @@ FlutterとDartアプリケーション向けの強力でインテリジェント
 **バージョン：** 0.1.1  
 **最終更新：** 2025-09-08
 
+## 📦 リソース
+
+- **GitHubリポジトリ：** [https://github.com/tienenwu/smart_faker](https://github.com/tienenwu/smart_faker)
+- **デモアプリケーション：** リポジトリの `/demo` フォルダにすべての機能の包括的なサンプルがあります
+- **APIドキュメント：** [pub.dev/documentation/smart_faker](https://pub.dev/documentation/smart_faker/latest/)
+
 ## 機能
 
 - 🌍 **多言語サポート**：英語、繁体字中国語、日本語
@@ -420,6 +426,25 @@ Future<void> seedDatabase() async {
 - `en_US` - 英語（米国）- デフォルト
 - `zh_TW` - 繁体字中国語
 - `ja_JP` - 日本語
+
+## サンプルアプリケーション
+
+[GitHubリポジトリ](https://github.com/tienenwu/smart_faker/tree/main/demo)に包括的なデモアプリケーションがあります。デモには以下が含まれます：
+
+- すべてのデータ生成モジュール
+- ライブサンプル付きのスキーマベース生成
+- スマートリレーションシップのデモンストレーション
+- 多言語サポート
+- カスタムアバター生成
+- 異なるユースケースを示すインタラクティブフォーム
+
+デモを実行：
+
+```bash
+git clone https://github.com/tienenwu/smart_faker.git
+cd smart_faker/demo
+flutter run
+```
 
 ## コントリビューション
 

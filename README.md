@@ -8,6 +8,12 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
 **Version:** 0.1.1  
 **Last Updated:** 2025-09-08
 
+## 📦 Resources
+
+- **GitHub Repository:** [https://github.com/tienenwu/smart_faker](https://github.com/tienenwu/smart_faker)
+- **Demo Application:** Available in the repository's `/demo` folder with comprehensive examples for all features
+- **API Documentation:** [pub.dev/documentation/smart_faker](https://pub.dev/documentation/smart_faker/latest/)
+
 ## Features
 
 - 🌍 **Multi-language Support**: English, Traditional Chinese (繁體中文), and Japanese (日本語)
@@ -608,6 +614,25 @@ final builder = SmartRelationshipBuilder(
 2. **Use Batch Generation**: Generate multiple items in a single loop
 3. **Lazy Loading**: Only generate data when needed
 4. **Seed for Testing**: Use seeds in tests for reproducible results
+
+## Example Application
+
+A comprehensive demo application is available in the [GitHub repository](https://github.com/tienenwu/smart_faker/tree/main/demo). The demo showcases:
+
+- All data generation modules
+- Schema-based generation with live examples
+- Smart relationships demonstration
+- Multi-language support
+- Custom avatar generation
+- Interactive forms showing different use cases
+
+To run the demo:
+
+```bash
+git clone https://github.com/tienenwu/smart_faker.git
+cd smart_faker/demo
+flutter run
+```
 
 ## Contributing
 
