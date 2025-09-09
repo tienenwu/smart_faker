@@ -70,8 +70,8 @@ void main() {
 
   final orders = List.generate(5, (index) {
     final items = faker.ecommerce.cart(items: 2);
-    final subtotal =
-        items.fold(0.0, (sum, item) => sum + (item['subtotal'] as double));
+    final subtotal = items.fold<double>(
+        0.0, (sum, item) => sum + (item['subtotal'] as double? ?? 0.0));
     final shipping = faker.ecommerce.shippingCost();
 
     return {

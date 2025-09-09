@@ -12,14 +12,14 @@ class SocialMediaDemoScreen extends StatefulWidget {
 class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
   SmartFaker faker = SmartFaker(locale: 'en_US', seed: 12345);
   String _currentLocale = 'en_US';
-  
+
   // Profile data
   String _username = '';
   String _bio = '';
   int _followers = 0;
   int _following = 0;
   bool _verified = false;
-  
+
   // Post data
   String _postContent = '';
   List<String> _hashtags = [];
@@ -27,12 +27,12 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
   int _comments = 0;
   int _shares = 0;
   int _storyViews = 0;
-  
+
   // Engagement
   String _engagementRate = '';
   String _postingTime = '';
   String _platform = '';
-  
+
   // Comments
   List<String> _sampleComments = [];
 
@@ -50,7 +50,7 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
       _followers = faker.social.followers(tier: 'micro');
       _following = faker.social.following(followerCount: _followers);
       _verified = faker.social.verified(probability: 0.3);
-      
+
       // Post
       _postContent = faker.social.post();
       _hashtags = faker.social.hashtags(5);
@@ -58,17 +58,16 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
       _comments = faker.social.comments(basedOnLikes: _likes);
       _shares = faker.social.shares(basedOnLikes: _likes);
       _storyViews = faker.social.storyViews();
-      
+
       // Engagement
       _engagementRate = faker.social.engagementRate();
       _postingTime = faker.social.postingTime();
       _platform = faker.social.platform();
-      
+
       // Generate sample comments
       _sampleComments = List.generate(5, (_) => faker.social.comment());
     });
   }
-
 
   Widget _buildProfileCard() {
     return Card(
@@ -82,7 +81,8 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
               children: [
                 CircleAvatar(
                   radius: 40,
-                  backgroundColor: Theme.of(context).colorScheme.primaryContainer,
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
                   child: Text(
                     _username.isNotEmpty ? _username[1].toUpperCase() : 'U',
                     style: Theme.of(context).textTheme.headlineMedium,
@@ -97,9 +97,12 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
                         children: [
                           Text(
                             _username,
-                            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
                           ),
                           if (_verified) ...[
                             const SizedBox(width: 4),
@@ -142,14 +145,14 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+                fontWeight: FontWeight.bold,
+              ),
         ),
         Text(
           label,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Theme.of(context).colorScheme.onSurfaceVariant,
-          ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
         ),
       ],
     );
@@ -164,14 +167,16 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
           // Post header
           ListTile(
             leading: CircleAvatar(
-              child: Text(_username.isNotEmpty ? _username[1].toUpperCase() : 'U'),
+              child:
+                  Text(_username.isNotEmpty ? _username[1].toUpperCase() : 'U'),
             ),
             title: Row(
               children: [
                 Text(_username.replaceAll('@', '')),
                 if (_verified) ...[
                   const SizedBox(width: 4),
-                  Icon(Icons.verified, size: 16, color: Theme.of(context).colorScheme.primary),
+                  Icon(Icons.verified,
+                      size: 16, color: Theme.of(context).colorScheme.primary),
                 ],
               ],
             ),
@@ -193,13 +198,15 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Wrap(
                 spacing: 8,
-                children: _hashtags.map((tag) => Text(
-                  tag,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.w500,
-                  ),
-                )).toList(),
+                children: _hashtags
+                    .map((tag) => Text(
+                          tag,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ))
+                    .toList(),
               ),
             ),
           ],
@@ -215,7 +222,8 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
                 const SizedBox(width: 16),
                 _buildEngagementStat(Icons.share, _formatNumber(_shares)),
                 const Spacer(),
-                _buildEngagementStat(Icons.visibility, _formatNumber(_storyViews)),
+                _buildEngagementStat(
+                    Icons.visibility, _formatNumber(_storyViews)),
               ],
             ),
           ),
@@ -228,7 +236,8 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
   Widget _buildEngagementStat(IconData icon, String value) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+        Icon(icon,
+            size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
         const SizedBox(width: 4),
         Text(value, style: Theme.of(context).textTheme.bodyMedium),
       ],
@@ -246,38 +255,39 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
             Text(
               'Sample Comments',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             ..._sampleComments.map((comment) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CircleAvatar(
-                    radius: 12,
-                    child: Text(
-                      faker.social.emoji(),
-                      style: const TextStyle(fontSize: 10),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          faker.social.username(includeAt: false),
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CircleAvatar(
+                        radius: 12,
+                        child: Text(
+                          faker.social.emoji(),
+                          style: const TextStyle(fontSize: 10),
                         ),
-                        Text(comment, style: const TextStyle(fontSize: 13)),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              faker.social.username(includeAt: false),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 12),
+                            ),
+                            Text(comment, style: const TextStyle(fontSize: 13)),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )),
+                )),
           ],
         ),
       ),
@@ -295,8 +305,8 @@ class _SocialMediaDemoScreenState extends State<SocialMediaDemoScreen> {
             Text(
               'Quick Generate',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             Wrap(

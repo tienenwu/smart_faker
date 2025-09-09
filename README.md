@@ -34,7 +34,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.3.1
+  smart_faker: ^0.3.3
 ```
 
 Then run:

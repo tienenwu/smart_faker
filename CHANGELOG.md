@@ -1,5 +1,24 @@
 # Changelog
 
+## [0.3.3] - 2025-09-09
+
+### Changed
+- **Improved Compatibility**: Lowered Dart SDK requirement from `^3.5.0` to `>=2.17.0 <4.0.0`
+- **Flutter 3.0.0 Support**: Now compatible with Flutter 3.0.0 and newer versions
+- **Dependency Updates**: Adjusted all dependencies to work with older Flutter/Dart versions
+
+### Fixed
+- Updated `meta` package to `^1.7.0` for Flutter 3.0.0 compatibility
+- Updated `intl` package to `^0.17.0` for wider compatibility
+- Fixed crypto package compatibility issues
+- Resolved dev dependency version conflicts
+- Fixed null safety issues in example code
+
+### Added
+- New standalone demo (`example/demo_standalone.dart`) showcasing all features
+- Comprehensive compatibility testing with Flutter 3.0.0
+- Updated installation guide for broader Flutter version support
+
 ## [0.3.2] - 2025-09-08
 
 ### Fixed

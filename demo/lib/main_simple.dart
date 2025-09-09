@@ -38,10 +38,10 @@ class _DemoHomeScreenState extends State<DemoHomeScreen> {
       generatedData.clear();
       generatedData.addAll([
         'Name: ${faker.person.fullName()}',
-        'First Name: ${faker.person.firstName()}',
-        'Last Name: ${faker.person.lastName()}',
-        'Job Title: ${faker.person.jobTitle()}',
-        'Address: ${faker.location.fullAddress()}',
+        'Email: ${faker.person.email()}',
+        'Phone: ${faker.person.phoneNumber()}',
+        'Age: ${faker.person.age()}',
+        'Address: ${faker.location.address()}',
       ]);
     });
   }
@@ -63,11 +63,11 @@ class _DemoHomeScreenState extends State<DemoHomeScreen> {
     setState(() {
       generatedData.clear();
       generatedData.addAll([
-        'Taiwan ID: ${faker.taiwan.idNumber()}',
-        'Taiwan Phone: ${faker.taiwan.landlineNumber()}',
-        'Postal Code: ${faker.taiwan.postalCode()}',
-        'License Plate: ${faker.taiwan.licensePlate()}',
-        'Bank Account: ${faker.taiwan.bankAccount()}',
+        'Taiwan ID: ${faker.taiwan.nationalId()}',
+        'Taiwan Phone: ${faker.taiwan.mobileNumber()}',
+        'Taiwan Address: ${faker.taiwan.address()}',
+        'Taiwan Company: ${faker.taiwan.companyName()}',
+        'Taiwan District: ${faker.taiwan.district()}',
       ]);
     });
   }

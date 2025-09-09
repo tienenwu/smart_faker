@@ -11,7 +11,7 @@ class TaiwanDemoScreen extends StatefulWidget {
 
 class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
   final faker = SmartFaker(locale: 'zh_TW', seed: 12345);
-  
+
   // Generated data
   String _idNumber = '';
   String _companyTaxId = '';
@@ -24,18 +24,18 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
   String _electricPlate = '';
   String _bankAccount = '';
   String _healthInsurance = '';
-  
+
   // Person data
   String _fullName = '';
   String _firstName = '';
   String _lastName = '';
   String _jobTitle = '';
   int _age = 0;
-  
+
   // Company data
   String _companyName = '';
   String _industry = '';
-  
+
   // Location data
   String _city = '';
   String _address = '';
@@ -52,34 +52,34 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
       _idNumber = faker.taiwan.idNumber(male: true);
       _companyTaxId = faker.taiwan.companyTaxId();
       _healthInsurance = faker.taiwan.healthInsuranceNumber();
-      
+
       // Phone numbers
       _landlineNumber = faker.taiwan.landlineNumber();
       _mobileNumber = faker.phone.number();
-      
+
       // Postal codes
       _postalCode3 = faker.taiwan.postalCode();
       _postalCode5 = faker.taiwan.postalCode(fiveDigit: true);
-      
+
       // License plates
       _carPlate = faker.taiwan.licensePlate(type: 'car');
       _motorcyclePlate = faker.taiwan.licensePlate(type: 'motorcycle');
       _electricPlate = faker.taiwan.licensePlate(type: 'electric');
-      
+
       // Financial
       _bankAccount = faker.taiwan.bankAccount();
-      
+
       // Person data
       _fullName = faker.person.fullName();
       _firstName = faker.person.firstName();
       _lastName = faker.person.lastName();
       _jobTitle = faker.person.jobTitle();
       _age = faker.person.age();
-      
+
       // Company
       _companyName = faker.company.name();
       _industry = faker.company.industry();
-      
+
       // Location
       _city = faker.location.city();
       _address = faker.location.streetAddress();
@@ -97,46 +97,49 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
             Text(
               title,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 12),
             ...items.map((item) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    item.label,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
-                  const SizedBox(width: 16),
-                  Expanded(
-                    child: SelectableText(
-                      item.value,
-                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        fontWeight: FontWeight.w500,
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        item.label,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .onSurfaceVariant,
+                            ),
                       ),
-                      textAlign: TextAlign.right,
-                    ),
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.copy, size: 16),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: item.value));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('${item.label} copied'),
-                          duration: const Duration(seconds: 1),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: SelectableText(
+                          item.value,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                          textAlign: TextAlign.right,
                         ),
-                      );
-                    },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.copy, size: 16),
+                        onPressed: () {
+                          Clipboard.setData(ClipboardData(text: item.value));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('${item.label} copied'),
+                              duration: const Duration(seconds: 1),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )),
+                )),
           ],
         ),
       ),
@@ -184,7 +187,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               ],
             ),
           ),
-          
+
           _buildDataCard(
             '🆔 身分證明 Identification',
             [
@@ -194,7 +197,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('健保卡號', _healthInsurance),
             ],
           ),
-          
+
           _buildDataCard(
             '📱 電話號碼 Phone Numbers',
             [
@@ -202,7 +205,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('市話號碼', _landlineNumber),
             ],
           ),
-          
+
           _buildDataCard(
             '📮 郵遞區號 Postal Codes',
             [
@@ -210,7 +213,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('郵遞區號 (5碼)', _postalCode5),
             ],
           ),
-          
+
           _buildDataCard(
             '🚗 車牌號碼 License Plates',
             [
@@ -219,7 +222,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('電動車牌照', _electricPlate),
             ],
           ),
-          
+
           _buildDataCard(
             '💳 金融資訊 Financial',
             [
@@ -227,7 +230,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('信用卡號', faker.finance.creditCardNumber()),
             ],
           ),
-          
+
           _buildDataCard(
             '👤 個人資料 Person Data',
             [
@@ -238,7 +241,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('年齡', _age.toString()),
             ],
           ),
-          
+
           _buildDataCard(
             '🏢 公司資料 Company Data',
             [
@@ -246,7 +249,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('產業', _industry),
             ],
           ),
-          
+
           _buildDataCard(
             '🏠 地址資料 Address Data',
             [
@@ -254,7 +257,7 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               DataItem('地址', _address),
             ],
           ),
-          
+
           const SizedBox(height: 80),
         ],
       ),
@@ -273,10 +276,10 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
               'taxId': faker.taiwan.companyTaxId(),
             },
           );
-          
+
           final csv = faker.export.toCSV(users);
           Clipboard.setData(ClipboardData(text: csv));
-          
+
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Batch data exported to clipboard as CSV'),
@@ -293,6 +296,6 @@ class _TaiwanDemoScreenState extends State<TaiwanDemoScreen> {
 class DataItem {
   final String label;
   final String value;
-  
+
   DataItem(this.label, this.value);
 }

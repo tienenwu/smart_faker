@@ -12,41 +12,40 @@ class HealthcareDemoScreen extends StatefulWidget {
 class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
   SmartFaker faker = SmartFaker(locale: 'en_US', seed: 12345);
   String _currentLocale = 'en_US';
-  
+
   // Patient data
   String _patientId = '';
   String _mrn = '';
   String _bloodType = '';
-  
+
   // Doctor & Hospital
   String _doctorName = '';
   String _specialty = '';
   String _hospitalName = '';
-  
+
   // Vital Signs
   String _bloodPressure = '';
   int _heartRate = 0;
   String _temperature = '';
   double _bmi = 0.0;
-  
+
   // Medical Info
   String _diagnosis = '';
   String _medication = '';
   String _dosage = '';
   String _medicalTest = '';
-  
+
   // Allergies & Vaccinations
   List<String> _allergies = [];
   List<String> _vaccinations = [];
-  
+
   // Insurance
   String _insuranceProvider = '';
   String _policyNumber = '';
-  
+
   // Appointment
   DateTime _appointmentTime = DateTime.now();
   String _appointmentStatus = '';
-  
 
   @override
   void initState() {
@@ -60,32 +59,32 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
       _patientId = faker.healthcare.patientId();
       _mrn = faker.healthcare.medicalRecordNumber();
       _bloodType = faker.healthcare.bloodType();
-      
+
       // Doctor & Hospital
       _doctorName = faker.healthcare.doctorName();
       _specialty = faker.healthcare.specialty();
       _hospitalName = faker.healthcare.hospitalName();
-      
+
       // Vital Signs
       _bloodPressure = faker.healthcare.bloodPressure();
       _heartRate = faker.healthcare.heartRate();
       _temperature = faker.healthcare.temperature();
       _bmi = faker.healthcare.bmi();
-      
+
       // Medical Info
       _diagnosis = faker.healthcare.diagnosis();
       _medication = faker.healthcare.medication();
       _dosage = faker.healthcare.dosage();
       _medicalTest = faker.healthcare.medicalTest();
-      
+
       // Allergies & Vaccinations
       _allergies = List.generate(3, (_) => faker.healthcare.allergy());
       _vaccinations = List.generate(3, (_) => faker.healthcare.vaccination());
-      
+
       // Insurance
       _insuranceProvider = faker.healthcare.insuranceProvider();
       _policyNumber = faker.healthcare.insurancePolicyNumber();
-      
+
       // Appointment
       _appointmentTime = faker.healthcare.appointmentTime();
       _appointmentStatus = faker.healthcare.appointmentStatus();
@@ -103,8 +102,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             Text(
               'Patient Information',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             _buildInfoRow('Patient ID', _patientId),
@@ -131,21 +130,25 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             Text(
               'Vital Signs',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                _buildVitalColumn('Blood Pressure', _bloodPressure, Icons.favorite),
-                _buildVitalColumn('Heart Rate', '$_heartRate bpm', Icons.timeline),
-                _buildVitalColumn('Temperature', _temperature, Icons.thermostat),
+                _buildVitalColumn(
+                    'Blood Pressure', _bloodPressure, Icons.favorite),
+                _buildVitalColumn(
+                    'Heart Rate', '$_heartRate bpm', Icons.timeline),
+                _buildVitalColumn(
+                    'Temperature', _temperature, Icons.thermostat),
               ],
             ),
             const SizedBox(height: 16),
             Center(
-              child: _buildVitalColumn('BMI', _bmi.toStringAsFixed(1), Icons.monitor_weight),
+              child: _buildVitalColumn(
+                  'BMI', _bmi.toStringAsFixed(1), Icons.monitor_weight),
             ),
           ],
         ),
@@ -161,8 +164,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+                fontWeight: FontWeight.bold,
+              ),
         ),
         Text(
           label,
@@ -183,8 +186,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             Text(
               'Medical Information',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             _buildInfoRow('Diagnosis', _diagnosis),
@@ -211,8 +214,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
                 Text(
                   'Allergies & Vaccinations',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 Icon(Icons.warning, color: Colors.orange),
               ],
@@ -223,30 +226,31 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             ..._allergies.map((allergy) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  const Icon(Icons.circle, size: 8, color: Colors.orange),
-                  const SizedBox(width: 8),
-                  Text(allergy),
-                ],
-              ),
-            )),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.circle, size: 8, color: Colors.orange),
+                      const SizedBox(width: 8),
+                      Text(allergy),
+                    ],
+                  ),
+                )),
             const SizedBox(height: 16),
             Text(
               'Vaccinations:',
               style: Theme.of(context).textTheme.titleMedium,
             ),
             ..._vaccinations.map((vaccine) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  const Icon(Icons.check_circle, size: 16, color: Colors.green),
-                  const SizedBox(width: 8),
-                  Text(vaccine),
-                ],
-              ),
-            )),
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.check_circle,
+                          size: 16, color: Colors.green),
+                      const SizedBox(width: 8),
+                      Text(vaccine),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),
@@ -267,8 +271,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
                 Text(
                   'Next Appointment',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 _buildStatusChip(_appointmentStatus),
               ],
@@ -276,7 +280,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             const SizedBox(height: 16),
             Row(
               children: [
-                Icon(Icons.calendar_today, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.calendar_today,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   DateFormat('EEEE, MMM dd, yyyy').format(_appointmentTime),
@@ -287,7 +292,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.access_time, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.access_time,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   DateFormat('HH:mm').format(_appointmentTime),
@@ -298,7 +304,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.person, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.person,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Text(
                   _doctorName,
@@ -309,7 +316,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             const SizedBox(height: 8),
             Row(
               children: [
-                Icon(Icons.local_hospital, color: Theme.of(context).colorScheme.primary),
+                Icon(Icons.local_hospital,
+                    color: Theme.of(context).colorScheme.primary),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -345,11 +353,12 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
       default:
         color = Colors.grey;
     }
-    
+
     return Chip(
       label: Text(status),
       backgroundColor: color.withOpacity(0.2),
-      labelStyle: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 12),
+      labelStyle:
+          TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 12),
     );
   }
 
@@ -364,8 +373,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
             Text(
               'Insurance Information',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             _buildInfoRow('Provider', _insuranceProvider),
@@ -384,7 +393,8 @@ class _HealthcareDemoScreenState extends State<HealthcareDemoScreen> {
         children: [
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
           SelectableText(
             value,

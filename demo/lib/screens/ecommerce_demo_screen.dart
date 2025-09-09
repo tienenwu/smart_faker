@@ -13,39 +13,39 @@ class EcommerceDemoScreen extends StatefulWidget {
 class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
   SmartFaker faker = SmartFaker(locale: 'en_US', seed: 12345);
   String _currentLocale = 'en_US';
-  
+
   // Order data
   String _orderId = '';
   String _trackingNumber = '';
   String _orderStatus = '';
   DateTime _estimatedDelivery = DateTime.now();
-  
+
   // Shipping & Payment
   String _shippingMethod = '';
   double _shippingCost = 0.0;
   String _paymentMethod = '';
-  
+
   // Customer
   String _customerTier = '';
   int _loyaltyPoints = 0;
-  
+
   // Products
   List<Map<String, dynamic>> _cartItems = [];
   double _totalAmount = 0.0;
-  
+
   // Promotions
   String _couponCode = '';
   int _discountPercentage = 0;
   String _giftCardCode = '';
-  
+
   // Warehouse
   String _sku = '';
   String _warehouseLocation = '';
   String _inventoryStatus = '';
-  
+
   // Review
   Map<String, dynamic> _review = {};
-  
+
   // Invoice
   String _invoiceNumber = '';
 
@@ -62,33 +62,34 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
       _trackingNumber = faker.ecommerce.trackingNumber();
       _orderStatus = faker.ecommerce.orderStatus();
       _estimatedDelivery = faker.ecommerce.estimatedDelivery();
-      
+
       // Shipping & Payment
       _shippingMethod = faker.ecommerce.shippingMethod();
       _shippingCost = faker.ecommerce.shippingCost();
       _paymentMethod = faker.ecommerce.paymentMethod();
-      
+
       // Customer
       _customerTier = faker.ecommerce.customerTier();
       _loyaltyPoints = faker.ecommerce.loyaltyPoints();
-      
+
       // Cart
       _cartItems = faker.ecommerce.cart(items: 4);
-      _totalAmount = _cartItems.fold(0.0, (sum, item) => sum + (item['subtotal'] as double));
-      
+      _totalAmount = _cartItems.fold(
+          0.0, (sum, item) => sum + (item['subtotal'] as double));
+
       // Promotions
       _couponCode = faker.ecommerce.couponCode();
       _discountPercentage = faker.ecommerce.discountPercentage();
       _giftCardCode = faker.ecommerce.giftCardCode();
-      
+
       // Warehouse
       _sku = faker.ecommerce.sku();
       _warehouseLocation = faker.ecommerce.warehouseLocation();
       _inventoryStatus = faker.ecommerce.inventoryStatus();
-      
+
       // Review
       _review = faker.ecommerce.review();
-      
+
       // Invoice
       _invoiceNumber = faker.ecommerce.invoiceNumber();
     });
@@ -108,8 +109,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
                 Text(
                   'Order Details',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 _buildStatusChip(_orderStatus),
               ],
@@ -118,10 +119,12 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
             _buildInfoRow('Order ID', _orderId),
             _buildInfoRow('Tracking', _trackingNumber),
             _buildInfoRow('Invoice', _invoiceNumber),
-            _buildInfoRow('Est. Delivery', DateFormat('MMM dd, yyyy').format(_estimatedDelivery)),
+            _buildInfoRow('Est. Delivery',
+                DateFormat('MMM dd, yyyy').format(_estimatedDelivery)),
             const Divider(height: 24),
             _buildInfoRow('Shipping', _shippingMethod),
-            _buildInfoRow('Shipping Cost', '\$${_shippingCost.toStringAsFixed(2)}'),
+            _buildInfoRow(
+                'Shipping Cost', '\$${_shippingCost.toStringAsFixed(2)}'),
             _buildInfoRow('Payment', _paymentMethod),
           ],
         ),
@@ -148,7 +151,7 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
       default:
         color = Colors.orange;
     }
-    
+
     return Chip(
       label: Text(status),
       backgroundColor: color.withOpacity(0.2),
@@ -167,37 +170,38 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
             Text(
               'Shopping Cart',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             ..._cartItems.map((item) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          item['product'],
-                          style: const TextStyle(fontWeight: FontWeight.w500),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              item['product'],
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                            Text(
+                              '${item['category']} • Qty: ${item['quantity']}',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
-                        Text(
-                          '${item['category']} • Qty: ${item['quantity']}',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        '\$${(item['subtotal'] as double).toStringAsFixed(2)}',
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  Text(
-                    '\$${(item['subtotal'] as double).toStringAsFixed(2)}',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ],
-              ),
-            )),
+                )),
             const Divider(height: 24),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,7 +212,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
                 ),
                 Text(
                   '\$${_totalAmount.toStringAsFixed(2)}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ],
             ),
@@ -220,7 +225,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
                   Text('Discount ($_discountPercentage%)'),
                   Text(
                     '-\$${(_totalAmount * _discountPercentage / 100).toStringAsFixed(2)}',
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.error),
                   ),
                 ],
               ),
@@ -260,16 +266,18 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
             Text(
               'Customer Info',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 _buildMetricColumn('Tier', _customerTier, Icons.star),
-                _buildMetricColumn('Points', _loyaltyPoints.toString(), Icons.card_giftcard),
-                _buildMetricColumn('Discount', '$_discountPercentage%', Icons.local_offer),
+                _buildMetricColumn(
+                    'Points', _loyaltyPoints.toString(), Icons.card_giftcard),
+                _buildMetricColumn(
+                    'Discount', '$_discountPercentage%', Icons.local_offer),
               ],
             ),
           ],
@@ -286,8 +294,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
         Text(
           value,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
+                fontWeight: FontWeight.bold,
+              ),
         ),
         Text(
           label,
@@ -308,8 +316,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
             Text(
               'Promotions & Codes',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             _buildCodeRow('Coupon Code', _couponCode, Icons.local_offer),
@@ -324,7 +332,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
   Widget _buildCodeRow(String label, String code, IconData icon) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
+        Icon(icon,
+            size: 20, color: Theme.of(context).colorScheme.onSurfaceVariant),
         const SizedBox(width: 8),
         Text('$label: '),
         const SizedBox(width: 8),
@@ -332,12 +341,13 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surfaceContainer,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: BorderRadius.circular(4),
             ),
             child: Text(
               code,
-              style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  fontFamily: 'monospace', fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -360,8 +370,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
             Text(
               'Warehouse & Inventory',
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+                    fontWeight: FontWeight.bold,
+                  ),
             ),
             const SizedBox(height: 16),
             _buildInfoRow('SKU', _sku),
@@ -378,7 +388,7 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
     final comment = (_review['comment'] as String?) ?? '';
     final helpful = (_review['helpful'] as int?) ?? 0;
     final verified = (_review['verified'] as bool?) ?? false;
-    
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -392,27 +402,31 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
                 Text(
                   'Product Review',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
                 if (verified)
                   Chip(
                     label: const Text('Verified'),
                     backgroundColor: Colors.green.withOpacity(0.2),
-                    labelStyle: const TextStyle(color: Colors.green, fontSize: 12),
+                    labelStyle:
+                        const TextStyle(color: Colors.green, fontSize: 12),
                   ),
               ],
             ),
             const SizedBox(height: 16),
             Row(
               children: [
-                ...List.generate(5, (index) => Icon(
-                  index < rating ? Icons.star : Icons.star_border,
-                  color: Colors.amber,
-                  size: 20,
-                )),
+                ...List.generate(
+                    5,
+                    (index) => Icon(
+                          index < rating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
+                          size: 20,
+                        )),
                 const SizedBox(width: 8),
-                Text('$rating', style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('$rating',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
               ],
             ),
             const SizedBox(height: 8),
@@ -436,7 +450,8 @@ class _EcommerceDemoScreenState extends State<EcommerceDemoScreen> {
         children: [
           Text(
             label,
-            style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.onSurfaceVariant),
           ),
           SelectableText(
             value,

@@ -308,8 +308,8 @@ class _SchemaValidationDemoScreenState
                 ),
                 IconButton(
                   icon: const Icon(Icons.refresh),
-                  onPressed: _selectedSchema == 'Custom' && 
-                           _patternController.text.isNotEmpty
+                  onPressed: _selectedSchema == 'Custom' &&
+                          _patternController.text.isNotEmpty
                       ? _generateCustom
                       : _generateData,
                 ),
@@ -368,8 +368,7 @@ class _SchemaValidationDemoScreenState
                       IconButton(
                         icon: const Icon(Icons.copy, size: 16),
                         onPressed: () {
-                          Clipboard.setData(
-                              ClipboardData(text: displayValue));
+                          Clipboard.setData(ClipboardData(text: displayValue));
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Copied ${entry.key}'),

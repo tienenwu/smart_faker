@@ -141,7 +141,7 @@ class _CoreFeaturesScreenState extends State<CoreFeaturesScreen> {
             Row(
               children: [
                 Expanded(
-                  child: FilledButton.icon(
+                  child: ElevatedButton.icon(
                     onPressed: _generateWithSeed,
                     icon: const Icon(Icons.lock),
                     label: const Text('Generate with Seed'),

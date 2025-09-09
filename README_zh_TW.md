@@ -34,7 +34,7 @@
 
 ```yaml
 dependencies:
-  smart_faker: ^0.3.1
+  smart_faker: ^0.3.3
 ```
 
 然後執行：

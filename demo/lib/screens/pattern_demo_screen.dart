@@ -278,7 +278,7 @@ class _PatternDemoScreenState extends State<PatternDemoScreen> {
             [
               const Text('Common patterns you can try:'),
               const SizedBox(height: 8),
-              ...[ 
+              ...[
                 r'^\d{5}$  — 5 digits',
                 r'^[A-Z]{3}-\d{4}$  — AAA-1234',
                 r'^09\d{8}$  — Taiwan mobile',
@@ -286,36 +286,40 @@ class _PatternDemoScreenState extends State<PatternDemoScreen> {
                 r'^[a-z]+@(gmail|yahoo)\.com$  — Email',
                 r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$  — IP',
               ].map((example) => Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          example,
-                          style: const TextStyle(fontFamily: 'monospace', fontSize: 12),
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surface,
+                        borderRadius: BorderRadius.circular(4),
+                        border: Border.all(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .outline
+                              .withOpacity(0.3),
                         ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.content_copy, size: 16),
-                        onPressed: () {
-                          final pattern = example.split('  —')[0].trim();
-                          _regexController.text = pattern;
-                          _generateCustomPattern();
-                        },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              example,
+                              style: const TextStyle(
+                                  fontFamily: 'monospace', fontSize: 12),
+                            ),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.content_copy, size: 16),
+                            onPressed: () {
+                              final pattern = example.split('  —')[0].trim();
+                              _regexController.text = pattern;
+                              _generateCustomPattern();
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              )),
+                    ),
+                  )),
             ],
           ),
         ],
