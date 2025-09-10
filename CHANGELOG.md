@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.4] - 2025-09-09
+
+### Changed
+- **Dependency Updates**: Updated `intl` from `^0.17.0` to `^0.18.1` for improved pub.dev score
+- **Maintained Compatibility**: Kept `meta` at `^1.7.0` to ensure Flutter SDK compatibility
+
+### Fixed
+- **pub.dev Score**: Improved dependency compliance for better package health score
+
 ## [0.3.3] - 2025-09-09
 
 ### Changed
