@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.5] - 2025-09-11
+
+### Added
+- Buy Me a Coffee support button in README files (all languages)
+
+### Changed
+- Updated documentation with support information
+
 ## [0.3.4] - 2025-09-09
 
 ### Changed
