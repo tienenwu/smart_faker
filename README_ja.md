@@ -5,7 +5,7 @@
 
 FlutterとDartアプリケーション向けの強力でインテリジェントなフェイクデータジェネレーター。SmartFakerは、スマートリレーションシップ、国際化サポート、スキーマベースの生成を含む包括的なテストデータ生成を提供します。
 
-**バージョン：** 0.3.3  
+**バージョン：** 0.3.4  
 **最終更新：** 2025-09-08
 
 ## 📦 リソース
@@ -34,7 +34,7 @@ FlutterとDartアプリケーション向けの強力でインテリジェント
 
 ```yaml
 dependencies:
-  smart_faker: ^0.3.3
+  smart_faker: ^0.3.4
 ```
 
 次に実行：
@@ -499,7 +499,11 @@ flutter run
 
 ## サポート
 
-このパッケージが役立つと思われる場合は、以下をご検討ください：
+このパッケージが役立つと思われる場合、開発をサポートできます：
+
+[![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-Support-yellow?style=for-the-badge&logo=buy-me-a-coffee)](https://buymeacoffee.com/wutienenc)
+
+また、以下もご検討ください：
 - ⭐ リポジトリにスターを付ける
 - 🐛 バグを報告する
 - 💡 新機能を提案する

@@ -174,6 +174,14 @@ For SmartFaker v0.2.0, ensure:
 - Examples demonstrate new features
 - CHANGELOG lists all new features
 
+### Git Commit Rules
+
+**IMPORTANT**: When making git commits:
+- DO NOT add Claude Code attribution
+- DO NOT add "🤖 Generated with [Claude Code]" 
+- DO NOT add "Co-Authored-By: Claude"
+- Use email: wutienen@gmail.com for git config
+
 ---
-*Last Updated: 2025-09-08*
+*Last Updated: 2025-09-11*
 *Maintaining pub.dev score: 160/160*
