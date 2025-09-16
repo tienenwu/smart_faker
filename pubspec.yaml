@@ -1,6 +1,6 @@
 name: smart_faker
 description: "An intelligent test data generator for Flutter/Dart with schema-based generation, smart relationships, and comprehensive internationalization support."
-version: 0.3.5
+version: 0.4.0
 homepage: https://github.com/tienenwu/smart_faker
 repository: https://github.com/tienenwu/smart_faker
 # publisher: tienenwu.me
@@ -15,6 +15,8 @@ dependencies:
   meta: ^1.7.0
   intl: ^0.18.0
   crypto: ^3.0.2
+  shelf: ^1.4.0
+  shelf_router: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -148,6 +148,18 @@ class DateTimeModule {
     return date.millisecondsSinceEpoch ~/ 1000;
   }
 
+  /// Generates a birthdate for a person between 18 and 80 years old
+  DateTime birthdate({int minAge = 18, int maxAge = 80}) {
+    final now = DateTime.now();
+    final maxBirthYear = now.year - minAge;
+    final minBirthYear = now.year - maxAge;
+
+    return between(
+      from: DateTime(minBirthYear, 1, 1),
+      to: DateTime(maxBirthYear, 12, 31),
+    );
+  }
+
   /// Generates an ISO 8601 date string.
   String iso8601() {
     final date = between(

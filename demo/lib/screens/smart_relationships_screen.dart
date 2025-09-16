@@ -257,36 +257,67 @@ class _SmartRelationshipsScreenState extends State<SmartRelationshipsScreen> {
           // Example selector
           Container(
             padding: const EdgeInsets.all(16),
-            child: SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(
-                  value: 'ecommerce',
-                  label: Text('E-commerce'),
-                  icon: Icon(Icons.shopping_cart),
-                ),
-                ButtonSegment(
-                  value: 'social',
-                  label: Text('Social'),
-                  icon: Icon(Icons.people),
-                ),
-                ButtonSegment(
-                  value: 'hierarchy',
-                  label: Text('Hierarchy'),
-                  icon: Icon(Icons.account_tree),
-                ),
-                ButtonSegment(
-                  value: 'sequential',
-                  label: Text('Sequential'),
-                  icon: Icon(Icons.timeline),
-                ),
-              ],
-              selected: {selectedExample},
-              onSelectionChanged: (Set<String> selection) {
-                setState(() {
-                  selectedExample = selection.first;
-                  _generateExample();
-                });
-              },
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ChoiceChip(
+                    avatar: const Icon(Icons.shopping_cart, size: 18),
+                    label: const Text('E-commerce'),
+                    selected: selectedExample == 'ecommerce',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          selectedExample = 'ecommerce';
+                          _generateExample();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    avatar: const Icon(Icons.people, size: 18),
+                    label: const Text('Social'),
+                    selected: selectedExample == 'social',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          selectedExample = 'social';
+                          _generateExample();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    avatar: const Icon(Icons.account_tree, size: 18),
+                    label: const Text('Hierarchy'),
+                    selected: selectedExample == 'hierarchy',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          selectedExample = 'hierarchy';
+                          _generateExample();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    avatar: const Icon(Icons.timeline, size: 18),
+                    label: const Text('Sequential'),
+                    selected: selectedExample == 'sequential',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          selectedExample = 'sequential';
+                          _generateExample();
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
 

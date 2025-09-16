@@ -210,21 +210,76 @@ class _SchemaValidationDemoScreenState
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: 8),
-            SegmentedButton<String>(
-              segments: const [
-                ButtonSegment(value: 'User', label: Text('User')),
-                ButtonSegment(value: 'Order', label: Text('Order')),
-                ButtonSegment(value: 'Product', label: Text('Product')),
-                ButtonSegment(value: 'Network', label: Text('Network')),
-                ButtonSegment(value: 'Custom', label: Text('Custom')),
-              ],
-              selected: {_selectedSchema},
-              onSelectionChanged: (Set<String> newSelection) {
-                setState(() {
-                  _selectedSchema = newSelection.first;
-                  _generateData();
-                });
-              },
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ChoiceChip(
+                    label: const Text('User'),
+                    selected: _selectedSchema == 'User',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          _selectedSchema = 'User';
+                          _generateData();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    label: const Text('Order'),
+                    selected: _selectedSchema == 'Order',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          _selectedSchema = 'Order';
+                          _generateData();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    label: const Text('Product'),
+                    selected: _selectedSchema == 'Product',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          _selectedSchema = 'Product';
+                          _generateData();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    label: const Text('Network'),
+                    selected: _selectedSchema == 'Network',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          _selectedSchema = 'Network';
+                          _generateData();
+                        });
+                      }
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ChoiceChip(
+                    label: const Text('Custom'),
+                    selected: _selectedSchema == 'Custom',
+                    onSelected: (selected) {
+                      if (selected) {
+                        setState(() {
+                          _selectedSchema = 'Custom';
+                          _generateData();
+                        });
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),

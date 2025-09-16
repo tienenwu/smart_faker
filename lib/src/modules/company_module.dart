@@ -24,11 +24,17 @@ class CompanyModule {
     return random.element(names);
   }
 
+  /// Alias for name() - generates a company name
+  String companyName() => name();
+
   /// Generates a company suffix (e.g., Inc., LLC).
   String suffix() {
     final suffixes = _getLocaleData('suffixes');
     return random.element(suffixes);
   }
+
+  /// Alias for suffix() - generates a company suffix
+  String companySuffix() => suffix();
 
   /// Generates a company name with suffix.
   String nameWithSuffix() {
@@ -48,6 +54,9 @@ class CompanyModule {
         .replaceAll('{descriptor}', random.element(descriptors))
         .replaceAll('{noun}', random.element(nouns));
   }
+
+  /// Alias for catchphrase() - generates a company catchphrase
+  String catchPhrase() => catchphrase();
 
   /// Generates a business buzzword.
   String buzzword() {

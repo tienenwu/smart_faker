@@ -1,5 +1,45 @@
 # Changelog
 
+## [0.4.0] - 2025-09-16
+
+### Added
+- **API Mocking Feature**: Built-in mock server for testing API integrations
+  - MockServer class with HTTP server using Shelf package
+  - Support for GET/POST/PUT/DELETE/PATCH methods
+  - Path parameters support (e.g., `/users/<id>`)
+  - Stateful operations with in-memory storage
+  - Network simulation with configurable delays and error rates
+  - CORS support for cross-origin requests
+- **Response Generator**: Template-based dynamic response generation
+  - Faker directives support (`@uuid`, `@person.fullName`, etc.)
+  - Array generation with `@array:N` directive
+  - Nested object support
+  - Conditional responses based on request
+- **Datatype Module**: New module for basic data types
+  - UUID generation
+  - Number, float, boolean generation
+  - Hexadecimal and alphanumeric strings
+  - Random element selection from lists
+- **Method Aliases**: Added convenience aliases for common methods
+  - `phoneNumber()` for phone module
+  - `email()`, `phone()`, `bio()` for person module
+  - `hexColor()` for color module
+  - `companyName()`, `companySuffix()`, `catchPhrase()` for company module
+  - `birthdate()` for datetime module
+  - `imageUrl()`, `avatarUrl()` for image module
+- **Module Aliases**: Added commonly used module aliases
+  - `date` as alias for `dateTime` module
+  - `address` as alias for `location` module
+
+### Changed
+- Updated dependencies to include shelf and shelf_router for API mocking
+- Enhanced documentation with API_MOCKING.md guide
+- Improved example directory with api_mocking_example.dart
+
+### Fixed
+- Fixed missing method implementations in various modules
+- Corrected method signatures for lorem module methods
+
 ## [0.3.5] - 2025-09-11
 
 ### Added

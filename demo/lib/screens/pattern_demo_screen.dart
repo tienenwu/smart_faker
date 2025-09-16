@@ -64,7 +64,7 @@ class _PatternDemoScreenState extends State<PatternDemoScreen> {
   }) {
     final value = generator();
     return Card(
-      color: Theme.of(context).colorScheme.surfaceContainerHighest,
+      color: Colors.grey.shade200,
       child: ListTile(
         leading: Icon(icon ?? Icons.pattern),
         title: Text(label),

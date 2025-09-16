@@ -26,6 +26,10 @@ class ColorModule {
     return '#${random.hexString(length: 6).toUpperCase()}';
   }
 
+  /// Alias for hex() - generates a hex color code
+  String hexColor({bool includeAlpha = false}) =>
+      hex(includeAlpha: includeAlpha);
+
   /// Generates an RGB color string.
   String rgb() {
     final r = random.integer(min: 0, max: 255);

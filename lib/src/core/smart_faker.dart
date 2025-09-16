@@ -26,6 +26,7 @@ import '../modules/social_media_module.dart';
 import '../modules/ecommerce_module.dart';
 import '../modules/healthcare_module.dart';
 import '../modules/pattern_module.dart';
+import '../modules/datatype_module.dart';
 
 /// The main SmartFaker class that provides access to all data generation modules.
 ///
@@ -194,4 +195,14 @@ class SmartFaker {
 
   /// Gets the pattern module for generating data from regex patterns.
   PatternModule get pattern => PatternModule(_randomGenerator, _localeManager);
+
+  /// Gets the datatype module for generating basic data types.
+  DatatypeModule get datatype =>
+      DatatypeModule(_randomGenerator, _localeManager);
+
+  /// Alias for dateTime module (commonly used as 'date')
+  DateTimeModule get date => dateTime;
+
+  /// Alias for location module (commonly used as 'address')
+  LocationModule get address => location;
 }

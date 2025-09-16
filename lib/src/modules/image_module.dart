@@ -26,6 +26,10 @@ class ImageModule {
     return 'https://source.unsplash.com/${w}x$h/?$cat';
   }
 
+  /// Alias for url() - generates an image URL
+  String imageUrl({int? width, int? height, String? category}) =>
+      url(width: width, height: height, category: category);
+
   /// Generates a placeholder image URL.
   String placeholder(
       {int? width,
@@ -47,6 +51,9 @@ class ImageModule {
     final hash = random.hexString(length: 32);
     return 'https://www.gravatar.com/avatar/$hash?s=$s&d=identicon';
   }
+
+  /// Alias for avatar() - generates an avatar URL
+  String avatarUrl({int? size}) => avatar(size: size);
 
   /// Generates a data URI for a small image.
   String dataUri({int? width, int? height}) {

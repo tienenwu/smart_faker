@@ -5,8 +5,22 @@
 
 一個強大且智慧的 Flutter 和 Dart 應用程式假資料生成器。SmartFaker 提供全面的測試資料生成功能，包含智慧關聯、國際化支援和基於模式的生成。
 
-**版本：** 0.3.5  
-**最後更新：** 2025-09-08
+## 應用程式截圖
+
+<p align="center">
+  <img src="screenshots/01_home_screen.jpg" width="200" alt="首頁畫面" />
+  <img src="screenshots/02_internet_generator.jpg" width="200" alt="網路資料生成器" />
+  <img src="screenshots/03_location_generator_multilang.jpg" width="200" alt="多語言位置生成器" />
+  <img src="screenshots/04_company_generator.jpg" width="200" alt="公司資料生成器" />
+</p>
+<p align="center">
+  <img src="screenshots/05_schema_based_generation.jpg" width="200" alt="基於架構的生成" />
+  <img src="screenshots/06_export_module.jpg" width="200" alt="匯出模組" />
+  <img src="screenshots/07_healthcare_module.jpg" width="200" alt="醫療保健模組" />
+</p>
+
+**版本：** 0.4.0
+**最後更新：** 2025-09-16
 
 ## 📦 資源
 
@@ -27,6 +41,7 @@
 - 📤 **資料匯出**：匯出為 CSV、JSON、SQL、XML、YAML、Markdown 格式（v0.2.0 新功能！）
 - 🇹🇼 **台灣模組**：完整的台灣特定資料生成，包括身分證字號、統一編號等（v0.2.0 新功能！）
 - 🎯 **模式模組**：從正規表示式生成符合驗證規則的假資料（v0.3.0 新功能！）
+- 🚀 **API 模擬**：內建模擬伺服器，用於測試 API 整合與真實資料（v0.4.0 新功能！）
 
 ## 安裝
 
@@ -34,7 +49,7 @@
 
 ```yaml
 dependencies:
-  smart_faker: ^0.3.5
+  smart_faker: ^0.4.0
 ```
 
 然後執行：
@@ -416,7 +431,7 @@ Map<String, dynamic> mockUserResponse() {
 ```dart
 Future<void> seedDatabase() async {
   final faker = SmartFaker(seed: 12345); // 可重現的資料
-  
+
   // 建立使用者
   for (int i = 0; i < 100; i++) {
     await db.insert('users', {
@@ -425,6 +440,446 @@ Future<void> seedDatabase() async {
       'created_at': faker.dateTime.past(),
     });
   }
+}
+```
+
+## API 模擬 - v0.4.0 新功能！
+
+SmartFaker 現在包含強大的 API 模擬功能，用於測試 Flutter 應用程式的 API 整合。內建的模擬伺服器可以生成真實的動態回應、模擬網路延遲，甚至測試錯誤處理。
+
+### 快速開始
+
+```dart
+import 'package:smart_faker/smart_faker.dart';
+
+void main() async {
+  final faker = SmartFaker();
+  final mockServer = MockServer(faker: faker);
+
+  // 設定端點
+  mockServer.get('/api/users', {
+    'users': ['@array:10', {
+      'id': '@uuid',
+      'name': '@person.fullName',
+      'email': '@internet.email',
+      'age': '@number.int:65',
+    }]
+  });
+
+  // 啟動伺服器
+  await mockServer.start(port: 3000);
+  print('模擬伺服器運行於 http://localhost:3000');
+
+  // 您的 Flutter 應用程式現在可以向 http://localhost:3000/api/users 發送請求
+  // 並接收具有 10 個隨機使用者的真實回應
+
+  // 停止伺服器
+  await mockServer.stop();
+}
+```
+
+### 支援的 HTTP 方法
+
+模擬伺服器支援所有標準的 RESTful 方法：
+
+```dart
+// GET - 取得資源
+mockServer.get('/api/products', {
+  'products': ['@array:5', {
+    'id': '@uuid',
+    'name': '@commerce.product',
+    'price': '@commerce.price',
+  }]
+});
+
+// POST - 建立資源
+mockServer.post('/api/users', (body) => {
+  'id': '@uuid',
+  'name': body['name'],
+  'email': body['email'],
+  'createdAt': '@date.recent',
+});
+
+// PUT - 更新整個資源
+mockServer.put('/api/users/<id>', (body, params) => {
+  'id': params['id'],
+  'name': body['name'],
+  'email': body['email'],
+  'updatedAt': '@date.recent',
+});
+
+// PATCH - 部分更新資源
+mockServer.patch('/api/users/<id>', (body, params) => {
+  'id': params['id'],
+  ...body,
+  'updatedAt': '@date.recent',
+});
+
+// DELETE - 刪除資源
+mockServer.delete('/api/users/<id>', (params) => {
+  'message': '使用者 ${params['id']} 已刪除',
+  'success': true,
+});
+```
+
+### 動態回應範本
+
+使用 faker 指令生成動態資料：
+
+```dart
+// 基本 faker 指令
+{
+  'id': '@uuid',                    // 生成 UUID
+  'email': '@email',                // 生成電子郵件
+  'url': '@url',                    // 生成 URL
+  'username': '@username',          // 生成使用者名稱
+  'password': '@password',          // 生成密碼
+  'boolean': '@boolean',            // 生成布林值
+  'phone': '@phone',                // 生成電話號碼
+  'color': '@color',                // 生成顏色
+}
+
+// 數字指令
+{
+  'age': '@number.int:100',         // 0-100 之間的整數
+  'price': '@number.double:999.99', // 0-999.99 之間的浮點數
+  'quantity': '@number.price',      // 價格格式
+}
+
+// 日期指令
+{
+  'createdAt': '@date.past',        // 過去的日期
+  'updatedAt': '@date.recent',      // 最近的日期
+  'nextReview': '@date.future',     // 未來的日期
+  'birthday': '@date.birthdate',    // 生日
+}
+
+// 人員指令
+{
+  'fullName': '@person.fullName',   // 全名
+  'firstName': '@person.firstName', // 名字
+  'lastName': '@person.lastName',   // 姓氏
+  'jobTitle': '@person.title',      // 職稱
+  'bio': '@person.bio',              // 個人簡介
+}
+
+// 公司指令
+{
+  'company': '@company.name',       // 公司名稱
+  'suffix': '@company.suffix',      // 公司後綴
+  'catchPhrase': '@company.catchPhrase', // 標語
+  'bs': '@company.bs',              // BS 術語
+}
+
+// 地址指令
+{
+  'street': '@address.street',      // 街道地址
+  'city': '@address.city',          // 城市
+  'country': '@address.country',    // 國家
+  'zipCode': '@address.zipCode',    // 郵遞區號
+  'fullAddress': '@address.full',   // 完整地址
+}
+
+// 網路指令
+{
+  'email': '@internet.email',       // 電子郵件
+  'username': '@internet.username', // 使用者名稱
+  'password': '@internet.password', // 密碼
+  'url': '@internet.url',           // URL
+  'domain': '@internet.domainName', // 網域名稱
+  'ipv4': '@internet.ipv4',        // IPv4 地址
+  'ipv6': '@internet.ipv6',        // IPv6 地址
+  'userAgent': '@internet.userAgent', // 使用者代理
+}
+
+// Lorem 文字指令
+{
+  'title': '@lorem.sentence',       // 一個句子
+  'description': '@lorem.paragraph', // 一個段落
+  'summary': '@lorem.sentences:3',  // 3 個句子
+  'content': '@lorem.paragraphs:5', // 5 個段落
+}
+
+// 圖片指令
+{
+  'avatar': '@image.avatar',        // 頭像 URL
+  'image': '@image.url',            // 圖片 URL
+  'placeholder': '@image.placeholder:640:480', // 佔位圖片
+}
+
+// 商務指令
+{
+  'product': '@commerce.product',   // 產品名稱
+  'price': '@commerce.price',       // 價格
+  'department': '@commerce.department', // 部門
+  'description': '@commerce.productDescription', // 產品描述
+}
+```
+
+### 陣列生成
+
+生成動態大小的陣列：
+
+```dart
+mockServer.get('/api/posts', {
+  'posts': ['@array:20', {      // 生成 20 個貼文
+    'id': '@uuid',
+    'title': '@lorem.sentence',
+    'content': '@lorem.paragraph',
+    'author': '@person.fullName',
+    'publishedAt': '@date.recent',
+    'likes': '@number.int:1000',
+  }]
+});
+```
+
+### 字串插值
+
+在字串中混合靜態和動態內容：
+
+```dart
+mockServer.get('/api/profile', {
+  'bio': '嗨！我是 {{person.fullName}}，{{person.title}} 來自 {{address.city}}。',
+  'description': '歡迎來到 {{company.name}} - {{company.catchPhrase}}！',
+});
+```
+
+### 路徑參數
+
+支援動態路由參數：
+
+```dart
+// 路由中使用 <參數名>
+mockServer.get('/api/users/<userId>/posts/<postId>', (params) => {
+  'userId': params['userId'],
+  'postId': params['postId'],
+  'title': '@lorem.sentence',
+  'content': '@lorem.paragraph',
+});
+
+// 客戶端請求：GET /api/users/123/posts/456
+// 回應：{ userId: "123", postId: "456", title: "...", content: "..." }
+```
+
+### 狀態管理 (CRUD)
+
+模擬伺服器可以維護記憶體中的狀態，用於真實的 CRUD 操作：
+
+```dart
+final mockServer = MockServer(faker: faker);
+
+// 啟用狀態管理
+mockServer.enableStatefulCrud('/api/users');
+
+// 現在這些端點自動運作：
+// GET    /api/users      - 列出所有使用者
+// GET    /api/users/:id  - 取得特定使用者
+// POST   /api/users      - 建立新使用者
+// PUT    /api/users/:id  - 更新使用者
+// DELETE /api/users/:id  - 刪除使用者
+
+// 您也可以手動管理狀態
+mockServer.setState('users', [
+  {'id': '1', 'name': '王小明'},
+  {'id': '2', 'name': '李小華'},
+]);
+
+final users = mockServer.getState('users');
+```
+
+### 網路模擬
+
+模擬真實的網路條件：
+
+```dart
+// 新增延遲到所有請求（毫秒）
+mockServer.setDelay(500, 2000);  // 隨機 500-2000ms 延遲
+
+// 模擬網路錯誤
+mockServer.setErrorRate(0.1);  // 10% 的請求會失敗
+
+// 只對特定端點設定條件
+mockServer.get('/api/slow-endpoint',
+  {'data': '@lorem.sentence'},
+  delay: 3000,  // 3 秒延遲
+);
+
+mockServer.get('/api/flaky-endpoint',
+  {'data': '@lorem.sentence'},
+  errorRate: 0.5,  // 50% 錯誤率
+);
+```
+
+### 中介軟體支援
+
+新增自訂中介軟體處理請求：
+
+```dart
+// 新增日誌記錄
+mockServer.addMiddleware((request) async {
+  print('${request.method} ${request.requestedUri.path}');
+  return null;  // 繼續到下一個處理程序
+});
+
+// 新增驗證
+mockServer.addMiddleware((request) async {
+  final authHeader = request.headers['authorization'];
+  if (authHeader == null || !authHeader.contains('Bearer')) {
+    return Response.forbidden('需要驗證');
+  }
+  return null;  // 繼續處理
+});
+
+// 新增自訂標頭
+mockServer.addMiddleware((request) async {
+  return null;  // 回應將由路由處理程序新增標頭
+});
+```
+
+### 完整範例：電商 API
+
+```dart
+import 'package:smart_faker/smart_faker.dart';
+
+void main() async {
+  final faker = SmartFaker(locale: 'zh_TW');
+  final mockServer = MockServer(faker: faker);
+
+  // 設定延遲以模擬真實網路
+  mockServer.setDelay(200, 800);
+
+  // 產品列表
+  mockServer.get('/api/products', {
+    'products': ['@array:20', {
+      'id': '@uuid',
+      'name': '@commerce.product',
+      'price': '@commerce.price',
+      'category': '@commerce.department',
+      'inStock': '@boolean',
+      'rating': '@number.int:5',
+      'imageUrl': '@image.url',
+    }],
+    'total': 20,
+    'page': 1,
+  });
+
+  // 產品詳情
+  mockServer.get('/api/products/<id>', (params) => {
+    'id': params['id'],
+    'name': '@commerce.product',
+    'price': '@commerce.price',
+    'description': '@commerce.productDescription',
+    'specifications': {
+      'weight': '{{number.int:10}} 公斤',
+      'dimensions': '{{number.int:100}}x{{number.int:100}}x{{number.int:100}} 公分',
+      'warranty': '{{number.int:3}} 年',
+    },
+    'images': ['@array:5', '@image.url'],
+    'reviews': ['@array:10', {
+      'id': '@uuid',
+      'author': '@person.fullName',
+      'rating': '@number.int:5',
+      'comment': '@lorem.sentence',
+      'date': '@date.recent',
+    }],
+  });
+
+  // 購物車
+  mockServer.enableStatefulCrud('/api/cart');
+
+  // 下訂單
+  mockServer.post('/api/orders', (body) => {
+    'orderId': '@uuid',
+    'items': body['items'],
+    'total': '@commerce.price',
+    'status': '處理中',
+    'estimatedDelivery': '@date.soon',
+    'trackingNumber': 'TW-{{number.int:999999999}}',
+  });
+
+  // 使用者認證
+  mockServer.post('/api/auth/login', (body) => {
+    'token': '@uuid',
+    'user': {
+      'id': '@uuid',
+      'email': body['email'],
+      'name': '@person.fullName',
+      'role': '顧客',
+    },
+    'expiresIn': 3600,
+  });
+
+  await mockServer.start(port: 3000);
+  print('電商模擬 API 運行於 http://localhost:3000');
+
+  // 測試時保持伺服器運行
+  // 生產環境中記得呼叫 mockServer.stop()
+}
+```
+
+### 與 Flutter 整合
+
+在您的 Flutter 應用程式中使用模擬伺服器：
+
+```dart
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
+class ApiService {
+  // 開發環境使用模擬伺服器，生產環境使用真實 API
+  static const String baseUrl = kDebugMode
+    ? 'http://localhost:3000'  // 模擬伺服器
+    : 'https://api.production.com';  // 生產 API
+
+  Future<List<Product>> getProducts() async {
+    final response = await http.get(Uri.parse('$baseUrl/api/products'));
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return (data['products'] as List)
+        .map((p) => Product.fromJson(p))
+        .toList();
+    }
+    throw Exception('載入產品失敗');
+  }
+}
+```
+
+### 測試範例
+
+```dart
+import 'package:test/test.dart';
+import 'package:smart_faker/smart_faker.dart';
+
+void main() {
+  late MockServer mockServer;
+
+  setUpAll(() async {
+    final faker = SmartFaker(seed: 12345);
+    mockServer = MockServer(faker: faker);
+
+    mockServer.get('/api/users', {
+      'users': ['@array:5', {
+        'id': '@uuid',
+        'name': '@person.fullName',
+      }]
+    });
+
+    await mockServer.start(port: 3001);
+  });
+
+  tearDownAll(() async {
+    await mockServer.stop();
+  });
+
+  test('應該取得使用者列表', () async {
+    final response = await http.get(
+      Uri.parse('http://localhost:3001/api/users')
+    );
+
+    expect(response.statusCode, 200);
+    final data = json.decode(response.body);
+    expect(data['users'], hasLength(5));
+  });
 }
 ```
 

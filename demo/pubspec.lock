@@ -81,13 +81,34 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.13.5"
+  http_methods:
+    dependency: transitive
+    description:
+      name: http_methods
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.1"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.0.2"
   intl:
     dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.17.0"
+    version: "0.18.1"
   lints:
     dependency: transitive
     description:
@@ -123,6 +144,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.1"
+  shelf:
+    dependency: transitive
+    description:
+      name: shelf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.1"
+  shelf_router:
+    dependency: transitive
+    description:
+      name: shelf_router
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -134,7 +169,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "0.3.2"
+    version: "0.4.0"
   source_span:
     dependency: transitive
     description:

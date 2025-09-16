@@ -178,6 +178,9 @@ class PhoneModule {
     return random.element(_manufacturers);
   }
 
+  /// Alias for number() method - generates a phone number
+  String phoneNumber() => number();
+
   /// Generates an OS version.
   String osVersion() {
     final os = random.element(['iOS', 'Android']);

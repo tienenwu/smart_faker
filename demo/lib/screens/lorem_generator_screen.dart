@@ -89,8 +89,7 @@ class _LoremGeneratorScreenState extends State<LoremGeneratorScreen> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color:
-                        Theme.of(context).colorScheme.surfaceContainerHighest,
+                    color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: SelectableText(

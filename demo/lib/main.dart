@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_faker/smart_faker.dart';
+import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const SmartFakerSimpleDemo());
+  runApp(const SmartFakerDemoApp());
 }
 
-class SmartFakerSimpleDemo extends StatelessWidget {
-  const SmartFakerSimpleDemo({super.key});
+class SmartFakerDemoApp extends StatelessWidget {
+  const SmartFakerDemoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,152 +14,17 @@ class SmartFakerSimpleDemo extends StatelessWidget {
       title: 'SmartFaker Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.light,
         useMaterial3: true,
       ),
-      home: const DemoHomeScreen(),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.system, // 自動偵測系統深色模式
+      home: const HomeScreen(),
       debugShowCheckedModeBanner: false,
-    );
-  }
-}
-
-class DemoHomeScreen extends StatefulWidget {
-  const DemoHomeScreen({super.key});
-
-  @override
-  State<DemoHomeScreen> createState() => _DemoHomeScreenState();
-}
-
-class _DemoHomeScreenState extends State<DemoHomeScreen> {
-  final SmartFaker faker = SmartFaker();
-  final List<String> generatedData = [];
-
-  void _generatePersonData() {
-    setState(() {
-      generatedData.clear();
-      generatedData.addAll([
-        'Name: ${faker.person.fullName()}',
-        'First Name: ${faker.person.firstName()}',
-        'Last Name: ${faker.person.lastName()}',
-        'Job Title: ${faker.person.jobTitle()}',
-        'Address: ${faker.location.fullAddress()}',
-      ]);
-    });
-  }
-
-  void _generateCommerceData() {
-    setState(() {
-      generatedData.clear();
-      generatedData.addAll([
-        'Product: ${faker.commerce.productName()}',
-        'Price: \$${faker.commerce.price()}',
-        'Category: ${faker.commerce.category()}',
-        'Brand: ${faker.commerce.brand()}',
-        'SKU: ${faker.commerce.sku()}',
-      ]);
-    });
-  }
-
-  void _generateTaiwanData() {
-    setState(() {
-      generatedData.clear();
-      generatedData.addAll([
-        'Taiwan ID: ${faker.taiwan.idNumber()}',
-        'Taiwan Phone: ${faker.taiwan.landlineNumber()}',
-        'Postal Code: ${faker.taiwan.postalCode()}',
-        'License Plate: ${faker.taiwan.licensePlate()}',
-        'Bank Account: ${faker.taiwan.bankAccount()}',
-      ]);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('SmartFaker Demo'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'SmartFaker - Intelligent Test Data Generator',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _generatePersonData,
-                    child: const Text('Person Data'),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _generateCommerceData,
-                    child: const Text('Commerce Data'),
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _generateTaiwanData,
-                    child: const Text('Taiwan Data'),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: generatedData.isEmpty
-                    ? const Center(
-                        child: Text(
-                          'Press a button above to generate sample data',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )
-                    : ListView.builder(
-                        itemCount: generatedData.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Text(
-                              generatedData[index],
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          );
-                        },
-                      ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Text(
-              'Features:\n'
-              '• Multi-language support (English, Chinese, Japanese)\n'
-              '• Taiwan-specific data generation\n'
-              '• Commerce and e-commerce data\n'
-              '• Person and location data\n'
-              '• Schema-based generation\n'
-              '• Export to multiple formats',
-              style: TextStyle(fontSize: 14),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

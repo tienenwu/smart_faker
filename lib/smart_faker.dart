@@ -28,6 +28,11 @@ export 'src/modules/person_module.dart';
 export 'src/modules/internet_module.dart';
 export 'src/modules/location_module.dart';
 export 'src/modules/datetime_module.dart';
+export 'src/modules/datatype_module.dart';
+
+// API Mocking exports
+export 'src/api/mock_server.dart';
+export 'src/api/response_generator.dart';
 export 'src/modules/commerce_module.dart';
 export 'src/modules/company_module.dart';
 export 'src/modules/finance_module.dart';

@@ -5,8 +5,22 @@
 
 FlutterとDartアプリケーション向けの強力でインテリジェントなフェイクデータジェネレーター。SmartFakerは、スマートリレーションシップ、国際化サポート、スキーマベースの生成を含む包括的なテストデータ生成を提供します。
 
-**バージョン：** 0.3.5  
-**最終更新：** 2025-09-08
+## スクリーンショット
+
+<p align="center">
+  <img src="screenshots/01_home_screen.jpg" width="200" alt="ホーム画面" />
+  <img src="screenshots/02_internet_generator.jpg" width="200" alt="インターネットデータジェネレーター" />
+  <img src="screenshots/03_location_generator_multilang.jpg" width="200" alt="多言語位置ジェネレーター" />
+  <img src="screenshots/04_company_generator.jpg" width="200" alt="会社ジェネレーター" />
+</p>
+<p align="center">
+  <img src="screenshots/05_schema_based_generation.jpg" width="200" alt="スキーマベース生成" />
+  <img src="screenshots/06_export_module.jpg" width="200" alt="エクスポートモジュール" />
+  <img src="screenshots/07_healthcare_module.jpg" width="200" alt="ヘルスケアモジュール" />
+</p>
+
+**バージョン：** 0.4.0
+**最終更新：** 2025-09-16
 
 ## 📦 リソース
 

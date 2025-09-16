@@ -137,7 +137,7 @@ class _ExportDemoScreenState extends State<ExportDemoScreen> {
               margin: const EdgeInsets.all(16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surfaceContainer,
+                color: Colors.grey.shade100,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: Theme.of(context).colorScheme.outline,

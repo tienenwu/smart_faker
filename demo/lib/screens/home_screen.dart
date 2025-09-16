@@ -25,6 +25,7 @@ import 'ecommerce_demo_screen.dart';
 import 'healthcare_demo_screen.dart';
 import 'pattern_demo_screen.dart';
 import 'schema_validation_demo_screen.dart';
+import 'api_mocking_demo_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -234,6 +235,16 @@ class HomeScreen extends StatelessWidget {
             title: 'Advanced Features',
             features: [
               FeatureTile(
+                title: 'API Mocking (v0.4.0)',
+                subtitle: 'Mock server with response templates',
+                icon: Icons.api,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const ApiMockingDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
                 title: 'Schema Builder',
                 subtitle: 'Define custom data schemas',
                 icon: Icons.account_tree,
@@ -356,7 +367,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Version: 0.3.0',
+              'Version: 0.4.0',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -398,7 +409,7 @@ class HomeScreen extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: 'SmartFaker Demo',
-      applicationVersion: '0.3.0',
+      applicationVersion: '0.4.0',
       applicationLegalese: '© 2024 SmartFaker',
       children: const [
         SizedBox(height: 16),
@@ -433,13 +444,13 @@ class FeatureTile extends StatelessWidget {
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: enabled
-              ? Theme.of(context).colorScheme.primaryContainer
-              : Theme.of(context).colorScheme.surfaceContainerHighest,
+              ? Theme.of(context).colorScheme.primary.withOpacity(0.1)
+              : Theme.of(context).disabledColor.withOpacity(0.12),
           child: Icon(
             icon,
             color: enabled
                 ? Theme.of(context).colorScheme.primary
-                : Theme.of(context).colorScheme.onSurfaceVariant,
+                : Theme.of(context).disabledColor,
           ),
         ),
         title: Text(
