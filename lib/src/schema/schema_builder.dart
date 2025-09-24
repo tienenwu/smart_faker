@@ -1,5 +1,10 @@
-import '../core/smart_faker.dart';
 import '../annotations/faker_field.dart';
+import '../core/smart_faker.dart';
+import 'importers/json_schema_importer.dart';
+import 'importers/openapi_schema_importer.dart';
+import 'importers/prisma_schema_importer.dart';
+import 'importers/schema_importer.dart';
+
 export 'field_validators.dart';
 
 /// Schema definition for generating structured data.
@@ -69,12 +74,16 @@ class Relationship {
   final String targetSchema;
   final RelationshipType type;
   final String? foreignKey;
+  final int? minItems;
+  final int? maxItems;
 
   Relationship({
     required this.field,
     required this.targetSchema,
     required this.type,
     this.foreignKey,
+    this.minItems,
+    this.maxItems,
   });
 }
 
@@ -92,6 +101,63 @@ class SchemaBuilder {
   /// Registers a schema.
   void registerSchema(Schema schema) {
     _schemas[schema.name] = schema;
+  }
+
+  /// Checks whether a schema with the given [name] is registered.
+  bool hasSchema(String name) => _schemas.containsKey(name);
+
+  /// Registers multiple schemas.
+  void registerSchemas(Iterable<Schema> schemas) {
+    for (final schema in schemas) {
+      registerSchema(schema);
+    }
+  }
+
+  /// Imports schemas from a JSON Schema document.
+  SchemaImportResult importFromJsonSchema(
+    Map<String, dynamic> document, {
+    Iterable<String>? schemaNames,
+    String? rootSchemaName,
+    SchemaImportConfig? config,
+  }) {
+    final importer = JsonSchemaImporter(config: config);
+    final result = importer.importFromDocument(
+      document,
+      schemaNames: schemaNames,
+      rootSchemaName: rootSchemaName,
+    );
+    registerSchemas(result.schemas);
+    return result;
+  }
+
+  /// Imports schemas from an OpenAPI document (v3+).
+  SchemaImportResult importFromOpenApi(
+    Map<String, dynamic> document, {
+    Iterable<String>? componentNames,
+    SchemaImportConfig? config,
+  }) {
+    final importer = OpenApiSchemaImporter(config: config);
+    final result = importer.importFromDocument(
+      document,
+      componentNames: componentNames,
+    );
+    registerSchemas(result.schemas);
+    return result;
+  }
+
+  /// Imports models from a Prisma schema file.
+  SchemaImportResult importFromPrisma(
+    String source, {
+    Iterable<String>? modelNames,
+    SchemaImportConfig? config,
+  }) {
+    final importer = PrismaSchemaImporter(config: config);
+    final result = importer.importFromSource(
+      source,
+      modelNames: modelNames,
+    );
+    registerSchemas(result.schemas);
+    return result;
   }
 
   /// Generates data for a schema.
@@ -191,6 +257,16 @@ class SchemaBuilder {
   }
 
   dynamic _generateByType(FieldDefinition fieldDef) {
+    final enums = fieldDef.options?['enum'];
+    if (enums is List && enums.isNotEmpty) {
+      return faker.random.element(enums);
+    }
+
+    final examples = fieldDef.options?['examples'];
+    if (examples is List && examples.isNotEmpty) {
+      return faker.random.element(examples);
+    }
+
     switch (fieldDef.type) {
       // Person types
       case FakerFieldType.firstName:
@@ -330,14 +406,21 @@ class SchemaBuilder {
       case RelationshipType.hasOne:
         return generate(relationship.targetSchema);
       case RelationshipType.hasMany:
-        final count = faker.random.integer(min: 1, max: 5);
+        final min = relationship.minItems ?? 1;
+        final rawMax = relationship.maxItems ?? (min + 3);
+        final max = rawMax < min ? min : rawMax;
+        final count = faker.random.integer(min: min, max: max);
         return generateList(relationship.targetSchema, count: count);
       case RelationshipType.belongsTo:
         // Return a reference ID
         final existingData = _generatedData[relationship.targetSchema];
         if (existingData != null && existingData.isNotEmpty) {
           final item = faker.random.element(existingData);
-          return item[relationship.foreignKey ?? 'id'];
+          if (relationship.foreignKey != null &&
+              item.containsKey(relationship.foreignKey)) {
+            return item[relationship.foreignKey];
+          }
+          return item['id'] ?? faker.random.uuid();
         }
         return faker.random.uuid();
     }
@@ -460,12 +543,14 @@ class SchemaDefinitionBuilder {
 
   /// Adds a has-many relationship.
   SchemaDefinitionBuilder hasMany(String field, String targetSchema,
-      {String? foreignKey}) {
+      {String? foreignKey, int? minItems, int? maxItems}) {
     relationships.add(Relationship(
       field: field,
       targetSchema: targetSchema,
       type: RelationshipType.hasMany,
       foreignKey: foreignKey,
+      minItems: minItems,
+      maxItems: maxItems,
     ));
     return this;
   }

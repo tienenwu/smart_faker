@@ -10,6 +10,11 @@ SmartFaker provides a powerful built-in mock server for creating realistic API e
 - ⏱️ **Network Simulation**: Configurable delays and error rates
 - 🔄 **Dynamic Data**: Generate fresh data on each request
 - 🎯 **Path Parameters**: Support for RESTful routing
+- 🧬 **GraphQL Resolvers**: Attach query & mutation handlers with faker-aware context
+- 📡 **Server-Sent Events**: Stream push notifications for real-time testing
+- 🔌 **WebSocket Sessions**: Bi-directional channels with helper utilities
+- 🎞️ **Recording & Replay**: Capture deterministic fixtures and replay them later
+- 🧰 **CLI Toolkit**: Launch mock scenarios and schema generation from the terminal
 
 ## Quick Start
 
@@ -194,6 +199,72 @@ When `errorRate` is configured, the server randomly returns:
 - `404 Not Found`
 - `408 Request Timeout`
 - `429 Too Many Requests`
+
+## GraphQL Resolvers
+
+```dart
+final graphQL = mockServer.graphQL('/graphql');
+
+// Query root fields map directly to resolver names
+graphQL.query('viewer', (context) {
+  return {
+    'id': faker.datatype.uuid(),
+    'name': faker.person.fullName(),
+    'email': faker.internet.email(),
+  };
+});
+
+// Use variables and the shared state store inside mutations
+graphQL.mutation('updateProfile', (context) {
+  final name = context.variables['name'] as String? ?? faker.person.fullName();
+  context.state['latestName'] = name;
+  return {'success': true, 'name': name};
+});
+```
+
+## Server-Sent Events
+
+```dart
+mockServer.sse('/events', (context) async* {
+  yield SseEvent(
+    event: 'notification',
+    data: {
+      'id': faker.datatype.uuid(),
+      'message': faker.lorem.sentence(),
+      'timestamp': DateTime.now().toIso8601String(),
+    },
+  );
+});
+```
+
+## WebSocket Sessions
+
+```dart
+mockServer.webSocket('/ws', (session) {
+  session.send({'type': 'welcome', 'message': 'Connected'});
+
+  // Echo messages back to the client
+  session.stream.listen((incoming) {
+    session.send({'type': 'echo', 'payload': incoming});
+  });
+});
+```
+
+## Recording & Replay
+
+```dart
+mockServer.startRecording('checkout');
+final port = await mockServer.start();
+print('Recording fixtures at http://localhost:$port/orders');
+
+// ...perform requests that you would like to capture...
+
+mockServer.stopRecording();
+mockServer.startReplay('checkout');
+```
+
+Use `mockServer.recordingsFor('checkout')` to inspect captured interactions or clear them with `mockServer.clearRecording('checkout')`.
+
 
 ## Path Parameters
 

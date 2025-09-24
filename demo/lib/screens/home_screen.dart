@@ -17,6 +17,7 @@ import 'crypto_generator_screen.dart';
 import 'food_generator_screen.dart';
 import 'music_generator_screen.dart';
 import 'schema_demo_screen.dart';
+import 'schema_import_demo_screen.dart';
 import 'smart_relationships_screen.dart';
 import 'export_demo_screen.dart';
 import 'taiwan_demo_screen.dart';
@@ -235,8 +236,8 @@ class HomeScreen extends StatelessWidget {
             title: 'Advanced Features',
             features: [
               FeatureTile(
-                title: 'API Mocking (v0.4.0)',
-                subtitle: 'Mock server with response templates',
+                title: 'Mocking & Streaming (v0.5.0)',
+                subtitle: 'REST, GraphQL, SSE/WebSocket, recording, CLI',
                 icon: Icons.api,
                 onTap: () => _navigateToScreen(
                   context,
@@ -251,6 +252,16 @@ class HomeScreen extends StatelessWidget {
                 onTap: () => _navigateToScreen(
                   context,
                   const SchemaDemoScreen(),
+                ),
+                enabled: true,
+              ),
+              FeatureTile(
+                title: 'Schema Imports',
+                subtitle: 'Bring in JSON Schema, OpenAPI, Prisma',
+                icon: Icons.import_export,
+                onTap: () => _navigateToScreen(
+                  context,
+                  const SchemaImportDemoScreen(),
                 ),
                 enabled: true,
               ),
@@ -367,7 +378,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Version: 0.4.0',
+              'Version: 0.5.0',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -409,7 +420,7 @@ class HomeScreen extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: 'SmartFaker Demo',
-      applicationVersion: '0.4.0',
+      applicationVersion: '0.5.0',
       applicationLegalese: '© 2024 SmartFaker',
       children: const [
         SizedBox(height: 16),

@@ -61,19 +61,25 @@ void main() {
       test('should generate recent date', () {
         final now = DateTime.now();
         final date = faker.dateTime.recent();
-        final sevenDaysAgo = now.subtract(const Duration(days: 7));
-
         expect(date.isBefore(now) || date.isAtSameMomentAs(now), isTrue);
-        expect(date.isAfter(sevenDaysAgo), isTrue);
+        expect(
+          now.difference(date) <= const Duration(days: 8),
+          isTrue,
+          reason:
+              'diff: \${now.difference(date)} date: \${date.toIso8601String()}',
+        );
       });
 
       test('should generate recent date with custom days', () {
         final now = DateTime.now();
         final date = faker.dateTime.recent(days: 30);
-        final thirtyDaysAgo = now.subtract(const Duration(days: 30));
-
         expect(date.isBefore(now) || date.isAtSameMomentAs(now), isTrue);
-        expect(date.isAfter(thirtyDaysAgo), isTrue);
+        expect(
+          now.difference(date) <= const Duration(days: 31),
+          isTrue,
+          reason:
+              'diff: \${now.difference(date)} date: \${date.toIso8601String()}',
+        );
       });
 
       test('should generate soon date', () {

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:smart_faker/smart_faker.dart';
 
@@ -14,6 +16,10 @@ class _ApiMockingDemoScreenState extends State<ApiMockingDemoScreen> {
   List<Map<String, dynamic>> generatedData = [];
   String selectedEndpoint = 'users';
   bool isLoading = false;
+  late final Map<String, dynamic> graphQLSample;
+  late final List<Map<String, dynamic>> sseSample;
+  late final Map<String, dynamic> webSocketSample;
+  late final Map<String, dynamic> recordingSample;
 
   // Template definitions for different endpoints
   final Map<String, dynamic> templates = {
@@ -65,6 +71,147 @@ class _ApiMockingDemoScreenState extends State<ApiMockingDemoScreen> {
       ]
     },
   };
+
+  @override
+  void initState() {
+    super.initState();
+
+    graphQLSample = {
+      'request': {
+        'query': 'query { viewer { id name email locale } }',
+      },
+      'response': {
+        'data': {
+          'viewer': {
+            'id': faker.datatype.uuid(),
+            'name': faker.person.fullName(),
+            'email': faker.internet.email(),
+            'locale': faker.locale,
+          },
+        },
+      }
+    };
+
+    sseSample = [
+      {
+        'event': 'orderCreated',
+        'data': {
+          'orderId': faker.datatype.uuid(),
+          'status': 'processing',
+          'total': faker.commerce.price(min: 19, max: 199),
+        },
+      },
+      {
+        'event': 'orderUpdated',
+        'data': {
+          'orderId': faker.datatype.uuid(),
+          'status': 'shipped',
+          'tracking': faker.datatype.uuid(),
+        },
+      },
+    ];
+
+    webSocketSample = {
+      'channel': 'support.chat',
+      'payload': {
+        'conversationId': faker.datatype.uuid(),
+        'sender': faker.person.fullName(),
+        'message': faker.lorem.sentence(),
+        'sentAt': DateTime.now().toIso8601String(),
+      },
+    };
+
+    recordingSample = {
+      'session': 'checkout-seed',
+      'interactions': [
+        {
+          'method': 'GET',
+          'path': '/api/cart',
+          'statusCode': 200,
+          'response': {
+            'id': faker.datatype.uuid(),
+            'items': [
+              {
+                'sku': faker.commerce.sku(),
+                'quantity': 2,
+                'price': faker.commerce.price(),
+              },
+              {
+                'sku': faker.commerce.sku(),
+                'quantity': 1,
+                'price': faker.commerce.price(),
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    _generateData(selectedEndpoint);
+  }
+
+  String _formatJson(dynamic value) {
+    const encoder = JsonEncoder.withIndent('  ');
+    return encoder.convert(value);
+  }
+
+  Widget _buildAdvancedFeaturesCard() {
+    final theme = Theme.of(context);
+    final ssePreview = sseSample
+        .map((event) => 'event: ${event["event"]}\n'
+            'data: ${jsonEncode(event["data"])}\n')
+        .join('\n');
+
+    return Card(
+      elevation: 4,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Advanced Mocking (GraphQL · Streaming · Recording)',
+              style: theme.textTheme.titleLarge,
+            ),
+            const SizedBox(height: 12),
+            Text('GraphQL preview', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(
+              _formatJson(graphQLSample),
+              style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            Text('Server-Sent Events stream',
+                style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(
+              ssePreview,
+              style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            Text('WebSocket message', style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(
+              _formatJson(webSocketSample),
+              style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 12),
+            ),
+            const SizedBox(height: 16),
+            Text('Recorded session snapshot',
+                style: theme.textTheme.titleMedium),
+            const SizedBox(height: 8),
+            SelectableText(
+              _formatJson(recordingSample),
+              style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 12),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Use these previews when wiring GraphQL resolvers, SSE streams, and WebSocket sessions with the SmartFaker mock server.',
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   void _generateData(String endpoint) {
     setState(() {
@@ -162,8 +309,8 @@ class _ApiMockingDemoScreenState extends State<ApiMockingDemoScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'SmartFaker v0.4.0 includes a built-in mock server for testing API integrations. '
-                      'This demo shows how response templates work with faker directives.',
+                      'SmartFaker v0.5.0 adds GraphQL resolvers, streaming endpoints, and response recording to the built-in mock server. '
+                      'This demo highlights response templates alongside the new advanced tooling.',
                     ),
                     const SizedBox(height: 8),
                     const Text(
@@ -307,6 +454,8 @@ class _ApiMockingDemoScreenState extends State<ApiMockingDemoScreen> {
                 ),
               ),
             ],
+            const SizedBox(height: 16),
+            _buildAdvancedFeaturesCard(),
           ],
         ),
       ),

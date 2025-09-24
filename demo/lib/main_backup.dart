@@ -44,7 +44,7 @@ class MainMenuScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'SmartFaker v0.4.0',
+                    'SmartFaker v0.5.0',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),

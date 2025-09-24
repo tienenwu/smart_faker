@@ -26,6 +26,7 @@ import '../modules/social_media_module.dart';
 import '../modules/ecommerce_module.dart';
 import '../modules/healthcare_module.dart';
 import '../modules/pattern_module.dart';
+import '../modules/privacy_module.dart';
 import '../modules/datatype_module.dart';
 
 /// The main SmartFaker class that provides access to all data generation modules.
@@ -195,6 +196,7 @@ class SmartFaker {
 
   /// Gets the pattern module for generating data from regex patterns.
   PatternModule get pattern => PatternModule(_randomGenerator, _localeManager);
+  PrivacyModule get privacy => PrivacyModule(_randomGenerator, _localeManager);
 
   /// Gets the datatype module for generating basic data types.
   DatatypeModule get datatype =>

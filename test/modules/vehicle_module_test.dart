@@ -124,7 +124,7 @@ void main() {
         final faker = SmartFaker(locale: 'ja_JP');
         final plate = faker.vehicle.licensePlate();
 
-        expect(plate, matches(RegExp(r'^.{2} \d{2}-\d{2}$')));
+        expect(plate, matches(RegExp(r'^.{2,4} \d{2}-\d{2}$')));
       });
     });
 

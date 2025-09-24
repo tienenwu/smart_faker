@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.5.0] - 2025-09-24
+
+### Added
+- **Schema Importers**: JSON Schema, OpenAPI, and Prisma importers with schema auto-naming and presets
+- **smart_faker CLI**: `generate`, `mock`, and `build` commands for fixture generation and mock server control
+- **Mock Server Enhancements**: GraphQL resolvers, SSE/WebSocket support, and request recording/replay APIs
+- **Privacy Module**: Masking, PII detection, numeric synthesizer, and k-anonymity helpers
+- **Demo & Docs**: Updated demo screens, multilingual READMEs, and API_MOCKING guide for new capabilities
+
+### Changed
+- Updated documentation and examples to highlight CLI usage and advanced streaming features
+- Refreshed README cards and demo app labels to reflect v0.5.0 feature set
+
+### Fixed
+- Corrected JSON Schema importer naming for root-level schemas and improved tests for CLI import workflows
+
 ## [0.4.0] - 2025-09-16
 
 ### Added

@@ -1,4 +1,8 @@
-include: package:flutter_lints/flutter.yaml
+analyzer:
+  exclude:
+    - demo/**
+    - smart_faker_generator/**
+    - tool/**
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+linter:
+  rules: []

@@ -18,6 +18,15 @@ void main() async {
 
   // Example 4: Error Simulation
   await errorSimulationExample(faker);
+
+  // Example 5: GraphQL Mocking
+  await graphQLExample(faker);
+
+  // Example 6: Streaming Endpoints
+  await streamingExample(faker);
+
+  // Example 7: Recording & Replay
+  await recordingExample(faker);
 }
 
 /// Example 1: Simple Mock Server
@@ -227,5 +236,118 @@ Future<void> errorSimulationExample(SmartFaker faker) async {
   print('Responses delayed 100-500ms');
 
   await Future.delayed(Duration(seconds: 2));
+  await mockServer.stop();
+}
+
+/// Example 5: GraphQL Mocking
+Future<void> graphQLExample(SmartFaker faker) async {
+  print('\n=== Example 5: GraphQL Mocking ===\n');
+
+  final mockServer = faker.createMockApi();
+  final graphQL = mockServer.graphQL('/graphql');
+
+  graphQL.query('viewer', (context) {
+    return {
+      'id': faker.datatype.uuid(),
+      'name': faker.person.fullName(),
+      'email': faker.internet.email(),
+      'locale': context.faker.locale,
+    };
+  });
+
+  graphQL.mutation('updateProfile', (context) {
+    final name =
+        context.variables['name'] as String? ?? faker.person.fullName();
+    context.state['profile:name'] = name;
+    return {'success': true, 'name': name};
+  });
+
+  final port = await mockServer.start();
+  print('GraphQL endpoint running at http://localhost:$port/graphql');
+  print(
+      'Try: curl -X POST http://localhost:$port/graphql -H "Content-Type: application/json" '
+      '-d "{\"query\":\"query { viewer { name email } }\"}"');
+
+  await Future.delayed(const Duration(seconds: 2));
+  await mockServer.stop();
+}
+
+/// Example 6: Streaming Endpoints
+Future<void> streamingExample(SmartFaker faker) async {
+  print('\n=== Example 6: Streaming (SSE & WebSocket) ===\n');
+
+  final mockServer = faker.createMockApi();
+
+  mockServer.sse('/events', (context) async* {
+    yield SseEvent(
+      event: 'notification',
+      data: {
+        'id': faker.datatype.uuid(),
+        'title': faker.lorem.sentence(),
+        'timestamp': DateTime.now().toIso8601String(),
+      },
+    );
+    await Future.delayed(const Duration(milliseconds: 400));
+    yield SseEvent(
+      event: 'notification',
+      data: {
+        'id': faker.datatype.uuid(),
+        'title': faker.lorem.sentence(),
+        'timestamp': DateTime.now().toIso8601String(),
+      },
+    );
+  });
+
+  mockServer.webSocket('/ws', (session) {
+    session.send({
+      'type': 'welcome',
+      'message': 'Connected to SmartFaker mock socket',
+    });
+    session.stream.listen((incoming) {
+      session.send({
+        'type': 'echo',
+        'payload': incoming,
+      });
+    });
+  });
+
+  final port = await mockServer.start();
+  print('SSE endpoint:  http://localhost:$port/events');
+  print('WebSocket endpoint: ws://localhost:$port/ws');
+  print('Try: curl http://localhost:$port/events');
+  print('     websocat ws://localhost:$port/ws');
+
+  await Future.delayed(const Duration(seconds: 2));
+  await mockServer.stop();
+}
+
+/// Example 7: Recording and Replay
+Future<void> recordingExample(SmartFaker faker) async {
+  print('\n=== Example 7: Recording & Replay ===\n');
+
+  final mockServer = faker.createMockApi();
+  mockServer.get('/orders', (_) {
+    return List.generate(
+      3,
+      (_) => {
+        'id': faker.datatype.uuid(),
+        'status':
+            faker.random.element(['processing', 'fulfilled', 'cancelled']),
+        'total': faker.commerce.price(),
+      },
+    );
+  });
+
+  mockServer.startRecording('demo');
+  final port = await mockServer.start();
+  print('Recording session "demo" at http://localhost:$port/orders');
+  print('Hit the endpoint now to capture fixtures.');
+
+  await Future.delayed(const Duration(seconds: 2));
+  mockServer.stopRecording();
+
+  mockServer.startReplay('demo');
+  print('Replay mode enabled — subsequent requests return recorded data.');
+  await Future.delayed(const Duration(seconds: 2));
   await mockServer.stop();
 }

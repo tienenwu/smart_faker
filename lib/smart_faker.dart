@@ -51,6 +51,7 @@ export 'src/modules/social_media_module.dart';
 export 'src/modules/ecommerce_module.dart';
 export 'src/modules/healthcare_module.dart';
 export 'src/modules/pattern_module.dart';
+export 'src/modules/privacy_module.dart';
 
 // Model exports
 export 'src/modules/models/coordinates.dart';
@@ -63,3 +64,7 @@ export 'src/annotations/faker_field.dart';
 export 'src/schema/schema_builder.dart';
 export 'src/schema/faker_model.dart';
 export 'src/schema/relationship_manager.dart';
+export 'src/schema/importers/schema_importer.dart';
+export 'src/schema/importers/json_schema_importer.dart';
+export 'src/schema/importers/openapi_schema_importer.dart';
+export 'src/schema/importers/prisma_schema_importer.dart';

@@ -163,7 +163,7 @@ class FullMenuScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'SmartFaker v0.4.0',
+                    'SmartFaker v0.5.0',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                   const SizedBox(height: 8),
@@ -192,7 +192,7 @@ class FullMenuScreen extends StatelessWidget {
           _buildMenuTile(context, 'Schema Generation', Icons.schema,
               SimplifiedSchemaScreen()),
 
-          // NEW in v0.4.0
+          // NEW in v0.5.0
           _buildSectionTitle(context, _getSectionTitle('new')),
           _buildMenuTile(
               context, 'API Mocking', Icons.api, const ApiMockingDemoScreen()),
@@ -247,7 +247,7 @@ class FullMenuScreen extends StatelessWidget {
           case 'core':
             return '🎯 核心功能';
           case 'new':
-            return '🚀 v0.4.0 新功能';
+            return '🚀 v0.5.0 新功能';
           case 'v03':
             return '✨ v0.3.0 功能';
           case 'v02':
@@ -262,7 +262,7 @@ class FullMenuScreen extends StatelessWidget {
           case 'core':
             return '🎯 コア機能';
           case 'new':
-            return '🚀 v0.4.0 新機能';
+            return '🚀 v0.5.0 新機能';
           case 'v03':
             return '✨ v0.3.0 機能';
           case 'v02':
@@ -277,7 +277,7 @@ class FullMenuScreen extends StatelessWidget {
           case 'core':
             return '🎯 Core Features';
           case 'new':
-            return '🚀 New in v0.4.0';
+            return '🚀 New in v0.5.0';
           case 'v03':
             return '✨ v0.3.0 Features';
           case 'v02':

@@ -127,7 +127,7 @@ void main() {
         final suffix = faker.company.suffix();
 
         expect(name, isNotEmpty);
-        expect(['Inc.', 'LLC', 'Corp.', 'Ltd.'], contains(suffix));
+        expect(['Inc.', 'LLC', 'Corp.', 'Ltd.', 'Holdings'], contains(suffix));
       });
 
       test('should generate Traditional Chinese company data', () {

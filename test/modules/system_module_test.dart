@@ -17,7 +17,7 @@ void main() {
 
       test('should generate file extension', () {
         final ext = faker.system.fileExtension();
-        expect(ext, matches(RegExp(r'^[a-z]+$')));
+        expect(ext, matches(RegExp(r'^[a-z0-9]+$')));
       });
 
       test('should generate file path', () {

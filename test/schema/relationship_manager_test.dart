@@ -130,7 +130,8 @@ void main() {
       for (final pivot in pivotData) {
         expect(pivot['userId'], isIn(['u1', 'u2']));
         expect(pivot['roleId'], isIn(['r1', 'r2', 'r3']));
-        expect(pivot['createdAt'], isA<DateTime>());
+        expect(pivot['createdAt'], isA<String>());
+        expect(DateTime.tryParse(pivot['createdAt']), isNotNull);
       }
     });
 

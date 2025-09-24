@@ -24,6 +24,16 @@ This directory contains comprehensive examples demonstrating how to use the Smar
 - Generate complex data structures
 - Maintain data relationships
 
+### Schema Imports
+- Import JSON Schema, OpenAPI, and Prisma models
+- Auto-map fields, constraints, and relationships
+- `dart run example/schema_import_example.dart`
+
+### CLI Utilities
+- Launch mock API scenarios from the terminal
+- Generate fixtures directly from schema files
+- `dart run bin/smart_faker_cli.dart --help`
+
 ### Smart Relationships
 - One-to-many relationships
 - Many-to-many relationships

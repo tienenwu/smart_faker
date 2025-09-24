@@ -19,14 +19,15 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
   <img src="screenshots/07_healthcare_module.jpg" width="200" alt="Healthcare Module" />
 </p>
 
-**Version:** 0.4.0
-**Last Updated:** 2025-09-16
+**Version:** 0.5.0
+**Last Updated:** 2025-09-24
 
 ## 📦 Resources
 
 - **GitHub Repository:** [https://github.com/tienenwu/smart_faker](https://github.com/tienenwu/smart_faker)
 - **Demo Application:** Available in the repository's `/demo` folder with comprehensive examples for all features
 - **API Documentation:** [pub.dev/documentation/smart_faker](https://pub.dev/documentation/smart_faker/latest/)
+- **CLI Quick Start:** `dart run bin/smart_faker_cli.dart --help`
 
 ## Features
 
@@ -41,7 +42,9 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
 - 📤 **Data Export**: Export to CSV, JSON, SQL, XML, YAML, Markdown formats (New in v0.2.0!)
 - 🇹🇼 **Taiwan Module**: Comprehensive Taiwan-specific data generation including ID numbers, tax IDs, and more (New in v0.2.0!)
 - 🎯 **Pattern Module**: Generate data from regex patterns for validation-ready fake data (New in v0.3.0!)
-- 🚀 **API Mocking**: Built-in mock server for testing API integrations with realistic data (New in v0.4.0!)
+- 🚀 **Mock Server Suite**: REST + GraphQL + SSE/WebSocket with recording & replay (New in v0.5.0!)
+- 🧰 **Schema Importers & CLI**: Import JSON Schema/OpenAPI/Prisma and generate data from the new CLI (New in v0.5.0!)
+- 🔐 **Privacy Toolkit**: Mask, de-identify, and synthesize datasets with the new `privacy` module (New in v0.5.0!)
 
 ## Installation
 
@@ -49,7 +52,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.4.0
+  smart_faker: ^0.5.0
 ```
 
 Then run:
@@ -356,6 +359,24 @@ faker.lorem.paragraphs(2)      // Multiple paragraphs
 faker.lorem.lines(5)           // Multiple lines
 ```
 
+### Privacy Module
+```dart
+final record = {
+  'fullName': 'Jane Doe',
+  'email': 'jane@example.com',
+  'phone': '+1-202-555-0101',
+};
+
+// Automatically detect PII and mask it
+final masked = faker.privacy.deidentifyRecord(record);
+
+// Detect suspect fields yourself
+final fields = faker.privacy.detectPiiFields(record);
+
+// Generate synthetic numeric samples from production data
+final synthetic = faker.privacy.synthesizeNumeric([42, 45, 44, 41], count: 5);
+```
+
 ### Image Module
 ```dart
 faker.image.avatar()           // Avatar URL
@@ -512,6 +533,7 @@ FieldPatterns.macAddress    // MAC address pattern
 - **Crypto**: bitcoin/ethereum addresses, hashes
 - **Food**: dishes, ingredients, restaurants, cuisines
 - **Music**: genres, artists, songs, albums, instruments
+- **Privacy**: masking, PII detection, synthetic datasets
 
 ## Advanced Usage
 
@@ -563,6 +585,21 @@ Container(
   ),
 )
 ```
+
+### CLI Helpers
+```bash
+# Launch the mock server with demo endpoints and recording
+dart run bin/smart_faker_cli.dart mock --port 3000 --record demo
+
+# Generate fixtures directly from schema files
+dart run bin/smart_faker_cli.dart generate \
+  --schema-file api/schema.json \
+  --schema Order \
+  --count 25 \
+  --output orders.json
+```
+
+Run `dart run bin/smart_faker_cli.dart --help` to explore all available commands and options.
 
 ### Performance Optimization
 
@@ -736,444 +773,104 @@ final builder = SmartRelationshipBuilder(
 );
 ```
 
-## API Mocking - New in v0.4.0!
+## API Mocking & Streaming - New in v0.5.0!
 
-SmartFaker now includes powerful API mocking capabilities for testing Flutter app API integrations. The built-in mock server generates realistic dynamic responses, simulates network delays, and even tests error handling.
+SmartFaker 0.5.0 extends the built-in mock server with GraphQL resolvers, server-sent events, WebSocket helpers, and request recording/replay. The new `smart_faker` CLI lets you launch scenarios or generate fixtures without writing additional code.
 
-### Quick Start
-
+### REST Quick Start
 ```dart
 import 'package:smart_faker/smart_faker.dart';
 
-void main() async {
+Future<void> main() async {
   final faker = SmartFaker();
-  final mockServer = MockServer(faker: faker);
+  final mockServer = faker.createMockApi(
+    options: MockServerOptions(minDelay: 80, maxDelay: 260),
+  );
 
-  // Set up endpoints
-  mockServer.get('/api/users', {
-    'users': ['@array:10', {
-      'id': '@uuid',
-      'name': '@person.fullName',
-      'email': '@internet.email',
-      'age': '@number.int:65',
-    }]
+  mockServer.get('/api/users', (request) {
+    return List.generate(5, (_) => {
+          'id': faker.datatype.uuid(),
+          'name': faker.person.fullName(),
+          'email': faker.internet.email(),
+          'joinedAt': faker.dateTime.recent().toIso8601String(),
+        });
   });
 
-  // Start the server
-  await mockServer.start(port: 3000);
-  print('Mock server running at http://localhost:3000');
-
-  // Your Flutter app can now make requests to http://localhost:3000/api/users
-  // and receive realistic responses with 10 random users
-
-  // Stop the server when done
-  await mockServer.stop();
+  final port = await mockServer.start(port: 3000);
+  print('Mock server running at http://localhost:$port');
 }
 ```
 
-### Supported HTTP Methods
-
-The mock server supports all standard RESTful methods:
-
+### Response Templates
 ```dart
-// GET - Retrieve resources
-mockServer.get('/api/products', {
-  'products': ['@array:5', {
-    'id': '@uuid',
-    'name': '@commerce.product',
-    'price': '@commerce.price',
-  }]
-});
-
-// POST - Create resources
-mockServer.post('/api/users', (body) => {
-  'id': '@uuid',
-  'name': body['name'],
-  'email': body['email'],
-  'createdAt': '@date.recent',
-});
-
-// PUT - Update entire resource
-mockServer.put('/api/users/<id>', (body, params) => {
-  'id': params['id'],
-  'name': body['name'],
-  'email': body['email'],
-  'updatedAt': '@date.recent',
-});
-
-// PATCH - Partial update
-mockServer.patch('/api/users/<id>', (body, params) => {
-  'id': params['id'],
-  ...body,
-  'updatedAt': '@date.recent',
-});
-
-// DELETE - Remove resource
-mockServer.delete('/api/users/<id>', (params) => {
-  'message': 'User ${params['id']} deleted',
-  'success': true,
-});
-```
-
-### Dynamic Response Templates
-
-Use faker directives to generate dynamic data:
-
-```dart
-// Basic faker directives
-{
-  'id': '@uuid',                    // Generate UUID
-  'email': '@email',                // Generate email
-  'url': '@url',                    // Generate URL
-  'username': '@username',          // Generate username
-  'password': '@password',          // Generate password
-  'boolean': '@boolean',            // Generate boolean
-  'phone': '@phone',                // Generate phone
-  'color': '@color',                // Generate color
-}
-
-// Number directives
-{
-  'age': '@number.int:100',         // Integer 0-100
-  'price': '@number.double:999.99', // Float 0-999.99
-  'quantity': '@number.price',      // Price format
-}
-
-// Date directives
-{
-  'createdAt': '@date.past',        // Past date
-  'updatedAt': '@date.recent',      // Recent date
-  'nextReview': '@date.future',     // Future date
-  'birthday': '@date.birthdate',    // Birthdate
-}
-
-// Person directives
-{
-  'fullName': '@person.fullName',   // Full name
-  'firstName': '@person.firstName', // First name
-  'lastName': '@person.lastName',   // Last name
-  'jobTitle': '@person.title',      // Job title
-  'bio': '@person.bio',              // Bio
-}
-
-// Company directives
-{
-  'company': '@company.name',       // Company name
-  'suffix': '@company.suffix',      // Company suffix
-  'catchPhrase': '@company.catchPhrase', // Catch phrase
-  'bs': '@company.bs',              // BS speak
-}
-
-// Address directives
-{
-  'street': '@address.street',      // Street address
-  'city': '@address.city',          // City
-  'country': '@address.country',    // Country
-  'zipCode': '@address.zipCode',    // ZIP code
-  'fullAddress': '@address.full',   // Full address
-}
-
-// Internet directives
-{
-  'email': '@internet.email',       // Email
-  'username': '@internet.username', // Username
-  'password': '@internet.password', // Password
-  'url': '@internet.url',           // URL
-  'domain': '@internet.domainName', // Domain
-  'ipv4': '@internet.ipv4',        // IPv4 address
-  'ipv6': '@internet.ipv6',        // IPv6 address
-  'userAgent': '@internet.userAgent', // User agent
-}
-
-// Lorem text directives
-{
-  'title': '@lorem.sentence',       // One sentence
-  'description': '@lorem.paragraph', // One paragraph
-  'summary': '@lorem.sentences:3',  // 3 sentences
-  'content': '@lorem.paragraphs:5', // 5 paragraphs
-}
-
-// Image directives
-{
-  'avatar': '@image.avatar',        // Avatar URL
-  'image': '@image.url',            // Image URL
-  'placeholder': '@image.placeholder:640:480', // Placeholder
-}
-
-// Commerce directives
-{
-  'product': '@commerce.product',   // Product name
-  'price': '@commerce.price',       // Price
-  'department': '@commerce.department', // Department
-  'description': '@commerce.productDescription', // Description
-}
-```
-
-### Array Generation
-
-Generate dynamic arrays of any size:
-
-```dart
-mockServer.get('/api/posts', {
-  'posts': ['@array:20', {      // Generate 20 posts
-    'id': '@uuid',
-    'title': '@lorem.sentence',
-    'content': '@lorem.paragraph',
-    'author': '@person.fullName',
-    'publishedAt': '@date.recent',
-    'likes': '@number.int:1000',
-  }]
-});
-```
-
-### String Interpolation
-
-Mix static and dynamic content in strings:
-
-```dart
-mockServer.get('/api/profile', {
-  'bio': 'Hi! I am {{person.fullName}}, a {{person.title}} from {{address.city}}.',
-  'description': 'Welcome to {{company.name}} - {{company.catchPhrase}}!',
-});
-```
-
-### Path Parameters
-
-Support dynamic route parameters:
-
-```dart
-// Use <param> in routes
-mockServer.get('/api/users/<userId>/posts/<postId>', (params) => {
-  'userId': params['userId'],
-  'postId': params['postId'],
-  'title': '@lorem.sentence',
-  'content': '@lorem.paragraph',
-});
-
-// Client requests: GET /api/users/123/posts/456
-// Response: { userId: "123", postId: "456", title: "...", content: "..." }
-```
-
-### State Management (CRUD)
-
-The mock server can maintain in-memory state for realistic CRUD operations:
-
-```dart
-final mockServer = MockServer(faker: faker);
-
-// Enable stateful CRUD
-mockServer.enableStatefulCrud('/api/users');
-
-// These endpoints now work automatically:
-// GET    /api/users      - List all users
-// GET    /api/users/:id  - Get specific user
-// POST   /api/users      - Create new user
-// PUT    /api/users/:id  - Update user
-// DELETE /api/users/:id  - Delete user
-
-// You can also manage state manually
-mockServer.setState('users', [
-  {'id': '1', 'name': 'John Doe'},
-  {'id': '2', 'name': 'Jane Smith'},
-]);
-
-final users = mockServer.getState('users');
-```
-
-### Network Simulation
-
-Simulate realistic network conditions:
-
-```dart
-// Add delay to all requests (milliseconds)
-mockServer.setDelay(500, 2000);  // Random 500-2000ms delay
-
-// Simulate network errors
-mockServer.setErrorRate(0.1);  // 10% of requests will fail
-
-// Set conditions for specific endpoints only
-mockServer.get('/api/slow-endpoint',
-  {'data': '@lorem.sentence'},
-  delay: 3000,  // 3 second delay
-);
-
-mockServer.get('/api/flaky-endpoint',
-  {'data': '@lorem.sentence'},
-  errorRate: 0.5,  // 50% error rate
-);
-```
-
-### Middleware Support
-
-Add custom middleware to handle requests:
-
-```dart
-// Add logging
-mockServer.addMiddleware((request) async {
-  print('${request.method} ${request.requestedUri.path}');
-  return null;  // Continue to next handler
-});
-
-// Add authentication
-mockServer.addMiddleware((request) async {
-  final authHeader = request.headers['authorization'];
-  if (authHeader == null || !authHeader.contains('Bearer')) {
-    return Response.forbidden('Authentication required');
-  }
-  return null;  // Continue if authenticated
-});
-
-// Add custom headers
-mockServer.addMiddleware((request) async {
-  return null;  // Response will have headers added by route handler
-});
-```
-
-### Complete Example: E-Commerce API
-
-```dart
-import 'package:smart_faker/smart_faker.dart';
-
-void main() async {
-  final faker = SmartFaker();
-  final mockServer = MockServer(faker: faker);
-
-  // Set delay to simulate real network
-  mockServer.setDelay(200, 800);
-
-  // Product listing
-  mockServer.get('/api/products', {
-    'products': ['@array:20', {
-      'id': '@uuid',
-      'name': '@commerce.product',
-      'price': '@commerce.price',
-      'category': '@commerce.department',
-      'inStock': '@boolean',
-      'rating': '@number.int:5',
-      'imageUrl': '@image.url',
-    }],
-    'total': 20,
-    'page': 1,
-  });
-
-  // Product details
-  mockServer.get('/api/products/<id>', (params) => {
-    'id': params['id'],
-    'name': '@commerce.product',
-    'price': '@commerce.price',
-    'description': '@commerce.productDescription',
-    'specifications': {
-      'weight': '{{number.int:10}} kg',
-      'dimensions': '{{number.int:100}}x{{number.int:100}}x{{number.int:100}} cm',
-      'warranty': '{{number.int:3}} years',
-    },
-    'images': ['@array:5', '@image.url'],
-    'reviews': ['@array:10', {
-      'id': '@uuid',
-      'author': '@person.fullName',
-      'rating': '@number.int:5',
-      'comment': '@lorem.sentence',
-      'date': '@date.recent',
-    }],
-  });
-
-  // Shopping cart
-  mockServer.enableStatefulCrud('/api/cart');
-
-  // Order placement
-  mockServer.post('/api/orders', (body) => {
-    'orderId': '@uuid',
-    'items': body['items'],
-    'total': '@commerce.price',
-    'status': 'processing',
-    'estimatedDelivery': '@date.soon',
-    'trackingNumber': 'US-{{number.int:999999999}}',
-  });
-
-  // User authentication
-  mockServer.post('/api/auth/login', (body) => {
-    'token': '@uuid',
-    'user': {
-      'id': '@uuid',
-      'email': body['email'],
-      'name': '@person.fullName',
-      'role': 'customer',
-    },
-    'expiresIn': 3600,
-  });
-
-  await mockServer.start(port: 3000);
-  print('E-commerce mock API running at http://localhost:3000');
-
-  // Keep server running for testing
-  // Remember to call mockServer.stop() in production
-}
-```
-
-### Integration with Flutter
-
-Use the mock server in your Flutter app:
-
-```dart
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-
-class ApiService {
-  // Use mock server in dev, real API in production
-  static const String baseUrl = kDebugMode
-    ? 'http://localhost:3000'  // Mock server
-    : 'https://api.production.com';  // Production API
-
-  Future<List<Product>> getProducts() async {
-    final response = await http.get(Uri.parse('$baseUrl/api/products'));
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      return (data['products'] as List)
-        .map((p) => Product.fromJson(p))
-        .toList();
-    }
-    throw Exception('Failed to load products');
-  }
-}
-```
-
-### Testing Example
-
-```dart
-import 'package:test/test.dart';
-import 'package:smart_faker/smart_faker.dart';
-
-void main() {
-  late MockServer mockServer;
-
-  setUpAll(() async {
-    final faker = SmartFaker(seed: 12345);
-    mockServer = MockServer(faker: faker);
-
-    mockServer.get('/api/users', {
-      'users': ['@array:5', {
+final generator = ResponseGenerator(faker: faker);
+mockServer.get('/api/orders', (request) {
+  return generator.generate({
+    'orders': [
+      '@array:3',
+      {
         'id': '@uuid',
-        'name': '@person.fullName',
-      }]
-    });
-
-    await mockServer.start(port: 3001);
+        'status': '@randomChoice:created,paid,shipped',
+        'total': '@commerce.price',
+      }
+    ]
   });
+});
+```
 
-  tearDownAll(() async {
-    await mockServer.stop();
+### GraphQL Resolvers
+```dart
+final graphQL = mockServer.graphQL('/graphql');
+
+graphQL.query('viewer', (context) {
+  return {
+    'id': context.faker.datatype.uuid(),
+    'name': context.faker.person.fullName(),
+    'email': context.faker.internet.email(),
+  };
+});
+
+graphQL.mutation('updateProfile', (context) {
+  final name = context.variables['name'] as String? ?? context.faker.person.fullName();
+  context.state['profile:lastName'] = name;
+  return {'success': true, 'name': name};
+});
+```
+
+### Streaming (SSE & WebSocket)
+```dart
+mockServer.sse('/events', (context) async* {
+  yield SseEvent(event: 'notification', data: {
+    'id': context.faker.datatype.uuid(),
+    'message': context.faker.lorem.sentence(),
   });
+});
 
-  test('should fetch users', () async {
-    final response = await http.get(
-      Uri.parse('http://localhost:3001/api/users')
-    );
-
-    expect(response.statusCode, 200);
-    final data = json.decode(response.body);
-    expect(data['users'], hasLength(5));
+mockServer.webSocket('/ws', (session) {
+  session.send({'type': 'welcome'});
+  session.stream.listen((incoming) {
+    session.send({'type': 'echo', 'payload': incoming});
   });
-}
+});
+```
+
+### Recording & Replay
+```dart
+mockServer.startRecording('checkout');
+await mockServer.start(port: 4000);
+// ...hit the endpoints you want to capture...
+mockServer.stopRecording();
+
+mockServer.startReplay('checkout', consume: false);
+```
+
+### CLI Quick Start
+```bash
+# Launch the mock server with demo endpoints
+dart run bin/smart_faker_cli.dart mock --port 3000 --record demo
+
+# Generate fixtures from JSON Schema / OpenAPI / Prisma files
+dart run bin/smart_faker_cli.dart generate   --schema-file api/schema.json   --schema Order   --count 25   --output orders.json
 ```
 
 ## Troubleshooting

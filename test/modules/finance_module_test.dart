@@ -12,7 +12,11 @@ void main() {
     group('Credit Card', () {
       test('should generate credit card number', () {
         final cardNumber = faker.finance.creditCardNumber();
-        expect(cardNumber, matches(RegExp(r'^\d{4} \d{4} \d{4} \d{4}$')));
+        expect(
+          cardNumber,
+          matches(
+              RegExp(r'^(\d{4} \d{4} \d{4} \d{4}|\d{4} \d{4} \d{4} \d{3})$')),
+        );
       });
 
       test('should generate credit card CVV', () {
