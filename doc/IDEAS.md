@@ -128,7 +128,7 @@ Map<String, Map<String, String>> patterns = {
 };
 ```
 
-#### Phase 3: Advanced Features (v0.5.0)
+#### Phase 3: Advanced Features (v0.5.1)
 
 **Custom Validators**:
 ```dart
@@ -296,7 +296,7 @@ final phone = faker.pattern.fromRegex(myCompanyPhonePattern);
 - **Month 4**: Release v0.3.0 with experimental pattern support
 - **Month 5-6**: Gather feedback and implement Phase 2
 - **Month 7-8**: Phase 3 development
-- **Month 9**: Full release v0.5.0
+- **Month 9**: Full release v0.5.1
 
 ### Alternative Approaches Considered
 

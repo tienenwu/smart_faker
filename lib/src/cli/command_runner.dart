@@ -18,7 +18,7 @@ class SmartFakerCommandRunner extends CommandRunner<int> {
     addCommand(BuildCommand());
   }
 
-  static const String cliVersion = '0.5.0';
+  static const String cliVersion = '0.5.1';
 
   @override
   Future<int?> run(Iterable<String> args) async {

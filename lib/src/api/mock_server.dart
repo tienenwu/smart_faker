@@ -320,7 +320,7 @@ class MockServer {
         .addMiddleware(_errorSimulationMiddleware())
         .addMiddleware(_recordingMiddleware())
         .addMiddleware(logRequests())
-        .addHandler(_router);
+        .addHandler(_router.call);
 
     _server = await shelf_io.serve(handler, 'localhost', port);
 

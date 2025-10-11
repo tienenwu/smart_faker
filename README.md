@@ -19,7 +19,7 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
   <img src="screenshots/07_healthcare_module.jpg" width="200" alt="Healthcare Module" />
 </p>
 
-**Version:** 0.5.0
+**Version:** 0.5.1
 **Last Updated:** 2025-09-24
 
 ## 📦 Resources
@@ -42,9 +42,9 @@ A powerful and intelligent fake data generator for Flutter and Dart applications
 - 📤 **Data Export**: Export to CSV, JSON, SQL, XML, YAML, Markdown formats (New in v0.2.0!)
 - 🇹🇼 **Taiwan Module**: Comprehensive Taiwan-specific data generation including ID numbers, tax IDs, and more (New in v0.2.0!)
 - 🎯 **Pattern Module**: Generate data from regex patterns for validation-ready fake data (New in v0.3.0!)
-- 🚀 **Mock Server Suite**: REST + GraphQL + SSE/WebSocket with recording & replay (New in v0.5.0!)
-- 🧰 **Schema Importers & CLI**: Import JSON Schema/OpenAPI/Prisma and generate data from the new CLI (New in v0.5.0!)
-- 🔐 **Privacy Toolkit**: Mask, de-identify, and synthesize datasets with the new `privacy` module (New in v0.5.0!)
+- 🚀 **Mock Server Suite**: REST + GraphQL + SSE/WebSocket with recording & replay (New in v0.5.1!)
+- 🧰 **Schema Importers & CLI**: Import JSON Schema/OpenAPI/Prisma and generate data from the new CLI (New in v0.5.1!)
+- 🔐 **Privacy Toolkit**: Mask, de-identify, and synthesize datasets with the new `privacy` module (New in v0.5.1!)
 
 ## Installation
 
@@ -52,7 +52,7 @@ Add `smart_faker` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  smart_faker: ^0.5.0
+  smart_faker: ^0.5.1
 ```
 
 Then run:
@@ -773,9 +773,9 @@ final builder = SmartRelationshipBuilder(
 );
 ```
 
-## API Mocking & Streaming - New in v0.5.0!
+## API Mocking & Streaming - New in v0.5.1!
 
-SmartFaker 0.5.0 extends the built-in mock server with GraphQL resolvers, server-sent events, WebSocket helpers, and request recording/replay. The new `smart_faker` CLI lets you launch scenarios or generate fixtures without writing additional code.
+SmartFaker 0.5.1 extends the built-in mock server with GraphQL resolvers, server-sent events, WebSocket helpers, and request recording/replay. The new `smart_faker` CLI lets you launch scenarios or generate fixtures without writing additional code.
 
 ### REST Quick Start
 ```dart

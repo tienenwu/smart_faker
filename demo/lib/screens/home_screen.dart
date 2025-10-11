@@ -236,7 +236,7 @@ class HomeScreen extends StatelessWidget {
             title: 'Advanced Features',
             features: [
               FeatureTile(
-                title: 'Mocking & Streaming (v0.5.0)',
+                title: 'Mocking & Streaming (v0.5.1)',
                 subtitle: 'REST, GraphQL, SSE/WebSocket, recording, CLI',
                 icon: Icons.api,
                 onTap: () => _navigateToScreen(
@@ -378,7 +378,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              'Version: 0.5.0',
+              'Version: 0.5.1',
               style: Theme.of(context).textTheme.bodySmall,
             ),
           ],
@@ -420,7 +420,7 @@ class HomeScreen extends StatelessWidget {
     showAboutDialog(
       context: context,
       applicationName: 'SmartFaker Demo',
-      applicationVersion: '0.5.0',
+      applicationVersion: '0.5.1',
       applicationLegalese: '© 2024 SmartFaker',
       children: const [
         SizedBox(height: 16),

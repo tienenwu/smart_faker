@@ -309,7 +309,7 @@ class _ApiMockingDemoScreenState extends State<ApiMockingDemoScreen> {
                     ),
                     const SizedBox(height: 8),
                     const Text(
-                      'SmartFaker v0.5.0 adds GraphQL resolvers, streaming endpoints, and response recording to the built-in mock server. '
+                      'SmartFaker v0.5.1 adds GraphQL resolvers, streaming endpoints, and response recording to the built-in mock server. '
                       'This demo highlights response templates alongside the new advanced tooling.',
                     ),
                     const SizedBox(height: 8),

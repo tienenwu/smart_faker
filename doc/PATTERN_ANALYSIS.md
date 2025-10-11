@@ -248,7 +248,7 @@ final schema = {
 - Basic types (string, number, boolean)
 - Method calls to faker modules
 
-#### Phase 2: Advanced Types (v0.5.0)
+#### Phase 2: Advanced Types (v0.5.1)
 - Arrays and objects
 - Patterns and enums
 - References between fields

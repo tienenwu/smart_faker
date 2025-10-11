@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.5.1] - 2025-09-24
+
+### Changed
+- Updated package homepage reference to https://kazami.me.
+- Synchronized documentation, demos, and CLI metadata with version 0.5.1.
+
+### Fixed
+- Resolved implicit `call` tear-off warning in the mock server pipeline to satisfy static analysis.
+
 ## [0.5.0] - 2025-09-24
 
 ### Added

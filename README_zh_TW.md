@@ -19,7 +19,7 @@
   <img src="screenshots/07_healthcare_module.jpg" width="200" alt="醫療保健模組" />
 </p>
 
-**版本：** 0.5.0
+**版本：** 0.5.1
 **最後更新：** 2025-09-24
 
 ## 📦 資源
@@ -42,9 +42,9 @@
 - 📤 **資料匯出**：匯出為 CSV、JSON、SQL、XML、YAML、Markdown 格式（v0.2.0 新功能！）
 - 🇹🇼 **台灣模組**：完整的台灣特定資料生成，包括身分證字號、統一編號等（v0.2.0 新功能！）
 - 🎯 **模式模組**：從正規表示式生成符合驗證規則的假資料（v0.3.0 新功能！）
-- 🚀 **模擬伺服器套件**：REST、GraphQL、SSE/WebSocket 以及錄製/重播功能（v0.5.0 新功能！）
-- 🧰 **架構匯入與 CLI**：支援 JSON Schema / OpenAPI / Prisma，並透過 CLI 快速產生資料（v0.5.0 新功能！）
-- 🔐 **隱私工具**：提供遮罩、去識別化與合成資料生成功能（v0.5.0 新功能！）
+- 🚀 **模擬伺服器套件**：REST、GraphQL、SSE/WebSocket 以及錄製/重播功能（v0.5.1 新功能！）
+- 🧰 **架構匯入與 CLI**：支援 JSON Schema / OpenAPI / Prisma，並透過 CLI 快速產生資料（v0.5.1 新功能！）
+- 🔐 **隱私工具**：提供遮罩、去識別化與合成資料生成功能（v0.5.1 新功能！）
 
 ## 安裝
 
@@ -52,7 +52,7 @@
 
 ```yaml
 dependencies:
-  smart_faker: ^0.5.0
+  smart_faker: ^0.5.1
 ```
 
 然後執行：
@@ -447,9 +447,9 @@ Future<void> seedDatabase() async {
 }
 ```
 
-## API 模擬與串流 - v0.5.0 新功能！
+## API 模擬與串流 - v0.5.1 新功能！
 
-SmartFaker 0.5.0 強化了內建的模擬伺服器，新增 GraphQL 解析器、SSE 串流、WebSocket 工具與錄製/重播功能；新的 `smart_faker` CLI 也能直接啟動情境或產生假資料檔案。
+SmartFaker 0.5.1 強化了內建的模擬伺服器，新增 GraphQL 解析器、SSE 串流、WebSocket 工具與錄製/重播功能；新的 `smart_faker` CLI 也能直接啟動情境或產生假資料檔案。
 
 ### REST 快速上手
 ```dart
